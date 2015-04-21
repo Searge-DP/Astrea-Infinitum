@@ -24,7 +24,7 @@ public class SpellProjTrans implements IProjectileSpell {
 				EntitySheep sheep = new EntitySheep(world);
 				sheep.setPosition(mop.entityHit.posX, mop.entityHit.posY, mop.entityHit.posZ);
 				sheep.getEntityData().setBoolean("trans", true);
-				sheep.getEntityData().setInteger("transTime", 300);
+				sheep.getEntityData().setInteger("transTime", 100);
 				NBTTagCompound tag = new NBTTagCompound();
 				mop.entityHit.writeToNBT(tag);
 				sheep.getEntityData().setTag("prevEnt", tag);
