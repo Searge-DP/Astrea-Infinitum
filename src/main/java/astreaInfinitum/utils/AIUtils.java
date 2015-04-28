@@ -10,16 +10,13 @@ import astreaInfinitum.entities.properties.EntityData;
 public class AIUtils {
 
 	public static void initPlayer(EntityPlayer player) {
-		setPlayerKnowledge(player, true);
 		setPlayerLevel(player, 1);
-		setPlayerMana(player, EnumMana.light, 0);
-		setPlayerMana(player, EnumMana.dark, 0);
-		setPlayerMaxMana(player, EnumMana.light, 25);
-		setPlayerMaxMana(player, EnumMana.dark, 25);
+		setPlayerMana(player, EnumMana.light, 20);
+		setPlayerMana(player, EnumMana.dark, 20);
+		setPlayerMaxMana(player, EnumMana.light, 40);
+		setPlayerMaxMana(player, EnumMana.dark, 40);
 		setPlayerMaxXP(player, 10);
 		setPlayerXP(player, 0);
-
-		addChatMessage(player, "know:" + getPlayerKnowledge(player));
 		addChatMessage(player, "level:" + getPlayerLevel(player));
 		addChatMessage(player, "maxLight:" + getPlayerManaMax(player, EnumMana.light));
 		addChatMessage(player, "maxDark:" + getPlayerManaMax(player, EnumMana.dark));
@@ -27,7 +24,6 @@ public class AIUtils {
 		addChatMessage(player, "currentDark:" + getPlayerMana(player, EnumMana.dark));
 		addChatMessage(player, "maxXP:" + getPlayerMaxXP(player));
 		addChatMessage(player, "xp:" + getPlayerXP(player));
-
 	}
 
 	public static void addChatMessage(EntityPlayer player, String message) {

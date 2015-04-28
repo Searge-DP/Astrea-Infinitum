@@ -119,12 +119,10 @@ public class PlayerTickHandler {
 					if (rand == 0) {
 						AIUtils.addChatMessage(player, String.valueOf(getPlayerMana(player, EnumMana.light) + ":" + getPlayerManaMax(player, EnumMana.light)));
 						if (getPlayerMana(player, EnumMana.light) < getPlayerManaMax(player, EnumMana.light)) {
-							AIUtils.addChatMessage(player, "hi");
 							addMana(player, EnumMana.light, 2);
 						}
 						if (getPlayerMana(player, EnumMana.dark) < getPlayerManaMax(player, EnumMana.dark)) {
 							addMana(player, EnumMana.dark, 2);
-							AIUtils.addChatMessage(player, "hi");
 						}
 
 						if (getPlayerMaxXP(player) > 0)
