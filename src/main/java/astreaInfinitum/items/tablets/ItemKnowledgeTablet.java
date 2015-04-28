@@ -20,12 +20,7 @@ public class ItemKnowledgeTablet extends Item {
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerMana(player, EnumMana.light) + ""));
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerMana(player, EnumMana.dark) + ""));
 				AstreaInfinitum.proxy.readTablet();
-				if (!AIUtils.getPlayerKnowledge(player)) {
-					AIUtils.setPlayerKnowledge(player, true);
-					player.addChatComponentMessage(new ChatComponentText("you have Successfully studied this tablet"));
-				} else {
-					player.addChatComponentMessage(new ChatComponentText("You have already studied this tablet."));
-				}
+				AIUtils.setPlayerKnowledge(player, true);
 			}
 		}
 		return stack;

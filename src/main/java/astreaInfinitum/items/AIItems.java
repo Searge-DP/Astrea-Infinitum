@@ -37,6 +37,7 @@ public class AIItems {
 	public static Item spellProjTrans= new ItemProjectileSpell(20, "Trans", 5, new SpellProjTrans());
 	
 	
+	
 	public static Item manaDrop = new Item();
 	public static Item bookBasic = new ItemBookBasic();
 
@@ -53,6 +54,7 @@ public class AIItems {
 		registerSpell(spellProjDig, "dig", "dig");
 		registerSpell(spellAreaRegen, "areaRegen", "areaRegen");
 		registerSpell(spellProjTrans, "projTrans", "projTrans");
+		
 		
 		
 	}

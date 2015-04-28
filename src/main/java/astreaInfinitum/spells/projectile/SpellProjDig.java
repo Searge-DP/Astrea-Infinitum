@@ -1,5 +1,6 @@
 package astreaInfinitum.spells.projectile;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
@@ -10,7 +11,7 @@ import astreaInfinitum.api.spell.IProjectileSpell;
 public class SpellProjDig implements IProjectileSpell {
 
 	@Override
-	public boolean onHit(World world,  MovingObjectPosition mop,  double x, double y, double z) {
+	public boolean onHit(World world,EntityPlayer caster,  MovingObjectPosition mop,  double x, double y, double z) {
 		if(mop.typeOfHit == MovingObjectType.BLOCK){
 			world.setBlock(mop.blockX, mop.blockY, mop.blockZ, Blocks.air);
 		}

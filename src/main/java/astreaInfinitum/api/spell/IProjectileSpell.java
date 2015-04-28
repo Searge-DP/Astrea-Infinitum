@@ -9,7 +9,7 @@ import astreaInfinitum.api.EnumMana;
 
 public interface IProjectileSpell {
 
-	public boolean onHit(World world, MovingObjectPosition mop, double x, double y, double z);
+	public boolean onHit(World world, EntityPlayer caster, MovingObjectPosition mop, double x, double y, double z);
 
 	public EnumMana getManaType();
 }

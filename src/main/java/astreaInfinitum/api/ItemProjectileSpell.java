@@ -50,6 +50,7 @@ public class ItemProjectileSpell extends Item implements IPrimarySpell {
 				if (world != null && player != null) {
 					EntitySpell eSpell = new EntitySpell(world, player);
 					eSpell.setSpell(spell);
+					eSpell.caster = player;
 					world.spawnEntityInWorld(eSpell);
 				}
 				int mana = AIUtils.getPlayerMana(player, spell.getManaType());

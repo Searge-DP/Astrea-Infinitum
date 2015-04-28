@@ -1,6 +1,8 @@
 package astreaInfinitum.entities;
 
+import astreaInfinitum.api.EnumMana;
 import astreaInfinitum.api.spell.IProjectileSpell;
+import astreaInfinitum.utils.AIUtils;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
@@ -8,6 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
@@ -27,6 +30,7 @@ public class EntitySpell extends EntityThrowable {
 	}
 
 	public IProjectileSpell spell;
+	public EntityPlayer caster;
 
 	@Override
 	public void onEntityUpdate() {
@@ -37,7 +41,12 @@ public class EntitySpell extends EntityThrowable {
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		if (worldObj != null && mop != null && spell != null) {
-			spell.onHit(worldObj, mop, this.posX, this.posY, this.posZ);
+			spell.onHit(worldObj, caster, mop, this.posX, this.posY, this.posZ);
+			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerMana(caster, EnumMana.light)));
+			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerMana(caster, EnumMana.dark)));
+			
+			
+			
 			this.setDead();
 		}
 	}
