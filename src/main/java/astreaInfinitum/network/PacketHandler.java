@@ -1,7 +1,6 @@
 package astreaInfinitum.network;
 
 import astreaInfinitum.ModProps;
-import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
@@ -13,6 +12,7 @@ public class PacketHandler {
 	
 	public static void init(){
 		INSTANCE.registerMessage(MessagePlayerSync.class, MessagePlayerSync.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageItemSync.class, MessageItemSync.class, id++, Side.CLIENT);
 	}
 
 }

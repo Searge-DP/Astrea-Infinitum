@@ -18,9 +18,12 @@ public class RenderingUtils {
 
 		GL11.glPushMatrix();
 		GL11.glDepthMask(true);
+
 		item.hoverStart = 0.0F;
 		GL11.glRotatef(180, 0, 0, 180);
+		GL11.glEnable(GL11.GL_LIGHTING);
 		RenderManager.instance.func_147939_a(item, 0, -0.3, 0, 0, angle, true);
+		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 	}
 }

@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.client.ForgeHooksClient;
 
 import org.lwjgl.opengl.GL11;
@@ -36,13 +37,12 @@ public class RenderPedestal extends TileEntitySpecialRenderer {
 	private final float size = 0.0625f;
 	private float angle = 0;
 	private EntityItem item = null;
-
+	
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float p_147500_8_) {
 		if (tile instanceof TileEntityPedestal)
 			render((TileEntityPedestal) tile, x, y, z);
 	}
-
 	public void render(TileEntityPedestal tile, double x, double y, double z) {
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);
@@ -53,7 +53,6 @@ public class RenderPedestal extends TileEntitySpecialRenderer {
 		if (tile.getStackInSlot(0) != null) {
 			RenderingUtils.render3DItem(new EntityItem(tile.getWorldObj(), x + 0.5, y + 1.5, z + 0.5, tile.getStackInSlot(0)), tile.angle);
 			angle++;
-
 		}
 		GL11.glPopMatrix();
 	}

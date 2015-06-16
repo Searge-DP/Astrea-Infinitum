@@ -15,14 +15,11 @@ public class ItemKnowledgeTablet extends Item {
 	public ItemKnowledgeTablet() {}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-		if (!world.isRemote) {
 			if (player != null && !(player instanceof FakePlayer)) {
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerMana(player, EnumMana.light) + ""));
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerMana(player, EnumMana.dark) + ""));
 				AstreaInfinitum.proxy.readTablet();
-				AIUtils.setPlayerKnowledge(player, true);
 			}
-		}
 		return stack;
 	}
 }

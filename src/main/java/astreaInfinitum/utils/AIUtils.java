@@ -1,18 +1,31 @@
 package astreaInfinitum.utils;
 
+import static astreaInfinitum.utils.AIUtils.getPlayerKnowledge;
+import static astreaInfinitum.utils.AIUtils.getPlayerLevel;
+import static astreaInfinitum.utils.AIUtils.getPlayerMana;
+import static astreaInfinitum.utils.AIUtils.getPlayerManaMax;
+import static astreaInfinitum.utils.AIUtils.getPlayerMaxXP;
+import static astreaInfinitum.utils.AIUtils.getPlayerXP;
+
+import java.util.Random;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.EnumMana;
 import astreaInfinitum.entities.properties.EntityData;
+import astreaInfinitum.network.MessagePlayerSync;
+import astreaInfinitum.network.PacketHandler;
 
 public class AIUtils {
 
 	public static void initPlayer(EntityPlayer player) {
+		setPlayerKnowledge(player, true);
 		setPlayerLevel(player, 1);
-		setPlayerMana(player, EnumMana.light, 20);
-		setPlayerMana(player, EnumMana.dark, 20);
+		setPlayerMana(player, EnumMana.light, 0);
+		setPlayerMana(player, EnumMana.dark, 0);
 		setPlayerMaxMana(player, EnumMana.light, 40);
 		setPlayerMaxMana(player, EnumMana.dark, 40);
 		setPlayerMaxXP(player, 10);
@@ -24,6 +37,8 @@ public class AIUtils {
 		addChatMessage(player, "currentDark:" + getPlayerMana(player, EnumMana.dark));
 		addChatMessage(player, "maxXP:" + getPlayerMaxXP(player));
 		addChatMessage(player, "xp:" + getPlayerXP(player));
+		PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerMana(player, EnumMana.light), getPlayerMana(player, EnumMana.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerManaMax(player, EnumMana.light), getPlayerManaMax(player, EnumMana.dark)));
+		
 	}
 
 	public static void addChatMessage(EntityPlayer player, String message) {
@@ -97,10 +112,10 @@ public class AIUtils {
 
 	public static void setPlayerMaxMana(EntityPlayer player, EnumMana mana, int max) {
 		if (mana == EnumMana.light) {
-			getEntityData(player).setManaLight(max);
+			getEntityData(player).setManaMaxLight(max);
 		}
 		if (mana == EnumMana.dark) {
-			getEntityData(player).setManaDark(max);
+			getEntityData(player).setManaMaxDark(max);
 		}
 	}
 
@@ -134,7 +149,7 @@ public class AIUtils {
 
 	public static void addXP(EntityPlayer player, int amount) {
 		int xp = getPlayerXP(player);
-		xp += amount;
+		xp += amount * getPlayerLevel(player);
 		setPlayerXP(player, xp);
 	}
 
@@ -148,4 +163,30 @@ public class AIUtils {
 		return false;
 	}
 
+	public static void initSpell(ItemStack stack) {
+		NBTHelper.setInteger(stack, "AIItemXP", 0);
+		NBTHelper.setInteger(stack, "AIItemXPMax", 10);
+		NBTHelper.setInteger(stack, "AIItemLevel", 1);
+	}
+
+	public static void levelUpSpell(ItemStack stack) {
+		int xp = NBTHelper.getInt(stack, "AIItemXP");
+		int xpMax = NBTHelper.getInt(stack, "AIItemXPMax");
+		int level = NBTHelper.getInt(stack, "AIItemLevel");
+		if (xp >= xpMax && level < 5) {
+			level++;
+			xp = 0;
+			xpMax = (xpMax + (xpMax / 2));
+			NBTHelper.setInteger(stack, "AIItemLevel", level);
+			NBTHelper.setInteger(stack, "AIItemXP", xp);
+			NBTHelper.setInteger(stack, "AIItemXPMax", xpMax);
+		}
+
+	}
+
+	public static void addSpellXP(ItemStack stack, int amount) {
+		int xp = NBTHelper.getInt(stack, "AIItemXP");
+		xp += new Random().nextInt(amount * NBTHelper.getInt(stack, "AIItemLevel"));
+		NBTHelper.setInteger(stack, "AIItemXP", xp);
+	}
 }

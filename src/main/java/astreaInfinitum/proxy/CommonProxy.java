@@ -7,6 +7,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy {
+	
+	
 
 	public EntityPlayer getClientPlayer() {
 		return null;

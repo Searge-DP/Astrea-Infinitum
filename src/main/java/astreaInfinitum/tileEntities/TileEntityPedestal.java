@@ -2,18 +2,23 @@ package astreaInfinitum.tileEntities;
 
 import java.util.ArrayList;
 
+import net.minecraft.client.renderer.entity.RenderPainting;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
 import astreaInfinitum.api.EnumMana;
 import astreaInfinitum.api.IManaDust;
 import astreaInfinitum.api.recipes.RecipeManaAltar;
 import astreaInfinitum.api.recipes.RecipeRegistry;
+import astreaInfinitum.client.RenderParticles;
 
 public class TileEntityPedestal extends TileEntity implements IInventory {
 
@@ -23,6 +28,8 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 	@Override
 	public void updateEntity() {
 		angle++;
+		if (!worldObj.isRemote && worldObj.rand.nextInt(20) == 0)
+			RenderParticles.spawnParticle("sphere", xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, 0, 0, 0);
 	}
 
 	public void infuse(World world, int x, int y, int z) {
@@ -40,7 +47,6 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 			if (getPedestalItem(world, x, y, z, ForgeDirection.WEST) != null) {
 				pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.WEST));
 			}
-			System.out.println(pedestalItems.size());
 			int manaLight = 0;
 			int manaDark = 0;
 			if (pedestalItems.size() == 4) {
@@ -57,8 +63,6 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 						}
 					}
 				}
-				System.out.println("light" + manaLight);
-				System.out.println("dark" + manaDark);
 
 				if (manaDark > 0 && manaLight > 0) {
 					return;
@@ -75,6 +79,10 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 											world.setBlockToAir(x + posX, y, z + posZ);
 											manaLight--;
 											world.spawnEntityInWorld(new EntityLightningBolt(world, x + posX, y, z + posZ));
+											setInventorySlotContents(0, recipe.getOutput());
+											for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+												setPedestalItem(world, x, y, z, dir, null);
+											}
 										}
 								}
 						}
@@ -93,6 +101,10 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 											world.setBlockToAir(x + posX, y, z + posZ);
 											manaDark--;
 											world.setBlock(x + posX, y, z + posZ, Blocks.fire);
+											setInventorySlotContents(0, recipe.getOutput());
+											for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+												setPedestalItem(world, x, y, z, dir, null);
+											}
 										}
 								}
 						}
@@ -114,6 +126,16 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 			}
 		}
 		return null;
+	}
+
+	public void setPedestalItem(World world, int x, int y, int z, ForgeDirection dir, ItemStack stack) {
+		if (!(dir == dir.DOWN) || !(dir == dir.UP))
+			if (world.getBlock(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3)) != null) {
+				if (world.getTileEntity(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3)) != null && world.getTileEntity(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3)) instanceof TileEntityPedestal) {
+					TileEntityPedestal tile = (TileEntityPedestal) world.getTileEntity(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3));
+					tile.setInventorySlotContents(0, stack);
+				}
+			}
 	}
 
 	@Override
@@ -186,4 +208,41 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 		return true;
 	}
 
+	@Override
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		readInventoryFromNBT(nbt);
+
+	}
+
+	public void readInventoryFromNBT(NBTTagCompound tags) {
+		NBTTagList nbttaglist = tags.getTagList("Items", Constants.NBT.TAG_COMPOUND);
+		for (int iter = 0; iter < nbttaglist.tagCount(); iter++) {
+			NBTTagCompound tagList = (NBTTagCompound) nbttaglist.getCompoundTagAt(iter);
+			byte slotID = tagList.getByte("Slot");
+			if (slotID >= 0 && slotID < items.length) {
+				items[slotID] = ItemStack.loadItemStackFromNBT(tagList);
+			}
+		}
+	}
+
+	@Override
+	public void writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+		writeInventoryToNBT(tag);
+	}
+
+	public void writeInventoryToNBT(NBTTagCompound tags) {
+		NBTTagList nbttaglist = new NBTTagList();
+		for (int iter = 0; iter < items.length; iter++) {
+			if (items[iter] != null) {
+				NBTTagCompound tagList = new NBTTagCompound();
+				tagList.setByte("Slot", (byte) iter);
+				items[iter].writeToNBT(tagList);
+				nbttaglist.appendTag(tagList);
+			}
+		}
+
+		tags.setTag("Items", nbttaglist);
+	}
 }

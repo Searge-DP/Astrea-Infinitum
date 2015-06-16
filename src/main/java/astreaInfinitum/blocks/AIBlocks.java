@@ -1,14 +1,10 @@
 package astreaInfinitum.blocks;
 
+import net.minecraft.block.Block;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.EnumMana;
-import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 
 public class AIBlocks {
 
@@ -23,6 +19,7 @@ public class AIBlocks {
 	public static Block manaExtractor = new BlockManaExtractor();
 	public static Block manaDustLight = new BlockManaDust(EnumMana.light, 0x0B72B0);
 	public static Block manaDustDark = new BlockManaDust(EnumMana.dark, 0xC20031);
+	
 
 	private static void registerBlocks() {
 		registerBlock(manaAltarBlock, "manaAltarBlock", "manaAltarBlock");

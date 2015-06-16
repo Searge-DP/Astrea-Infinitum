@@ -1,14 +1,12 @@
 package astreaInfinitum.proxy;
 
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
+import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.gui.GuiBookBasic;
 import astreaInfinitum.client.gui.GuiKnowledgeTablet;
@@ -18,9 +16,10 @@ import astreaInfinitum.client.render.items.RenderItemPedestal;
 import astreaInfinitum.entities.EntitySpell;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.utils.ClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy {
-	
 
 	@Override
 	public EntityPlayer getClientPlayer() {
@@ -61,5 +60,6 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 		ClientRegistry.registerTileEntity(TileEntityPedestal.class, "pedestalRender", new RenderPedestal());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.pedestal), new RenderItemPedestal());
+		AstreaInfinitum.glowID = RenderingRegistry.getNextAvailableRenderId();
 	}
 }

@@ -1,15 +1,17 @@
 package astreaInfinitum.blocks;
 
-import astreaInfinitum.tileEntities.TileEntityPedestal;
-import astreaInfinitum.utils.AIUtils;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import astreaInfinitum.tileEntities.TileEntityPedestal;
+import astreaInfinitum.utils.AIUtils;
 
 public class BlockPedestal extends BlockContainer {
 
@@ -25,17 +27,24 @@ public class BlockPedestal extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float hitX, float hitY, float hitZ) {
 		TileEntityPedestal tile = (TileEntityPedestal) world.getTileEntity(x, y, z);
-		if (player.inventory.getCurrentItem() != null && !(player.inventory.getCurrentItem().getItem() == Items.stick)) {
-			// tile.items[0] = player.inventory.getCurrentItem().copy();
-			tile.setInventorySlotContents(0, player.inventory.getCurrentItem().copy());
+		if (player.inventory.getCurrentItem() != null && !(player.inventory.getCurrentItem().getItem() == Items.stick) && tile.getStackInSlot(0) == null) {
+			ItemStack stack = player.inventory.getCurrentItem().copy();
+			stack.stackSize = 1;
+			tile.setInventorySlotContents(0, stack);
+			player.inventory.decrStackSize(player.inventory.currentItem, 1);
+			return true;
 		}
-		if (player.inventory.getCurrentItem().getItem() == Items.stick) {
-			player.addChatComponentMessage(new ChatComponentText("hi"));
+		if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == Items.stick) {
 			tile.infuse(world, x, y, z);
+			return true;
 		}
-		if (tile.getStackInSlot(0) != null)
-			AIUtils.addChatMessage(player, tile.items[0].getDisplayName());
-		return true;
+		if (tile.getStackInSlot(0) != null && player.inventory.getCurrentItem() == null) {
+			if (!world.isRemote)
+				world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 1.5, z + 0.5, tile.getStackInSlot(0)));
+			tile.setInventorySlotContents(0, null);
+			return true;
+		}
+		return false;
 	}
 
 	@Override

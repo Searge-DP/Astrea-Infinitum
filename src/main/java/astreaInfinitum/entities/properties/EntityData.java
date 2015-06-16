@@ -1,19 +1,17 @@
 package astreaInfinitum.entities.properties;
 
-import astreaInfinitum.AstreaInfinitum;
-import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumMana;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
+import astreaInfinitum.ModProps;
+import astreaInfinitum.api.EnumMana;
 
 public class EntityData implements IExtendedEntityProperties {
 
 	private EntityLivingBase entity;
-
 	private boolean knowledge;
 	private int level;
 	private int manaLight;
@@ -23,14 +21,14 @@ public class EntityData implements IExtendedEntityProperties {
 	private int xp;
 	private int maxXP;
 
-	public static String tagKnowledge = "AIKnowledge";
-	public static String taglevel = "AILevel";
-	public static String tagManaLight = EnumMana.light.getNBTName();
-	public static String tagManaDark = EnumMana.dark.getNBTName();
-	public static String tagManaMaxLight = EnumMana.light.getNBTName() + "Max";
-	public static String tagManaMaxDark = EnumMana.dark.getNBTName() + "Max";
-	public static String tagXP = "AIXP";
-	public static String tagXPMax = "AIXPMax";
+	public static final String tagKnowledge = "AIKnowledge";
+	public static final String taglevel = "AILevel";
+	public static final String tagManaLight = EnumMana.light.getNBTName();
+	public static final String tagManaDark = EnumMana.dark.getNBTName();
+	public static final String tagManaMaxLight = EnumMana.light.getNBTName() + "Max";
+	public static final String tagManaMaxDark = EnumMana.dark.getNBTName() + "Max";
+	public static final String tagXP = "AIXP";
+	public static final String tagXPMax = "AIXPMax";
 
 	@Override
 	public void saveNBTData(NBTTagCompound tag) {
@@ -38,8 +36,8 @@ public class EntityData implements IExtendedEntityProperties {
 		tag.setInteger(taglevel, level);
 		tag.setInteger(tagManaLight, manaLight);
 		tag.setInteger(tagManaDark, manaDark);
-		tag.setInteger(tagManaMaxLight, manaLight);
-		tag.setInteger(tagManaMaxDark, manaDark);
+		tag.setInteger(tagManaMaxLight, manaMaxLight);
+		tag.setInteger(tagManaMaxDark, manaMaxDark);
 		tag.setInteger(tagXP, xp);
 		tag.setInteger(tagXPMax, maxXP);
 	}
@@ -62,7 +60,6 @@ public class EntityData implements IExtendedEntityProperties {
 
 	@Override
 	public void init(Entity entity, World world) {
-//		System.out.println("Registering data for " + entity.getCommandSenderName());
 
 		if (entity instanceof EntityLivingBase) {
 			this.entity = (EntityLivingBase) entity;

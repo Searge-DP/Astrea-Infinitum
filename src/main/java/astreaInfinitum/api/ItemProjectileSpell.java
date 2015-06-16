@@ -1,18 +1,23 @@
 package astreaInfinitum.api;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import astreaInfinitum.api.spell.IPrimarySpell;
 import astreaInfinitum.api.spell.IProjectileSpell;
 import astreaInfinitum.entities.EntitySpell;
+import astreaInfinitum.network.MessageItemSync;
+import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.utils.AIUtils;
+import astreaInfinitum.utils.NBTHelper;
 
 public class ItemProjectileSpell extends Item implements IPrimarySpell {
 
@@ -33,12 +38,19 @@ public class ItemProjectileSpell extends Item implements IPrimarySpell {
 		setMaxDamage(castTimeTotal);
 	}
 
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {
+		list.add(String.valueOf(NBTHelper.getInt(stack, "AIItemLevel")));
+		list.add(String.valueOf(NBTHelper.getInt(stack, "AIItemXP")));
+		list.add(String.valueOf(NBTHelper.getInt(stack, "AIItemXPMax")));
+	}
+
 	public int getDisplayDamage(ItemStack stack) {
 		return castTimeTotal - castTime;
 	}
 
 	public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player) {
-		if (castTime>0) {
+		if (castTime > 0) {
 			return false;
 		}
 		return true;
@@ -54,14 +66,14 @@ public class ItemProjectileSpell extends Item implements IPrimarySpell {
 					world.spawnEntityInWorld(eSpell);
 				}
 				int mana = AIUtils.getPlayerMana(player, spell.getManaType());
-				
+
 				mana -= getManaUsage();
 				AIUtils.setPlayerMana(player, spell.getManaType(), mana);
 				castTime = -1;
 				AIUtils.addXP(player, new Random().nextInt(3));
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerLevel(player) + ":" + AIUtils.getPlayerMaxXP(player) + ":" + AIUtils.getPlayerXP(player)));
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerManaMax(player, EnumMana.light) + ":" + AIUtils.getPlayerMana(player, EnumMana.light)));
-
+				AIUtils.addSpellXP(stack, 3);
 			} else if (!AIUtils.getPlayerKnowledge(player)) {
 				player.addChatComponentMessage(new ChatComponentText("You need to study more!"));
 			} else if (AIUtils.getPlayerMana(player, spell.getManaType()) <= getManaUsage()) {
@@ -95,6 +107,9 @@ public class ItemProjectileSpell extends Item implements IPrimarySpell {
 		stack.setItemDamage(castTimeTotal);
 		if (!world.isRemote)
 			if (entity instanceof EntityPlayer) {
+				if (NBTHelper.getInt(stack, "AIItemLevel") < 1) {
+					AIUtils.initSpell(stack);
+				}
 				EntityPlayer player = (EntityPlayer) entity;
 				if (setCasting) {
 					castTime++;
@@ -111,6 +126,10 @@ public class ItemProjectileSpell extends Item implements IPrimarySpell {
 					castTime = 0;
 					canCast = false;
 					setCasting = false;
+				}
+				if (NBTHelper.getInt(stack, "AIItemXP") >= NBTHelper.getInt(stack, "AIItemXPMax")) {
+					AIUtils.levelUpSpell(stack);
+					PacketHandler.INSTANCE.sendToAll(new MessageItemSync(NBTHelper.getInt(stack, "AIItemXP"), NBTHelper.getInt(stack, "AIItemXPMax"), NBTHelper.getInt(stack, "AIItemLevel")));
 				}
 			}
 	}
