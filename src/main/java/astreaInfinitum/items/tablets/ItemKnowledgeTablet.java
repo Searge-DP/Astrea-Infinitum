@@ -19,6 +19,7 @@ public class ItemKnowledgeTablet extends Item {
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerMana(player, EnumMana.light) + ""));
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerMana(player, EnumMana.dark) + ""));
 				AstreaInfinitum.proxy.readTablet();
+				AIUtils.getEntityData(player).setManaMaxDark(40);
 			}
 		return stack;
 	}

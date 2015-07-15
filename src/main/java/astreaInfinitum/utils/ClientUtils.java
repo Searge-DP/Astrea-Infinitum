@@ -14,8 +14,8 @@ public class ClientUtils {
 		AIUtils.setPlayerLevel(player, message.level);
 		AIUtils.setPlayerMana(player, EnumMana.light, message.manaLight);
 		AIUtils.setPlayerMana(player, EnumMana.dark, message.manaDark);
-		AIUtils.setPlayerMaxMana(player, EnumMana.light, message.manaDark);
-		AIUtils.setPlayerMaxMana(player, EnumMana.dark, message.manaDark);
+		AIUtils.setPlayerMaxMana(player, EnumMana.light, message.maxManaLight);
+		AIUtils.setPlayerMaxMana(player, EnumMana.dark, message.maxManaDark);
 		
 		AIUtils.setPlayerMaxXP(player, message.maxXP);
 		AIUtils.setPlayerXP(player, message.xp);

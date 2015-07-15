@@ -24,6 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -143,12 +144,19 @@ public class PlayerTickHandler {
 				Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) + 91, e.resolution.getScaledHeight() - 12, 6, 2, 102, 12);
 				Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 91 - 102, e.resolution.getScaledHeight() - 12, 6, 18, 102, 12);
 				if (getPlayerMana(player, EnumMana.light) > 0) {
-					// AIUtils.setPlayerMana(player, EnumMana.light, 4);
-					AIUtils.addChatMessage(player, "" + getScaledBar(40, getPlayerMana(player, EnumMana.light), getPlayerManaMax(player, EnumMana.light)));
+					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerMana(player, EnumMana.light) + ":" + getPlayerManaMax(player, EnumMana.light) + ":" + getScaledBar(102, getPlayerMana(player, EnumMana.light), getPlayerManaMax(player, EnumMana.light)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 500, 0xFFFFFF, true);
+					Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
 					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) + 93, e.resolution.getScaledHeight() - 11, 120, 3, getScaledBar(102, getPlayerMana(player, EnumMana.light), getPlayerManaMax(player, EnumMana.light)), 12);
 				}
-				if (getPlayerMana(player, EnumMana.dark) > 0)
-					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 93 - 102, e.resolution.getScaledHeight() - 11, 120 + getScaledBar(102, getPlayerMana(player, EnumMana.dark), getPlayerManaMax(player, EnumMana.dark)), 20, 102, 12);
+				if (getPlayerMana(player, EnumMana.dark) > 0) {
+					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerMana(player, EnumMana.dark) + ":" + getPlayerManaMax(player, EnumMana.dark) + ":" + getScaledBar(102, getPlayerMana(player, EnumMana.dark), getPlayerManaMax(player, EnumMana.dark)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 550, 0xccaacc, true);
+					Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
+					/**
+					 * Draws a textured rectangle at the stored z-value. Args:
+					 * x, y, u, v, width, height
+					 */
+					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 93 - 98, e.resolution.getScaledHeight() - 11, 222 - getScaledBar(102, getPlayerMana(player, EnumMana.dark), getPlayerManaMax(player, EnumMana.dark)), 19, getScaledBar(102, getPlayerMana(player, EnumMana.dark), getPlayerManaMax(player, EnumMana.dark)), 12);
+				}
 				Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerLevel(player), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 44, 0xFF55FF, true);
 
 			}
@@ -156,9 +164,8 @@ public class PlayerTickHandler {
 	}
 
 	public int getScaledBar(int scale, int mana, int maxMana) {
-		System.out.println(Math.scalb((mana/maxMana), scale));
-		
-		return (int) ((mana+0)/maxMana)*scale;
+		int barWidth = (int) (((float) mana / maxMana) * scale);
+		return barWidth;
 	}
 
 	@SubscribeEvent

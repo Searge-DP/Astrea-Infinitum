@@ -52,6 +52,7 @@ public class EntitySphereFX extends EntityFX {
 		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/particles/particles.png"));
 		par1Tessellator.startDrawingQuads();
 		par1Tessellator.setBrightness(100);// make sure you have this!!
+
 		super.renderParticle(par1Tessellator, par2, par3, par4, par5, par6, par7);
 		par1Tessellator.draw();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/particle/particles.png"));

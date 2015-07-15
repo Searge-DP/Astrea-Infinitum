@@ -26,7 +26,7 @@ import cpw.mods.fml.common.registry.EntityRegistry;
 @Mod(modid = ModProps.modid, name = ModProps.name, version = ModProps.version)
 public class AstreaInfinitum {
 	
-	public static int glowID;
+	public static int ctmID;
 
 	@Instance(ModProps.modid)
 	public static AstreaInfinitum INSTANCE;

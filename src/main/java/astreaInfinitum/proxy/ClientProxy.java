@@ -6,10 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.MinecraftForge;
-import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.gui.GuiBookBasic;
 import astreaInfinitum.client.gui.GuiKnowledgeTablet;
+import astreaInfinitum.client.render.RenderManaAltarBlock;
 import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.client.render.RenderSpell;
 import astreaInfinitum.client.render.items.RenderItemPedestal;
@@ -60,6 +60,6 @@ public class ClientProxy extends CommonProxy {
 	public void registerRenderers() {
 		ClientRegistry.registerTileEntity(TileEntityPedestal.class, "pedestalRender", new RenderPedestal());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.pedestal), new RenderItemPedestal());
-		AstreaInfinitum.glowID = RenderingRegistry.getNextAvailableRenderId();
+		RenderingRegistry.registerBlockHandler(new RenderManaAltarBlock());
 	}
 }

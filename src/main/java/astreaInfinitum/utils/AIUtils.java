@@ -1,12 +1,5 @@
 package astreaInfinitum.utils;
 
-import static astreaInfinitum.utils.AIUtils.getPlayerKnowledge;
-import static astreaInfinitum.utils.AIUtils.getPlayerLevel;
-import static astreaInfinitum.utils.AIUtils.getPlayerMana;
-import static astreaInfinitum.utils.AIUtils.getPlayerManaMax;
-import static astreaInfinitum.utils.AIUtils.getPlayerMaxXP;
-import static astreaInfinitum.utils.AIUtils.getPlayerXP;
-
 import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -189,4 +182,5 @@ public class AIUtils {
 		xp += new Random().nextInt(amount * NBTHelper.getInt(stack, "AIItemLevel"));
 		NBTHelper.setInteger(stack, "AIItemXP", xp);
 	}
+	
 }

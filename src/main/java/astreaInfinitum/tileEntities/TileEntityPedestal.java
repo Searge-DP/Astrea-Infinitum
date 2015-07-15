@@ -2,7 +2,6 @@ package astreaInfinitum.tileEntities;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.entity.RenderPainting;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -28,8 +27,6 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 	@Override
 	public void updateEntity() {
 		angle++;
-		if (!worldObj.isRemote && worldObj.rand.nextInt(20) == 0)
-			RenderParticles.spawnParticle("sphere", xCoord + 0.5, yCoord + 1.5, zCoord + 0.5, 0, 0, 0);
 	}
 
 	public void infuse(World world, int x, int y, int z) {

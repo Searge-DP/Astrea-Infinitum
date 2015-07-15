@@ -1,8 +1,10 @@
 package astreaInfinitum.api;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,13 +14,11 @@ import net.minecraft.world.World;
 import astreaInfinitum.api.spell.IPrimarySpell;
 import astreaInfinitum.api.spell.ISpell;
 import astreaInfinitum.utils.AIUtils;
+import astreaInfinitum.utils.NBTHelper;
 
 public class ItemSpell extends Item implements IPrimarySpell {
 
 	public int castTimeTotal = 0;
-	public int castTime = 0;
-	public boolean setCasting = false;
-	public boolean canCast = false;
 	public String name;
 	public int manaUsage;
 	public ISpell spell;
@@ -32,12 +32,17 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		setMaxDamage(castTimeTotal);
 	}
 
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
+		
+	}
+
 	public int getDisplayDamage(ItemStack stack) {
-		return castTimeTotal - castTime;
+		return NBTHelper.getInt(stack, "castTimeTotal") - NBTHelper.getInt(stack, "castTime");
 	}
 
 	public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player) {
-		if (castTime>0) {
+		if (NBTHelper.getInt(item, "castTime") > 0) {
 			return false;
 		}
 		return true;
@@ -45,12 +50,12 @@ public class ItemSpell extends Item implements IPrimarySpell {
 
 	public void onCast(ItemStack stack, World world, EntityPlayer player, int x, int y, int z) {
 		if (!world.isRemote) {
-			if (canCast && canCast(player, spell.getManaType())) {
+			if (NBTHelper.getBoolean(stack, "canCast") && canCast(player, spell.getManaType())) {
 				int mana = AIUtils.getPlayerMana(player, spell.getManaType());
 				if (spell.onCast(stack, world, player, x, y, z)) {
 					mana -= getManaUsage();
 					AIUtils.setPlayerMana(player, spell.getManaType(), mana);
-					castTime = -1;
+					NBTHelper.setInteger(stack, "castTime", -1);
 					AIUtils.addXP(player, new Random().nextInt(3));
 					player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerLevel(player) + ":" + AIUtils.getPlayerMaxXP(player) + ":" + AIUtils.getPlayerXP(player)));
 					player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerManaMax(player, EnumMana.light) + ":" + AIUtils.getPlayerMana(player, EnumMana.light)));
@@ -59,7 +64,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 			} else if (!AIUtils.getPlayerKnowledge(player)) {
 				player.addChatComponentMessage(new ChatComponentText("You need to study more!"));
 			} else if (AIUtils.getPlayerMana(player, spell.getManaType()) <= getManaUsage()) {
-				player.addChatComponentMessage(new ChatComponentText("You need more mana!"));
+				player.addChatComponentMessage(new ChatComponentText("You need more " + spell.getManaType() + "mana!"));
 			} else if (AIUtils.getPlayerKnowledge(player) && AIUtils.getPlayerMana(player, spell.getManaType()) <= getManaUsage()) {
 				player.addChatComponentMessage(new ChatComponentText(EnumChatFormatting.RED + "An error has occured."));
 			}
@@ -86,33 +91,34 @@ public class ItemSpell extends Item implements IPrimarySpell {
 	}
 
 	public void onUpdate(ItemStack stack, World world, Entity entity, int meta, boolean par5) {
-		stack.setItemDamage(castTimeTotal);
+		NBTHelper.setInteger(stack, "castTimeTotal", castTimeTotal);
+		stack.setItemDamage(NBTHelper.getInt(stack, "castTimeTotal"));
 		if (!world.isRemote)
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if (setCasting) {
-					castTime++;
-					canCast = false;
+				if (NBTHelper.getBoolean(stack, "setCasting")) {
+					NBTHelper.setBoolean(stack, "canCast", false);
+					NBTHelper.setInteger(stack, "castTime", NBTHelper.getInt(stack, "castTime") + 1);
 				}
-				if (castTime == castTimeTotal) {
-					canCast = true;
-					setCasting = false;
+				if (NBTHelper.getInt(stack, "castTime") == NBTHelper.getInt(stack, "castTimeTotal")) {
+					NBTHelper.setBoolean(stack, "canCast", true);
+					NBTHelper.setBoolean(stack, "setCasting", false);
 				}
-				if (canCast) {
-					castTime -= 2;
+				if (NBTHelper.getBoolean(stack, "canCast")) {
+					NBTHelper.setInteger(stack, "castTime", NBTHelper.getInt(stack, "castTime") - 2);
 				}
-				if (castTime <= 0) {
-					castTime = 0;
-					canCast = false;
-					setCasting = false;
+				if (NBTHelper.getInt(stack, "castTime") <= 0) {
+					NBTHelper.setInteger(stack, "castTime", 0);
+					NBTHelper.setBoolean(stack, "canCast", false);
+					NBTHelper.setBoolean(stack, "setCasting", false);
 				}
 			}
 	}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (!world.isRemote) {
-			if (castTime <= 0 && AIUtils.getPlayerMana(player, spell.getManaType()) >= manaUsage && AIUtils.getPlayerKnowledge(player)) {
-				setCasting = true;
+			if (NBTHelper.getInt(stack, "castTime") <= 0 && AIUtils.getPlayerMana(player, spell.getManaType()) >= manaUsage && AIUtils.getPlayerKnowledge(player)) {
+				NBTHelper.setBoolean(stack, "setCasting", true);
 			}
 			onCast(stack, world, player, (int) player.posX, (int) player.posY, (int) player.posZ);
 
