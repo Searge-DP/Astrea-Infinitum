@@ -7,6 +7,7 @@ import net.minecraft.world.IBlockAccess;
 
 import org.lwjgl.opengl.GL11;
 
+import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.blocks.BlockCtm;
 
 import com.cricketcraft.ctmlib.ClientUtils;
@@ -67,6 +68,6 @@ public class RenderManaAltarBlock implements ISimpleBlockRenderingHandler {
 
 	@Override
 	public int getRenderId() {
-		return ClientUtils.renderCTMId;
+		return AstreaInfinitum.ctmID;
 	}
 }
