@@ -31,6 +31,10 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 	@Override
 	public void updateEntity() {
 		angle += 6;
+		if (!worldObj.isRemote) {
+			if (getStackInSlot(0) != null)
+				PacketHandler.INSTANCE.sendToAllAround(new MessagePedestalSync(this), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
+		}
 	}
 
 	public void infuse(World world, int x, int y, int z) {

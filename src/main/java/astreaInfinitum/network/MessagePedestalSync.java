@@ -31,7 +31,7 @@ public class MessagePedestalSync implements IMessage, IMessageHandler<MessagePed
 	}
 
 	public MessagePedestalSync(TileEntityPedestal tile) {
-		this(tile.items[0], tile.angle, tile.xCoord, tile.yCoord, tile.zCoord);
+		this(tile.getStackInSlot(0), tile.angle, tile.xCoord, tile.yCoord, tile.zCoord);
 	}
 
 	@Override
@@ -57,9 +57,9 @@ public class MessagePedestalSync implements IMessage, IMessageHandler<MessagePed
 		TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (tileEntity instanceof TileEntityPedestal) {
 			((TileEntityPedestal) tileEntity).angle = message.angle;
-			((TileEntityPedestal)tileEntity).setInventorySlotContents(0, item);
+			((TileEntityPedestal) tileEntity).setInventorySlotContents(0, message.item);
 		}
-		
+
 		return null;
 	}
 
