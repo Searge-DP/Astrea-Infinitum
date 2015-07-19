@@ -1,14 +1,14 @@
 package astreaInfinitum.api;
 
-public enum EnumMana {
+public enum EnumEco {
 	light {
 		public String getNBTName() {
-			return "AIPlayerManaLight";
+			return "AIPlayerEcoLight";
 		}
 	},
 	dark {
 		public String getNBTName() {
-			return "AIPlayerManaDark";
+			return "AIPlayerEcoDark";
 		}
 	};
 

@@ -16,7 +16,7 @@ import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.client.render.model.ModelPedestal;
 
-public class RenderItemManaDust implements IItemRenderer {
+public class RenderItemEcoDust implements IItemRenderer {
 
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {

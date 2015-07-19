@@ -8,8 +8,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.api.spell.IProjectileSpell;
+import astreaInfinitum.entities.EntitySpell;
 
 public class SpellProjTrans implements IProjectileSpell {
 
@@ -41,8 +42,14 @@ public class SpellProjTrans implements IProjectileSpell {
 	}
 
 	@Override
-	public EnumMana getManaType() {
-		return EnumMana.dark;
+	public EnumEco getEcoType() {
+		return EnumEco.dark;
+	}
+
+	@Override
+	public void update(World world, EntityPlayer caster, EntitySpell spell, double x, double y, double z) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

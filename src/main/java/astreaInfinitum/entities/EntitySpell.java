@@ -1,6 +1,6 @@
 package astreaInfinitum.entities;
 
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.api.spell.IProjectileSpell;
 import astreaInfinitum.utils.AIUtils;
 import net.minecraft.block.Block;
@@ -36,14 +36,17 @@ public class EntitySpell extends EntityThrowable {
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		worldObj.spawnParticle("reddust", posX, posY, posZ, 255, 0, 0);
+		if(spell!=null){
+			spell.update(worldObj, caster, this, posX, posY, posZ);
+		}
 	}
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		if (worldObj != null && mop != null && spell != null) {
 			spell.onHit(worldObj, caster, mop, this.posX, this.posY, this.posZ);
-			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerMana(caster, EnumMana.light)));
-			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerMana(caster, EnumMana.dark)));
+			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumEco.light)));
+			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumEco.dark)));
 			
 			
 			

@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.entities.properties.EntityData;
 import astreaInfinitum.network.MessagePlayerSync;
 import astreaInfinitum.network.PacketHandler;
@@ -17,21 +17,21 @@ public class AIUtils {
 	public static void initPlayer(EntityPlayer player) {
 		setPlayerKnowledge(player, true);
 		setPlayerLevel(player, 1);
-		setPlayerMana(player, EnumMana.light, 0);
-		setPlayerMana(player, EnumMana.dark, 0);
-		setPlayerMaxMana(player, EnumMana.light, 40);
-		setPlayerMaxMana(player, EnumMana.dark, 40);
+		setPlayerEco(player, EnumEco.light, 0);
+		setPlayerEco(player, EnumEco.dark, 0);
+		setPlayerMaxEco(player, EnumEco.light, 40);
+		setPlayerMaxEco(player, EnumEco.dark, 40);
 		setPlayerMaxXP(player, 10);
 		setPlayerXP(player, 0);
 		addChatMessage(player, "level:" + getPlayerLevel(player));
-		addChatMessage(player, "maxLight:" + getPlayerManaMax(player, EnumMana.light));
-		addChatMessage(player, "maxDark:" + getPlayerManaMax(player, EnumMana.dark));
-		addChatMessage(player, "currentLight:" + getPlayerMana(player, EnumMana.light));
-		addChatMessage(player, "currentDark:" + getPlayerMana(player, EnumMana.dark));
+		addChatMessage(player, "maxLight:" + getPlayerEcoMax(player, EnumEco.light));
+		addChatMessage(player, "maxDark:" + getPlayerEcoMax(player, EnumEco.dark));
+		addChatMessage(player, "currentLight:" + getPlayerEco(player, EnumEco.light));
+		addChatMessage(player, "currentDark:" + getPlayerEco(player, EnumEco.dark));
 		addChatMessage(player, "maxXP:" + getPlayerMaxXP(player));
 		addChatMessage(player, "xp:" + getPlayerXP(player));
-		PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerMana(player, EnumMana.light), getPlayerMana(player, EnumMana.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerManaMax(player, EnumMana.light), getPlayerManaMax(player, EnumMana.dark)));
-		
+		PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumEco.light), getPlayerEco(player, EnumEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumEco.light), getPlayerEcoMax(player, EnumEco.dark)));
+
 	}
 
 	public static void addChatMessage(EntityPlayer player, String message) {
@@ -46,22 +46,22 @@ public class AIUtils {
 		return getEntityData(player).isKnowledge();
 	}
 
-	public static int getPlayerMana(EntityPlayer player, EnumMana mana) {
-		if (mana == EnumMana.light) {
-			return getEntityData(player).getManaLight();
+	public static int getPlayerEco(EntityPlayer player, EnumEco eco) {
+		if (eco == EnumEco.light) {
+			return getEntityData(player).getEcoLight();
 		}
-		if (mana == EnumMana.dark) {
-			return getEntityData(player).getManaDark();
+		if (eco == EnumEco.dark) {
+			return getEntityData(player).getEcoDark();
 		}
 		return 0;
 	}
 
-	public static int getPlayerManaMax(EntityPlayer player, EnumMana mana) {
-		if (mana == EnumMana.light) {
-			return getEntityData(player).getManaMaxLight();
+	public static int getPlayerEcoMax(EntityPlayer player, EnumEco eco) {
+		if (eco == EnumEco.light) {
+			return getEntityData(player).getEcoMaxLight();
 		}
-		if (mana == EnumMana.dark) {
-			return getEntityData(player).getManaMaxDark();
+		if (eco == EnumEco.dark) {
+			return getEntityData(player).getEcoMaxDark();
 		}
 		return 0;
 	}
@@ -82,12 +82,12 @@ public class AIUtils {
 		getEntityData(player).setKnowledge(bool);
 	}
 
-	public static void setPlayerMana(EntityPlayer player, EnumMana mana, int amount) {
-		if (mana == EnumMana.light) {
-			getEntityData(player).setManaLight(amount);
+	public static void setPlayerEco(EntityPlayer player, EnumEco eco, int amount) {
+		if (eco == EnumEco.light) {
+			getEntityData(player).setEcoLight(amount);
 		}
-		if (mana == EnumMana.dark) {
-			getEntityData(player).setManaDark(amount);
+		if (eco == EnumEco.dark) {
+			getEntityData(player).setEcoDark(amount);
 		}
 	}
 
@@ -103,41 +103,41 @@ public class AIUtils {
 		getEntityData(player).setLevel(level);
 	}
 
-	public static void setPlayerMaxMana(EntityPlayer player, EnumMana mana, int max) {
-		if (mana == EnumMana.light) {
-			getEntityData(player).setManaMaxLight(max);
+	public static void setPlayerMaxEco(EntityPlayer player, EnumEco eco, int max) {
+		if (eco == EnumEco.light) {
+			getEntityData(player).setEcoMaxLight(max);
 		}
-		if (mana == EnumMana.dark) {
-			getEntityData(player).setManaMaxDark(max);
+		if (eco == EnumEco.dark) {
+			getEntityData(player).setEcoMaxDark(max);
 		}
 	}
 
-	public static void removeMana(EntityPlayer player, EnumMana mana, int amount) {
-		int manaA = 0;
-		if (mana == EnumMana.light) {
-			manaA = getEntityData(player).getManaLight();
+	public static void removeEco(EntityPlayer player, EnumEco eco, int amount) {
+		int ecoA = 0;
+		if (eco == EnumEco.light) {
+			ecoA = getEntityData(player).getEcoLight();
 		}
-		if (mana == EnumMana.dark) {
-			manaA = getEntityData(player).getManaDark();
+		if (eco == EnumEco.dark) {
+			ecoA = getEntityData(player).getEcoDark();
 		}
-		manaA -= amount;
-		setPlayerMana(player, mana, manaA);
+		ecoA -= amount;
+		setPlayerEco(player, eco, ecoA);
 	}
 
 	public static void levelUp(EntityPlayer player) {
 		if (getPlayerXP(player) >= getPlayerMaxXP(player)) {
 			setPlayerXP(player, 0);
 			setPlayerMaxXP(player, getPlayerMaxXP(player) + (getPlayerMaxXP(player) / 2));
-			setPlayerMaxMana(player, EnumMana.light, (getPlayerManaMax(player, EnumMana.light) / 2) + getPlayerManaMax(player, EnumMana.light));
-			setPlayerMaxMana(player, EnumMana.dark, (getPlayerManaMax(player, EnumMana.dark) / 2) + getPlayerManaMax(player, EnumMana.dark));
+			setPlayerMaxEco(player, EnumEco.light, (getPlayerEcoMax(player, EnumEco.light) / 2) + getPlayerEcoMax(player, EnumEco.light));
+			setPlayerMaxEco(player, EnumEco.dark, (getPlayerEcoMax(player, EnumEco.dark) / 2) + getPlayerEcoMax(player, EnumEco.dark));
 			setPlayerLevel(player, getPlayerLevel(player) + 1);
 		}
 	}
 
-	public static void addMana(EntityPlayer player, EnumMana mana, int amount) {
-		int manaA = getPlayerMana(player, mana);
-		manaA += amount;
-		setPlayerMana(player, mana, manaA);
+	public static void addEco(EntityPlayer player, EnumEco eco, int amount) {
+		int ecoA = getPlayerEco(player, eco);
+		ecoA += amount;
+		setPlayerEco(player, eco, ecoA);
 	}
 
 	public static void addXP(EntityPlayer player, int amount) {
@@ -146,11 +146,11 @@ public class AIUtils {
 		setPlayerXP(player, xp);
 	}
 
-	public static boolean drainMana(EntityPlayer player, EnumMana mana, int amount) {
-		int manaA = getPlayerMana(player, mana);
-		if (manaA >= amount) {
-			manaA -= amount;
-			setPlayerMana(player, mana, manaA);
+	public static boolean drainEco(EntityPlayer player, EnumEco eco, int amount) {
+		int ecoA = getPlayerEco(player, eco);
+		if (ecoA >= amount) {
+			ecoA -= amount;
+			setPlayerEco(player, eco, ecoA);
 			return true;
 		}
 		return false;
@@ -163,16 +163,18 @@ public class AIUtils {
 	}
 
 	public static void levelUpSpell(ItemStack stack) {
-		int xp = NBTHelper.getInt(stack, "AIItemXP");
-		int xpMax = NBTHelper.getInt(stack, "AIItemXPMax");
-		int level = NBTHelper.getInt(stack, "AIItemLevel");
-		if (xp >= xpMax && level < 5) {
-			level++;
-			xp = 0;
-			xpMax = (xpMax + (xpMax / 2));
-			NBTHelper.setInteger(stack, "AIItemLevel", level);
-			NBTHelper.setInteger(stack, "AIItemXP", xp);
-			NBTHelper.setInteger(stack, "AIItemXPMax", xpMax);
+		if (stack != null) {
+			int xp = NBTHelper.getInt(stack, "AIItemXP");
+			int xpMax = NBTHelper.getInt(stack, "AIItemXPMax");
+			int level = NBTHelper.getInt(stack, "AIItemLevel");
+			if (xp >= xpMax && level < 5) {
+				level++;
+				xp = 0;
+				xpMax = (xpMax + (xpMax / 2));
+				NBTHelper.setInteger(stack, "AIItemLevel", level);
+				NBTHelper.setInteger(stack, "AIItemXP", xp);
+				NBTHelper.setInteger(stack, "AIItemXPMax", xpMax);
+			}
 		}
 
 	}
@@ -182,5 +184,5 @@ public class AIUtils {
 		xp += new Random().nextInt(amount * NBTHelper.getInt(stack, "AIItemLevel"));
 		NBTHelper.setInteger(stack, "AIItemXP", xp);
 	}
-	
+
 }

@@ -22,7 +22,7 @@ public class NBTHelper {
 	 *            for initialization
 	 */
 	private static void initNBTTagCompound(ItemStack itemStack) {
-		if (itemStack.stackTagCompound == null) {
+		if (itemStack !=null && itemStack.stackTagCompound == null) {
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
 	}

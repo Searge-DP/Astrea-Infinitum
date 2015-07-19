@@ -1,10 +1,12 @@
 package astreaInfinitum.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
 import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.items.AIItems;
+import astreaInfinitum.tileEntities.TileEntityEcoAltar;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -16,30 +18,30 @@ public class AIBlocks {
 	}
 
 	public static Block pedestal = new BlockPedestal();
-	public static Block manaAltarBlock = new BlockManaAltarBlock();
-	public static Block manaAltar = new BlockManaAltar();
-	public static Block manaExtractor = new BlockManaExtractor();
-	public static Block manaDustLight = new BlockManaDust(EnumMana.light, 0x0B72B0);
-	public static Block manaDustDark = new BlockManaDust(EnumMana.dark, 0xC20031);
+	public static Block ecoAltarBlock = new BlockEcoAltarBlock();
+	public static Block ecoAltar = new BlockEcoAltar();
+	public static Block ecoExtractor = new BlockEcoExtractor();
+	public static Block ecoDustLight = new BlockEcoDust(EnumEco.light, 0x0B72B0);
+	public static Block ecoDustDark = new BlockEcoDust(EnumEco.dark, 0xC20031);
 
-	public static Block manaRitual = new BlockManaRitual();
-	public static Block manaRitualBlock = new BlockManaRitualBlock();
+	public static Block ecoRitualBlock = new BlockEcoAltarWhite();
 
 	private static void registerBlocks() {
-		registerBlock(manaAltarBlock, "manaAltarBlock", "manaAltarBlock");
-		registerBlock(manaAltar, "manaAltar", "manaAltar");
-		registerBlock(pedestal, "pedestal", "pedestal");
-		registerBlock(manaExtractor, "extractor", "extractor");
-		registerBlock(manaDustLight, "manaDustLight", "manaDustLight", "manaDust");
-		registerBlock(manaDustDark, "manaDustDark", "manaDustDark", "manaDust");
+		registerBlock(ecoAltarBlock, "ecoAltarBlock", "ecoAltarBlock");
+		registerBlock(ecoAltar, "ecoAltar", "ecoAltar");
+		registerBlock(pedestal, "pedestal", "pedestal", "ecoAltarBlock");
+		registerBlock(ecoExtractor, "extractor", "extractor");
+		registerBlock(ecoDustLight, "ecoDustLight", "ecoDustLight", "ecoDust", null);
+		registerBlock(ecoDustDark, "ecoDustDark", "ecoDustDark", "ecoDust", null);
 
-		registerBlock(manaRitual, "manaRitual", "manaRitual");
-		registerBlock(manaRitualBlock, "manaRitualBlock", "manaRitualBlock");
+		registerBlock(ecoRitualBlock, "ecoAltarBlockWhite", "ecoRitualBlock");
 
 	}
 
 	private static void registerTileEntities() {
 		GameRegistry.registerTileEntity(TileEntityPedestal.class, "pedestal");
+		GameRegistry.registerTileEntity(TileEntityEcoAltar.class, "ecoAltar");
+
 	}
 
 	private static void registerBlock(Block block, String name, String key) {
@@ -49,6 +51,16 @@ public class AIBlocks {
 
 	private static void registerBlock(Block block, String name, String key, String texture) {
 		block.setBlockName(name).setBlockTextureName(ModProps.modid + ":" + texture).setCreativeTab(AIItems.tab);
+		GameRegistry.registerBlock(block, key);
+	}
+
+	private static void registerBlock(Block block, String name, String key, String texture, CreativeTabs tab) {
+		block.setBlockName(name).setBlockTextureName(ModProps.modid + ":" + texture).setCreativeTab(tab);
+		GameRegistry.registerBlock(block, key);
+	}
+
+	private static void registerBlock(Block block, String name, String key, CreativeTabs tab) {
+		block.setBlockName(name).setBlockTextureName(ModProps.modid + ":" + key).setCreativeTab(tab);
 		GameRegistry.registerBlock(block, key);
 	}
 }

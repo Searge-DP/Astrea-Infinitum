@@ -7,26 +7,26 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 
 public class EntityData implements IExtendedEntityProperties {
 
 	private EntityLivingBase entity;
 	private boolean knowledge;
 	private int level;
-	private int manaLight;
-	private int manaDark;
-	private int manaMaxLight;
-	private int manaMaxDark;
+	private int ecoLight;
+	private int ecoDark;
+	private int ecoMaxLight;
+	private int ecoMaxDark;
 	private int xp;
 	private int maxXP;
 
 	public static final String tagKnowledge = "AIKnowledge";
 	public static final String taglevel = "AILevel";
-	public static final String tagManaLight = EnumMana.light.getNBTName();
-	public static final String tagManaDark = EnumMana.dark.getNBTName();
-	public static final String tagManaMaxLight = EnumMana.light.getNBTName() + "Max";
-	public static final String tagManaMaxDark = EnumMana.dark.getNBTName() + "Max";
+	public static final String tagEcoLight = EnumEco.light.getNBTName();
+	public static final String tagEcoDark = EnumEco.dark.getNBTName();
+	public static final String tagEcoMaxLight = EnumEco.light.getNBTName() + "Max";
+	public static final String tagEcoMaxDark = EnumEco.dark.getNBTName() + "Max";
 	public static final String tagXP = "AIXP";
 	public static final String tagXPMax = "AIXPMax";
 
@@ -34,10 +34,10 @@ public class EntityData implements IExtendedEntityProperties {
 	public void saveNBTData(NBTTagCompound tag) {
 		tag.setBoolean(tagKnowledge, knowledge);
 		tag.setInteger(taglevel, level);
-		tag.setInteger(tagManaLight, manaLight);
-		tag.setInteger(tagManaDark, manaDark);
-		tag.setInteger(tagManaMaxLight, manaMaxLight);
-		tag.setInteger(tagManaMaxDark, manaMaxDark);
+		tag.setInteger(tagEcoLight, ecoLight);
+		tag.setInteger(tagEcoDark, ecoDark);
+		tag.setInteger(tagEcoMaxLight, ecoMaxLight);
+		tag.setInteger(tagEcoMaxDark, ecoMaxDark);
 		tag.setInteger(tagXP, xp);
 		tag.setInteger(tagXPMax, maxXP);
 	}
@@ -46,10 +46,10 @@ public class EntityData implements IExtendedEntityProperties {
 	public void loadNBTData(NBTTagCompound tag) {
 		knowledge = tag.getBoolean(tagKnowledge);
 		level = tag.getInteger(taglevel);
-		manaLight = tag.getInteger(tagManaLight);
-		manaDark = tag.getInteger(tagManaDark);
-		manaMaxLight = tag.getInteger(tagManaMaxLight);
-		manaMaxDark = tag.getInteger(tagManaMaxDark);
+		ecoLight = tag.getInteger(tagEcoLight);
+		ecoDark = tag.getInteger(tagEcoDark);
+		ecoMaxLight = tag.getInteger(tagEcoMaxLight);
+		ecoMaxDark = tag.getInteger(tagEcoMaxDark);
 		xp = tag.getInteger(tagXP);
 		maxXP = tag.getInteger(tagXPMax);
 	}
@@ -74,20 +74,20 @@ public class EntityData implements IExtendedEntityProperties {
 		return level;
 	}
 
-	public int getManaLight() {
-		return manaLight;
+	public int getEcoLight() {
+		return ecoLight;
 	}
 
-	public int getManaDark() {
-		return manaDark;
+	public int getEcoDark() {
+		return ecoDark;
 	}
 
-	public int getManaMaxLight() {
-		return manaMaxLight;
+	public int getEcoMaxLight() {
+		return ecoMaxLight;
 	}
 
-	public int getManaMaxDark() {
-		return manaMaxDark;
+	public int getEcoMaxDark() {
+		return ecoMaxDark;
 	}
 
 	public int getXp() {
@@ -106,20 +106,20 @@ public class EntityData implements IExtendedEntityProperties {
 		this.level = level;
 	}
 
-	public void setManaLight(int manaLight) {
-		this.manaLight = manaLight;
+	public void setEcoLight(int ecoLight) {
+		this.ecoLight = ecoLight;
 	}
 
-	public void setManaDark(int manaDark) {
-		this.manaDark = manaDark;
+	public void setEcoDark(int ecoDark) {
+		this.ecoDark = ecoDark;
 	}
 
-	public void setManaMaxLight(int manaMaxLight) {
-		this.manaMaxLight = manaMaxLight;
+	public void setEcoMaxLight(int ecoMaxLight) {
+		this.ecoMaxLight = ecoMaxLight;
 	}
 
-	public void setManaMaxDark(int manaMaxDark) {
-		this.manaMaxDark = manaMaxDark;
+	public void setEcoMaxDark(int ecoMaxDark) {
+		this.ecoMaxDark = ecoMaxDark;
 	}
 
 	public void setXp(int xp) {

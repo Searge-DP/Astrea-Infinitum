@@ -1,14 +1,8 @@
 package astreaInfinitum.utils;
 
-import java.util.Random;
-
-import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraftforge.client.ForgeHooksClient;
 
 import org.lwjgl.opengl.GL11;
 
@@ -18,12 +12,20 @@ public class RenderingUtils {
 
 		GL11.glPushMatrix();
 		GL11.glDepthMask(true);
-
 		item.hoverStart = 0.0F;
-		GL11.glRotatef(180, 0, 0, 180);
+		GL11.glRotated(180, 0, 0, 1);
+		GL11.glPushMatrix();
+		GL11.glRotatef(angle, 0, 1, 0);
 		GL11.glEnable(GL11.GL_LIGHTING);
-		RenderManager.instance.func_147939_a(item, 0, -0.3, 0, 0, angle, true);
+		RenderManager.instance.renderEntityWithPosYaw(item, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+		 if (!Minecraft.isFancyGraphicsEnabled())
+	      {
+	        GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+	        RenderManager.instance.renderEntityWithPosYaw(item, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+	      }
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
+		GL11.glPopMatrix();
 	}
+
 }

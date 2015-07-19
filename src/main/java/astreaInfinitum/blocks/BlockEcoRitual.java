@@ -3,9 +3,9 @@ package astreaInfinitum.blocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
-public class BlockManaRitual extends Block {
+public class BlockEcoRitual extends Block {
 
-	protected BlockManaRitual() {
+	protected BlockEcoRitual() {
 		super(Material.rock);
 	}
 

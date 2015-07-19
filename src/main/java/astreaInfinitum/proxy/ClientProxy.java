@@ -10,11 +10,13 @@ import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.gui.GuiBookBasic;
 import astreaInfinitum.client.gui.GuiKnowledgeTablet;
-import astreaInfinitum.client.render.RenderManaAltarBlock;
+import astreaInfinitum.client.render.RenderEcoAltarBlock;
 import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.client.render.RenderSpell;
 import astreaInfinitum.client.render.items.RenderItemPedestal;
+import astreaInfinitum.client.render.items.RenderItemWand;
 import astreaInfinitum.entities.EntitySpell;
+import astreaInfinitum.items.AIItems;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.utils.ClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
@@ -62,6 +64,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.registerTileEntity(TileEntityPedestal.class, "pedestalRender", new RenderPedestal());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.pedestal), new RenderItemPedestal());
 		AstreaInfinitum.ctmID = RenderingRegistry.getNextAvailableRenderId();
-		RenderingRegistry.registerBlockHandler(new RenderManaAltarBlock());
+		RenderingRegistry.registerBlockHandler(new RenderEcoAltarBlock());
+		MinecraftForgeClient.registerItemRenderer(AIItems.wand, new RenderItemWand());
 	}
 }

@@ -15,53 +15,53 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 public class MessagePlayerSync implements IMessage, IMessageHandler<MessagePlayerSync, IMessage> {
 
 	public boolean knowledge;
-	public int manaLight;
-	public int manaDark;
+	public int ecoLight;
+	public int ecoDark;
 	public int level;
 	public int xp;
 	public int maxXP;
-	public int maxManaLight;
-	public int maxManaDark;
+	public int maxEcoLight;
+	public int maxEcoDark;
 
 	public MessagePlayerSync() {
 
 	}
 
-	public MessagePlayerSync(boolean knowledge, int manaLight, int manaDark, int level, int xp, int maxXP, int maxManaLight, int maxManaDark) {
+	public MessagePlayerSync(boolean knowledge, int ecoLight, int ecoDark, int level, int xp, int maxXP, int maxEcoLight, int maxEcoDark) {
 		this.knowledge = knowledge;
-		this.manaLight = manaLight;
-		this.manaDark = manaDark;
+		this.ecoLight = ecoLight;
+		this.ecoDark = ecoDark;
 		this.level = level;
 		this.xp = xp;
 		this.maxXP = maxXP;
-		this.maxManaLight = maxManaLight;
-		this.maxManaDark = maxManaDark;
+		this.maxEcoLight = maxEcoLight;
+		this.maxEcoDark = maxEcoDark;
 
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		knowledge = buf.readBoolean();
-		manaLight = buf.readInt();
-		manaDark = buf.readInt();
+		ecoLight = buf.readInt();
+		ecoDark = buf.readInt();
 		level = buf.readInt();
 		xp = buf.readInt();
 		maxXP = buf.readInt();
-		maxManaLight = buf.readInt();
-		maxManaDark = buf.readInt();
+		maxEcoLight = buf.readInt();
+		maxEcoDark = buf.readInt();
 
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		buf.writeBoolean(knowledge);
-		buf.writeInt(manaLight);
-		buf.writeInt(manaDark);
+		buf.writeInt(ecoLight);
+		buf.writeInt(ecoDark);
 		buf.writeInt(level);
 		buf.writeInt(xp);
 		buf.writeInt(maxXP);
-		buf.writeInt(maxManaLight);
-		buf.writeInt(maxManaDark);
+		buf.writeInt(maxEcoLight);
+		buf.writeInt(maxEcoDark);
 
 	}
 

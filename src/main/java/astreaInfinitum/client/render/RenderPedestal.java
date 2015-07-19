@@ -37,12 +37,13 @@ public class RenderPedestal extends TileEntitySpecialRenderer {
 	private final float size = 0.0625f;
 	private float angle = 0;
 	private EntityItem item = null;
-	
+
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float p_147500_8_) {
 		if (tile instanceof TileEntityPedestal)
 			render((TileEntityPedestal) tile, x, y, z);
 	}
+
 	public void render(TileEntityPedestal tile, double x, double y, double z) {
 		GL11.glPushMatrix();
 		GL11.glDisable(GL11.GL_LIGHTING);

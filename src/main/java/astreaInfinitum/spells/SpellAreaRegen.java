@@ -10,7 +10,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.api.spell.ISpell;
 import astreaInfinitum.utils.AIUtils;
 
@@ -27,8 +27,8 @@ public class SpellAreaRegen implements ISpell {
 	}
 
 	@Override
-	public EnumMana getManaType() {
-		return EnumMana.light;
+	public EnumEco getEcoType() {
+		return EnumEco.light;
 	}
 
 }

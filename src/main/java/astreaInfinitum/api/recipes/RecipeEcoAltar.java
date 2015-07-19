@@ -1,9 +1,9 @@
 package astreaInfinitum.api.recipes;
 
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import net.minecraft.item.ItemStack;
 
-public class RecipeManaAltar {
+public class RecipeEcoAltar {
 
 	private ItemStack baseItem;
 	private ItemStack output;
@@ -11,18 +11,18 @@ public class RecipeManaAltar {
 	private ItemStack southItem;
 	private ItemStack eastItem;
 	private ItemStack westItem;
-	private EnumMana mana;
-	private int manaDustNeeded;
+	private EnumEco eco;
+	private int ecoDustNeeded;
 
-	public RecipeManaAltar(ItemStack output, ItemStack baseItem, ItemStack northItem, ItemStack southItem, ItemStack eastItem, ItemStack westItem, EnumMana mana, int manaDustNeeded) {
+	public RecipeEcoAltar(ItemStack output, ItemStack baseItem, ItemStack northItem, ItemStack southItem, ItemStack eastItem, ItemStack westItem, EnumEco eco, int ecoDustNeeded) {
 		this.baseItem = baseItem;
 		this.output = output;
 		this.northItem = northItem;
 		this.southItem = southItem;
 		this.eastItem = eastItem;
 		this.westItem = westItem;
-		this.mana = mana;
-		this.manaDustNeeded = manaDustNeeded;
+		this.eco = eco;
+		this.ecoDustNeeded = ecoDustNeeded;
 	}
 
 	public ItemStack getBaseItem() {
@@ -49,12 +49,12 @@ public class RecipeManaAltar {
 		return westItem;
 	}
 
-	public EnumMana getMana() {
-		return mana;
+	public EnumEco getEco() {
+		return eco;
 	}
 
-	public int getManaDustNeeded() {
-		return manaDustNeeded;
+	public int getEcoDustNeeded() {
+		return ecoDustNeeded;
 	}
 
 }

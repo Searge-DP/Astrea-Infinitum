@@ -5,9 +5,11 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-import astreaInfinitum.api.EnumMana;
-import astreaInfinitum.api.IManaDust;
+import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.IEcoDust;
+import astreaInfinitum.items.AIItems;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -23,16 +25,16 @@ import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockManaDust extends Block implements IManaDust {
+public class BlockEcoDust extends Block implements IEcoDust {
 
 	public int color;
-	public EnumMana mana;
+	public EnumEco eco;
 
-	public BlockManaDust(EnumMana mana, int color) {
+	public BlockEcoDust(EnumEco eco, int color) {
 		super(Material.circuits);
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
 		this.color = color;
-		this.mana = mana;
+		this.eco = eco;
 	}
 
 	/**
@@ -95,11 +97,29 @@ public class BlockManaDust extends Block implements IManaDust {
 	 */
 	@SideOnly(Side.CLIENT)
 	public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_) {
+		if (eco == EnumEco.dark) {
+			return AIItems.ecoDropDark;
+		}
+		if (eco == EnumEco.light) {
+			return AIItems.ecoDropLight;
+		}
 		return Item.getItemFromBlock(this);
 	}
 
 	@Override
-	public EnumMana getManaType() {
-		return mana;
+	public EnumEco getEcoType() {
+		return eco;
 	}
+
+	@Override
+	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
+		if (eco == EnumEco.dark) {
+			return AIItems.ecoDropDark;
+		}
+		if (eco == EnumEco.light) {
+			return AIItems.ecoDropLight;
+		}
+		return Item.getItemFromBlock(this);
+	}
+
 }

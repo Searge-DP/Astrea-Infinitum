@@ -2,7 +2,7 @@ package astreaInfinitum.utils;
 
 import net.minecraft.entity.player.EntityPlayer;
 import astreaInfinitum.AstreaInfinitum;
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.network.MessageItemSync;
 import astreaInfinitum.network.MessagePlayerSync;
 
@@ -12,10 +12,10 @@ public class ClientUtils {
 		EntityPlayer player = AstreaInfinitum.proxy.getClientPlayer();
 		AIUtils.setPlayerKnowledge(player, message.knowledge);
 		AIUtils.setPlayerLevel(player, message.level);
-		AIUtils.setPlayerMana(player, EnumMana.light, message.manaLight);
-		AIUtils.setPlayerMana(player, EnumMana.dark, message.manaDark);
-		AIUtils.setPlayerMaxMana(player, EnumMana.light, message.maxManaLight);
-		AIUtils.setPlayerMaxMana(player, EnumMana.dark, message.maxManaDark);
+		AIUtils.setPlayerEco(player, EnumEco.light, message.ecoLight);
+		AIUtils.setPlayerEco(player, EnumEco.dark, message.ecoDark);
+		AIUtils.setPlayerMaxEco(player, EnumEco.light, message.maxEcoLight);
+		AIUtils.setPlayerMaxEco(player, EnumEco.dark, message.maxEcoDark);
 		
 		AIUtils.setPlayerMaxXP(player, message.maxXP);
 		AIUtils.setPlayerXP(player, message.xp);

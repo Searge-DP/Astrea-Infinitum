@@ -12,7 +12,7 @@ public interface IPrimarySpell {
 
 	public String getName();
 
-	public int getManaUsage();
+	public int getEcoUsage();
 
 	public void onCast(ItemStack stack, World world, EntityPlayer player, int x, int y, int z);
 

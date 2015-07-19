@@ -5,8 +5,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import astreaInfinitum.api.EnumMana;
+import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.api.spell.IProjectileSpell;
+import astreaInfinitum.entities.EntitySpell;
 
 public class SpellProjDig implements IProjectileSpell {
 
@@ -19,8 +20,15 @@ public class SpellProjDig implements IProjectileSpell {
 	}
 
 	@Override
-	public EnumMana getManaType() {
-		return EnumMana.light;
+	public EnumEco getEcoType() {
+		return EnumEco.light;
+	}
+
+
+	@Override
+	public void update(World world, EntityPlayer caster, EntitySpell spell, double x, double y, double z){
+		// TODO Auto-generated method stub
+		
 	}
 
 }

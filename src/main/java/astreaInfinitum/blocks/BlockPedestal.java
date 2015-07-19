@@ -7,11 +7,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import astreaInfinitum.api.wands.IWand;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
-import astreaInfinitum.utils.AIUtils;
 
 public class BlockPedestal extends BlockContainer {
 
@@ -34,7 +33,7 @@ public class BlockPedestal extends BlockContainer {
 			player.inventory.decrStackSize(player.inventory.currentItem, 1);
 			return true;
 		}
-		if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() == Items.stick) {
+		if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof IWand) {
 			tile.infuse(world, x, y, z);
 			return true;
 		}
