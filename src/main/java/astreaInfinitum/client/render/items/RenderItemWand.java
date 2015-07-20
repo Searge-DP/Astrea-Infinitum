@@ -1,7 +1,18 @@
 package astreaInfinitum.client.render.items;
 
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+import static org.lwjgl.opengl.GL11.glBegin;
+import static org.lwjgl.opengl.GL11.glColor4f;
+import static org.lwjgl.opengl.GL11.glEnd;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glVertex2d;
+
+import java.util.Random;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -69,8 +80,9 @@ public class RenderItemWand implements IItemRenderer {
 		GL11.glTranslatef(0, -0.65f, 0.5f);
 		GL11.glRotatef(180, 1, 0, 0);
 		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModProps.modid + ":textures/models/wand.png"));
-		ModelWand ped = new ModelWand();
-		ped.render(0.125f);
+		ModelWand wand = new ModelWand();
+		wand.render(0.125f);
+
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
 	}
 

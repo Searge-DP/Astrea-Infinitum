@@ -18,11 +18,10 @@ public class RenderingUtils {
 		GL11.glRotatef(angle, 0, 1, 0);
 		GL11.glEnable(GL11.GL_LIGHTING);
 		RenderManager.instance.renderEntityWithPosYaw(item, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-		 if (!Minecraft.isFancyGraphicsEnabled())
-	      {
-	        GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
-	        RenderManager.instance.renderEntityWithPosYaw(item, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-	      }
+		if (!Minecraft.isFancyGraphicsEnabled()) {
+			GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+			RenderManager.instance.renderEntityWithPosYaw(item, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
+		}
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glPopMatrix();
 		GL11.glPopMatrix();
