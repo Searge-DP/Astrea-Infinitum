@@ -34,10 +34,11 @@ public class CommonProxy {
 
 
 	public void registerClientHandler(){
-		MinecraftForge.EVENT_BUS.register(new ClientHandler());
+//		MinecraftForge.EVENT_BUS.register(new ClientHandler());
 	}
 	
 	public void registerRenderers(){
 		
 	}
+	
 }

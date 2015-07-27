@@ -13,6 +13,7 @@ import astreaInfinitum.api.ItemProjectileSpell;
 import astreaInfinitum.api.ItemSpell;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.items.learning.ItemBookBasic;
+import astreaInfinitum.items.runes.ItemRune;
 import astreaInfinitum.items.tablets.ItemKnowledgeTablet;
 import astreaInfinitum.items.wands.ItemWand;
 import astreaInfinitum.spells.SpellAreaRegen;
@@ -42,12 +43,13 @@ public class AIItems {
 
 	public static Item ecoDropLight = new ItemEcoDrop(0x0B72B0, AIBlocks.ecoDustLight);
 	public static Item ecoDropDark = new ItemEcoDrop(0xC20031, AIBlocks.ecoDustDark);
-	
-	
+
 	public static Item bookBasic = new ItemBookBasic();
 
 	public static Item tabletKnowledge = new ItemKnowledgeTablet();
 	public static Item wand = new ItemWand().setFull3D();
+
+	public static Item rune = new ItemRune();
 
 	private static void registerItems() {
 		tab = new AITab();
@@ -62,7 +64,7 @@ public class AIItems {
 		registerSpell(spellAreaRegen, "areaRegen", "areaRegen");
 		registerSpell(spellProjTrans, "projTrans", "projTrans");
 		registerSpell(spellProjRain, "projRain", "projRain");
-
+		registerItemNoTexture(rune, "basicRune", "rune");
 	}
 
 	private static void registerRecipes() {
@@ -79,8 +81,13 @@ public class AIItems {
 		GameRegistry.registerItem(item, name);
 	}
 
+	public static void registerItemNoTexture(Item item, String name, String key) {
+		item.setUnlocalizedName(key).setCreativeTab(tab);
+		GameRegistry.registerItem(item, name);
+	}
+
 	public static void registerSpell(Item item, String name, String key) {
-		item.setUnlocalizedName(key).setTextureName(ModProps.modid + ":spells/" + key).setCreativeTab(tab);
+		item.setUnlocalizedName(key).setTextureName(ModProps.modid + ":spells/" + "spell").setCreativeTab(tab);
 		GameRegistry.registerItem(item, name);
 		spells.add(item);
 	}

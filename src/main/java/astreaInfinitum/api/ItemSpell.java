@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import astreaInfinitum.api.spell.IPrimarySpell;
 import astreaInfinitum.api.spell.ISpell;
@@ -34,7 +35,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-		
+
 	}
 
 	public int getDisplayDamage(ItemStack stack) {
@@ -126,4 +127,13 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		return stack;
 	}
 
+//	@Override
+//	public boolean requiresMultipleRenderPasses() {
+//		return true;
+//	}
+//
+//	@Override
+//	public IIcon getIconFromDamageForRenderPass(int damage, int pass) {
+//		return null;
+//	}
 }

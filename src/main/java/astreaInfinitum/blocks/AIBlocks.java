@@ -2,9 +2,13 @@ package astreaInfinitum.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import astreaInfinitum.AstreaInfinitum;
+import net.minecraft.item.ItemBlock;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.blocks.eco.BlockEcoBeamGenerator;
+import astreaInfinitum.blocks.eco.BlockEcoInfuser;
+import astreaInfinitum.blocks.eco.world.BlockEcoOre;
+import astreaInfinitum.blocks.eco.world.ItemBlockEcoOre;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.tileEntities.TileEntityEcoAltar;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
@@ -26,6 +30,10 @@ public class AIBlocks {
 
 	public static Block ecoRitualBlock = new BlockEcoAltarWhite();
 
+	public static Block ecoBeamGenerator = new BlockEcoBeamGenerator();
+	public static Block ecoInfuser = new BlockEcoInfuser();
+	public static Block ecoOre = new BlockEcoOre();
+
 	private static void registerBlocks() {
 		registerBlock(ecoAltarBlock, "ecoAltarBlock", "ecoAltarBlock");
 		registerBlock(ecoAltar, "ecoAltar", "ecoAltar");
@@ -35,6 +43,9 @@ public class AIBlocks {
 		registerBlock(ecoDustDark, "ecoDustDark", "ecoDustDark", "ecoDust", null);
 
 		registerBlock(ecoRitualBlock, "ecoAltarBlockWhite", "ecoRitualBlock");
+		registerBlock(ecoBeamGenerator, "ecoBeamGenerator", "ecoBeamGenerator");
+		registerBlock(ecoInfuser, "ecoInfuser", "ecoInfuser");
+		registerItemBlockNoTexture(ecoOre, "ecoOre", "ecoOre", ItemBlockEcoOre.class);
 
 	}
 
@@ -46,6 +57,11 @@ public class AIBlocks {
 
 	private static void registerBlock(Block block, String name, String key) {
 		block.setBlockName(name).setBlockTextureName(ModProps.modid + ":" + key).setCreativeTab(AIItems.tab);
+		GameRegistry.registerBlock(block, key);
+	}
+
+	private static void registerBlockNoTexture(Block block, String name, String key) {
+		block.setBlockName(name).setCreativeTab(AIItems.tab);
 		GameRegistry.registerBlock(block, key);
 	}
 
@@ -62,5 +78,10 @@ public class AIBlocks {
 	private static void registerBlock(Block block, String name, String key, CreativeTabs tab) {
 		block.setBlockName(name).setBlockTextureName(ModProps.modid + ":" + key).setCreativeTab(tab);
 		GameRegistry.registerBlock(block, key);
+	}
+
+	private static void registerItemBlockNoTexture(Block block, String name, String key, Class<? extends ItemBlock> clazz) {
+		block.setBlockName(name).setCreativeTab(AIItems.tab);
+		GameRegistry.registerBlock(block, clazz, key);
 	}
 }

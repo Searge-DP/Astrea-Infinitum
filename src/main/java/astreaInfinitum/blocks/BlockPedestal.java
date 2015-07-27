@@ -26,28 +26,27 @@ public class BlockPedestal extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float hitX, float hitY, float hitZ) {
 		TileEntityPedestal tile = (TileEntityPedestal) world.getTileEntity(x, y, z);
-		boolean placed = false;;
 		if (!world.isRemote) {
 			if (player.inventory.getCurrentItem() != null && !(player.inventory.getCurrentItem().getItem() instanceof IWand) && tile.getStackInSlot(0) == null) {
 				ItemStack stack = player.inventory.getCurrentItem().copy();
 				stack.stackSize = 1;
 				tile.setInventorySlotContents(0, stack);
 				player.inventory.decrStackSize(player.inventory.currentItem, 1);
-				placed = true;
+				return true;
 			}
 			if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof IWand) {
 				tile.infuse(world, x, y, z);
-				placed = true;
+				return true;
 			}
 			if (tile.getStackInSlot(0) != null && player.inventory.getCurrentItem() == null) {
 				if (!world.isRemote) {
 					world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 1.5, z + 0.5, tile.getStackInSlot(0)));
 					tile.setInventorySlotContents(0, null);
 				}
-				placed = true;
+				return true;
 			}
 		}
-		return placed;
+		return true;
 	}
 
 	@Override
