@@ -9,6 +9,7 @@ import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.common.FMLLog;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.render.RenderPedestal;

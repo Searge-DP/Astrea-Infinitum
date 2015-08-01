@@ -12,6 +12,8 @@ import astreaInfinitum.ModProps;
 import astreaInfinitum.api.ItemProjectileSpell;
 import astreaInfinitum.api.ItemSpell;
 import astreaInfinitum.blocks.AIBlocks;
+import astreaInfinitum.items.arcane.ItemArcaneDust;
+import astreaInfinitum.items.eco.ItemEcoOrb;
 import astreaInfinitum.items.learning.ItemBookBasic;
 import astreaInfinitum.items.runes.ItemRune;
 import astreaInfinitum.items.tablets.ItemKnowledgeTablet;
@@ -50,7 +52,10 @@ public class AIItems {
 	public static Item wand = new ItemWand().setFull3D();
 
 	public static Item rune = new ItemRune();
+	public static Item ecoOrb = new ItemEcoOrb();
 
+	public static Item arcaneDust = new ItemArcaneDust();
+	
 	private static void registerItems() {
 		tab = new AITab();
 
@@ -65,6 +70,8 @@ public class AIItems {
 		registerSpell(spellProjTrans, "projTrans", "projTrans");
 		registerSpell(spellProjRain, "projRain", "projRain");
 		registerItemNoTexture(rune, "basicRune", "rune");
+		registerItem(ecoOrb, "ecoOrb", "ecoOrb");
+		registerItem(arcaneDust, "arcaneDust", "arcaneDust", "arcane/arcaneDust");
 	}
 
 	private static void registerRecipes() {

@@ -13,7 +13,6 @@ import astreaInfinitum.client.gui.GuiKnowledgeTablet;
 import astreaInfinitum.client.render.RenderEcoAltarBlock;
 import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.client.render.RenderSpell;
-import astreaInfinitum.client.render.block.RenderEcoOre;
 import astreaInfinitum.client.render.items.RenderItemPedestal;
 import astreaInfinitum.client.render.items.RenderItemWand;
 import astreaInfinitum.client.render.tile.eco.RenderTileEcoBeamGenerator;
@@ -77,6 +76,5 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerBlockHandler(new RenderEcoAltarBlock());
 		MinecraftForgeClient.registerItemRenderer(AIItems.wand, new RenderItemWand());
 
-		RenderingRegistry.registerBlockHandler(new RenderEcoOre());
 	}
 }
