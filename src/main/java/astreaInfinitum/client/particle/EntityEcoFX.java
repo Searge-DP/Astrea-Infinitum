@@ -36,7 +36,7 @@ public  class EntityEcoFX extends EntityFX {
 		indexX = (byte) rand.nextInt(4);
 		indexY = (byte) rand.nextInt(4);
 
-		particleScale = (targetX != 0D && targetY != 0D && targetZ != 0D ? 0.5F : 1F) * rand.nextFloat() * 0.2F + 0.4F;
+		particleScale = (targetX != 0D && targetY != 0D && targetZ != 0D ? 0.5F : 1F) * rand.nextFloat() * 0.2F + 0.3F;
 		maxAge = (byte) (2 + rand.nextInt(20));
 
 		this.targetX = targetX;
@@ -128,7 +128,7 @@ public  class EntityEcoFX extends EntityFX {
 		RenderHelper.disableStandardItemLighting();
 
 		tessellator.startDrawingQuads();
-		tessellator.setColorRGBA_F(particleRed, particleGreen, particleBlue, 0.2f);
+		tessellator.setColorRGBA_F(particleRed, particleGreen, particleBlue, 1f);
 		tessellator.setNormal(0F, 1F, 0F);
 		tessellator.setBrightness(65);
 		tessellator.addVertexWithUV(x - rotX * particleScale - rotYZ * particleScale, y - rotXZ * particleScale, z - rotZ * particleScale - rotXY * particleScale, right, bottom);

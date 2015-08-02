@@ -1,5 +1,7 @@
 package astreaInfinitum.client.render;
 
+import astreaInfinitum.client.particle.EntityEcoFX;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
@@ -8,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class RenderSpell extends RenderEntity {
 
 	@Override
-	public void doRender(Entity p_76986_1_, double p_76986_2_, double p_76986_4_, double p_76986_6_, float p_76986_8_, float p_76986_9_) {
+	public void doRender(Entity entity, double x, double y, double z, float p_76986_8_, float p_76986_9_) {
 	}
 
 	@Override

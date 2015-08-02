@@ -17,6 +17,7 @@ public class BlockEcoAltarBlock extends BlockAltarBlock implements IEcoAltarBloc
 
 	protected BlockEcoAltarBlock() {
 		super(Material.rock);
+		setHardness(0.5f);
 	}
 
 	@Override

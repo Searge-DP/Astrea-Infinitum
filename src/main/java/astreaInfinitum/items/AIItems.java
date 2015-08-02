@@ -12,7 +12,8 @@ import astreaInfinitum.ModProps;
 import astreaInfinitum.api.ItemProjectileSpell;
 import astreaInfinitum.api.ItemSpell;
 import astreaInfinitum.blocks.AIBlocks;
-import astreaInfinitum.items.arcane.ItemArcaneDust;
+import astreaInfinitum.items.dusts.ItemArcaneDust;
+import astreaInfinitum.items.dusts.ItemEcoDust;
 import astreaInfinitum.items.eco.ItemEcoOrb;
 import astreaInfinitum.items.learning.ItemBookBasic;
 import astreaInfinitum.items.runes.ItemRune;
@@ -43,9 +44,6 @@ public class AIItems {
 	public static Item spellProjTrans = new ItemProjectileSpell(20, "Trans", 5, new SpellProjTrans());
 	public static Item spellProjRain = new ItemProjectileSpell(20, "Rain", 5, new SpellRain());
 
-	public static Item ecoDropLight = new ItemEcoDrop(0x0B72B0, AIBlocks.ecoDustLight);
-	public static Item ecoDropDark = new ItemEcoDrop(0xC20031, AIBlocks.ecoDustDark);
-
 	public static Item bookBasic = new ItemBookBasic();
 
 	public static Item tabletKnowledge = new ItemKnowledgeTablet();
@@ -55,14 +53,13 @@ public class AIItems {
 	public static Item ecoOrb = new ItemEcoOrb();
 
 	public static Item arcaneDust = new ItemArcaneDust();
-	
+	public static Item ecoDust = new ItemEcoDust();
+
 	private static void registerItems() {
 		tab = new AITab();
 
 		registerItem(tabletKnowledge, "Knowledge Tablet", "tablet");
 		registerItem(bookBasic, "basicBook", "bookBasic");
-		registerItem(ecoDropLight, "ecoDropLight", "ecoDropLight", "ecoDrop");
-		registerItem(ecoDropDark, "ecoDropDark", "ecoDropDark", "ecoDrop");
 		registerItem(wand, "wand", "wand", "wands/wand");
 		registerSpell(spellDay, "day", "day");
 		registerSpell(spellProjDig, "dig", "dig");
@@ -71,11 +68,13 @@ public class AIItems {
 		registerSpell(spellProjRain, "projRain", "projRain");
 		registerItemNoTexture(rune, "basicRune", "rune");
 		registerItem(ecoOrb, "ecoOrb", "ecoOrb");
-		registerItem(arcaneDust, "arcaneDust", "arcaneDust", "arcane/arcaneDust");
+		registerItem(arcaneDust, "arcaneDust", "arcaneDust", "dust/arcaneDust");
+		registerItem(ecoDust, "ecoDust", "ecoDust", "dust/ecoDust");
+
 	}
 
 	private static void registerRecipes() {
-		GameRegistry.addRecipe(new ShapelessOreRecipe(bookBasic, new ItemStack(Items.book), new ItemStack(ecoDropLight), new ItemStack(ecoDropLight), new ItemStack(ecoDropLight), new ItemStack(ecoDropLight)));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(bookBasic, new ItemStack(Items.book), new ItemStack(ecoDust), new ItemStack(ecoDust), new ItemStack(ecoDust), new ItemStack(ecoDust)));
 	}
 
 	public static void registerItem(Item item, String name, String key) {

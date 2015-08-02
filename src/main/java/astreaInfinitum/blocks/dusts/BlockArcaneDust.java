@@ -1,40 +1,30 @@
-package astreaInfinitum.blocks;
+package astreaInfinitum.blocks.dusts;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
-import astreaInfinitum.api.EnumEco;
-import astreaInfinitum.api.IEcoDust;
-import astreaInfinitum.items.AIItems;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import astreaInfinitum.api.dust.EnumDust;
+import astreaInfinitum.api.dust.IDust;
+import astreaInfinitum.items.AIItems;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class BlockEcoDust extends Block implements IEcoDust {
+public class BlockArcaneDust extends Block implements IDust {
 
 	public int color;
-	public EnumEco eco;
+	public EnumDust dust;
 
-	public BlockEcoDust(EnumEco eco, int color) {
+	public BlockArcaneDust() {
 		super(Material.circuits);
 		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.0625F, 1.0F);
-		this.color = color;
-		this.eco = eco;
+		this.color = EnumDust.arcane.color;
+		this.dust = EnumDust.arcane;
 	}
 
 	/**
@@ -97,29 +87,18 @@ public class BlockEcoDust extends Block implements IEcoDust {
 	 */
 	@SideOnly(Side.CLIENT)
 	public Item getItem(World p_149694_1_, int p_149694_2_, int p_149694_3_, int p_149694_4_) {
-		if (eco == EnumEco.dark) {
-			return AIItems.ecoDropDark;
-		}
-		if (eco == EnumEco.light) {
-			return AIItems.ecoDropLight;
-		}
-		return Item.getItemFromBlock(this);
+			return AIItems.arcaneDust;
 	}
 
-	@Override
-	public EnumEco getEcoType() {
-		return eco;
-	}
 
 	@Override
 	public Item getItemDropped(int p_149650_1_, Random p_149650_2_, int p_149650_3_) {
-		if (eco == EnumEco.dark) {
-			return AIItems.ecoDropDark;
-		}
-		if (eco == EnumEco.light) {
-			return AIItems.ecoDropLight;
-		}
-		return Item.getItemFromBlock(this);
+			return AIItems.arcaneDust;
+	}
+
+	@Override
+	public EnumDust getDustType() {
+		return EnumDust.arcane;
 	}
 
 }

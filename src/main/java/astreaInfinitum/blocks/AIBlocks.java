@@ -4,7 +4,8 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemBlock;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.blocks.dusts.BlockArcaneDust;
+import astreaInfinitum.blocks.dusts.BlockEcoDust;
 import astreaInfinitum.blocks.eco.BlockEcoBeamGenerator;
 import astreaInfinitum.blocks.eco.BlockEcoInfuser;
 import astreaInfinitum.blocks.eco.world.BlockEcoOre;
@@ -24,9 +25,6 @@ public class AIBlocks {
 	public static Block pedestal = new BlockPedestal();
 	public static Block ecoAltarBlock = new BlockEcoAltarBlock();
 	public static Block ecoAltar = new BlockEcoAltar();
-	public static Block ecoExtractor = new BlockEcoExtractor();
-	public static Block ecoDustLight = new BlockEcoDust(EnumEco.light, 0x0B72B0);
-	public static Block ecoDustDark = new BlockEcoDust(EnumEco.dark, 0xC20031);
 
 	public static Block ecoRitualBlock = new BlockEcoAltarWhite();
 
@@ -34,13 +32,15 @@ public class AIBlocks {
 	public static Block ecoInfuser = new BlockEcoInfuser();
 	public static Block ecoOre = new BlockEcoOre();
 
+	public static Block ecoDust = new BlockEcoDust();
+	public static Block arcaneDust = new BlockArcaneDust();
+
 	private static void registerBlocks() {
 		registerBlock(ecoAltarBlock, "ecoAltarBlock", "ecoAltarBlock");
 		registerBlock(ecoAltar, "ecoAltar", "ecoAltar");
 		registerBlock(pedestal, "pedestal", "pedestal", "ecoAltarBlock");
-		registerBlock(ecoExtractor, "extractor", "extractor");
-		registerBlock(ecoDustLight, "ecoDustLight", "ecoDustLight", "ecoDust", null);
-		registerBlock(ecoDustDark, "ecoDustDark", "ecoDustDark", "ecoDust", null);
+		registerBlock(ecoDust, "ecoDust", "ecoDustBlock", "dust", null);
+		registerBlock(arcaneDust, "arcaneDust", "arcaneDustBlock", "dust", null);
 
 		registerBlock(ecoRitualBlock, "ecoAltarBlockWhite", "ecoRitualBlock");
 		registerBlock(ecoBeamGenerator, "ecoBeamGenerator", "ecoBeamGenerator");

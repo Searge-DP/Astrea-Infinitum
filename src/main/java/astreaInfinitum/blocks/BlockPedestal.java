@@ -73,4 +73,11 @@ public class BlockPedestal extends BlockContainer {
 	public IIcon getIcon(int side, int meta) {
 		return blockIcon;
 	}
+
+	@Override
+	public void onBlockPreDestroy(World world, int x, int y, int z, int meta) {
+		TileEntityPedestal tile = (TileEntityPedestal) world.getTileEntity(x, y, z);
+		if (tile.getStackInSlot(0) != null)
+			world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, tile.getStackInSlot(0)));
+	}
 }

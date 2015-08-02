@@ -50,12 +50,11 @@ public class TileEntityEcoAltar extends TileEntity {
 	@Override
 	public void updateEntity() {
 		if (worldObj.isRemote) {
-			for (double yx = 0; yx < 1; yx += 0.1){
-				Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, xCoord + 0.5, yCoord + 1 + yx, zCoord + 0.5, 0.1));
-				
-			}
+			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 0.1));
+			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 0.1));
 
 		}
+
 		if (!worldObj.isRemote) {
 			if (isAltarActivated(worldObj, xCoord, yCoord, zCoord)) {
 				activated = true;

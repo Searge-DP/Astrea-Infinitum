@@ -6,7 +6,6 @@ import astreaInfinitum.client.gui.GuiHandler;
 import astreaInfinitum.entities.EntitySpell;
 import astreaInfinitum.handlers.RecipeHandler;
 import astreaInfinitum.items.AIItems;
-import astreaInfinitum.items.runes.ItemRune;
 import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.proxy.CommonProxy;
 import astreaInfinitum.utils.ClientHandler;
@@ -20,7 +19,6 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
-import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = ModProps.modid, name = ModProps.name, version = ModProps.version)
 public class AstreaInfinitum {
@@ -54,5 +52,4 @@ public class AstreaInfinitum {
 		RecipeHandler.postInit();
 	}
 
-	
 }

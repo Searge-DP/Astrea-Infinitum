@@ -2,8 +2,10 @@ package astreaInfinitum.entities;
 
 import astreaInfinitum.api.EnumEco;
 import astreaInfinitum.api.spell.IProjectileSpell;
+import astreaInfinitum.client.particle.EntityEcoFX;
 import astreaInfinitum.utils.AIUtils;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -35,8 +37,12 @@ public class EntitySpell extends EntityThrowable {
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		worldObj.spawnParticle("reddust", posX, posY, posZ, 255, 0, 0);
-		if(spell!=null){
+		if (worldObj.isRemote){
+			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, posX, posY, posZ, 0));
+			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, posX, posY, posZ, 0));
+			}
+			
+			if (spell != null) {
 			spell.update(worldObj, caster, this, posX, posY, posZ);
 		}
 	}
@@ -47,9 +53,7 @@ public class EntitySpell extends EntityThrowable {
 			spell.onHit(worldObj, caster, mop, this.posX, this.posY, this.posZ);
 			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumEco.light)));
 			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumEco.dark)));
-			
-			
-			
+
 			this.setDead();
 		}
 	}

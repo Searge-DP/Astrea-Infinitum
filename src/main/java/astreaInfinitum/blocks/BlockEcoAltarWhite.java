@@ -11,12 +11,13 @@ import astreaInfinitum.client.render.submaps.SubmapManagerCTM;
 
 import com.cricketcraft.ctmlib.ISubmapManager;
 
-public class BlockEcoAltarWhite extends BlockAltarBlock implements IEcoAltarBlock{
+public class BlockEcoAltarWhite extends BlockAltarBlock implements IEcoAltarBlock {
 
 	private SubmapManagerCTM manager;
 
 	protected BlockEcoAltarWhite() {
 		super(Material.rock);
+		setHardness(0.5f);
 	}
 
 	@Override
