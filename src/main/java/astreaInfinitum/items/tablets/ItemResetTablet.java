@@ -1,6 +1,6 @@
 package astreaInfinitum.items.tablets;
 
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.utils.AIUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,8 +17,8 @@ public class ItemResetTablet extends Item {
 			if (player != null && !(player instanceof FakePlayer)) {
 				AIUtils.setPlayerKnowledge(player, false);
 				player.addChatComponentMessage(new ChatComponentText("you have Successfully forgotten this tablet"));
-				AIUtils.setPlayerEco(player, EnumEco.light, 0);
-				AIUtils.setPlayerEco(player, EnumEco.dark, 0);
+				AIUtils.setPlayerEco(player, EnumPlayerEco.light, 0);
+				AIUtils.setPlayerEco(player, EnumPlayerEco.dark, 0);
 				AIUtils.setPlayerLevel(player, 0);
 			}
 		}

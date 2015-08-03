@@ -13,7 +13,7 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
 import astreaInfinitum.AstreaInfinitum;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.network.MessagePlayerSync;
 import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.utils.AIUtils;

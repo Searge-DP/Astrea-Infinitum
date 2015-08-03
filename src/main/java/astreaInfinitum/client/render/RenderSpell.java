@@ -23,7 +23,7 @@ public class RenderSpell extends RenderEntity {
 
 	@Override
 	public void setRenderManager(RenderManager p_76976_1_) {
-
+		
 	}
 
 }

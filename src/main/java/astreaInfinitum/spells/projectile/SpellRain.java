@@ -3,7 +3,7 @@ package astreaInfinitum.spells.projectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.spell.IProjectileSpell;
 import astreaInfinitum.entities.EntitySpell;
 
@@ -15,8 +15,8 @@ public class SpellRain implements IProjectileSpell {
 	}
 
 	@Override
-	public EnumEco getEcoType() {
-		return EnumEco.light;
+	public EnumPlayerEco getEcoType() {
+		return EnumPlayerEco.light;
 	}
 
 	@Override

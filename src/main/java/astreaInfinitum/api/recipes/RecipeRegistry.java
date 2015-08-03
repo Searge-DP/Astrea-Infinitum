@@ -3,7 +3,7 @@ package astreaInfinitum.api.recipes;
 import java.util.ArrayList;
 import java.util.List;
 
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.ForgeEventFactory;
 
@@ -29,7 +29,7 @@ public class RecipeRegistry {
 		return null;
 	}
 
-	public static RecipeEcoAltar getRecipeForItems(ItemStack base, ItemStack north, ItemStack south, ItemStack east, ItemStack west, EnumEco eco) {
+	public static RecipeEcoAltar getRecipeForItems(ItemStack base, ItemStack north, ItemStack south, ItemStack east, ItemStack west, EnumPlayerEco eco) {
 		for (RecipeEcoAltar r : recipeEcoAltar) {
 			if (r.getEco() == eco)
 				if (r.getBaseItem().isItemEqual(base)) {

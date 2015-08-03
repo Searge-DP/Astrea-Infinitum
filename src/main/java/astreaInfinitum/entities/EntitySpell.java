@@ -1,6 +1,6 @@
 package astreaInfinitum.entities;
 
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.spell.IProjectileSpell;
 import astreaInfinitum.client.particle.EntityEcoFX;
 import astreaInfinitum.utils.AIUtils;
@@ -37,22 +37,22 @@ public class EntitySpell extends EntityThrowable {
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
-		if (worldObj.isRemote){
+		if (worldObj.isRemote) {
 			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, posX, posY, posZ, 0));
-			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, posX, posY, posZ, 0));
-			}
-			
-			if (spell != null) {
+		}
+
+		if (spell != null) {
 			spell.update(worldObj, caster, this, posX, posY, posZ);
 		}
 	}
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
-		if (worldObj != null && mop != null && spell != null) {
+
+		if (!worldObj.isRemote && worldObj != null && mop != null && spell != null) {
 			spell.onHit(worldObj, caster, mop, this.posX, this.posY, this.posZ);
-			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumEco.light)));
-			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumEco.dark)));
+			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumPlayerEco.light)));
+			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumPlayerEco.dark)));
 
 			this.setDead();
 		}

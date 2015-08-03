@@ -1,5 +1,6 @@
 package astreaInfinitum.client.render.tile.eco;
 
+import java.awt.Color;
 import java.util.Random;
 
 import org.lwjgl.opengl.GL11;
@@ -55,7 +56,8 @@ public class RenderTileEcoBeamGenerator extends TileEntitySpecialRenderer {
 
 		float rot = ((float) tile.getWorldObj().getTotalWorldTime() * 20);
 
-		renderAllTranslucent(tile, tessellator, rot, tile.type);
+		if (tile.shouldSendEco)
+			renderAllTranslucent(tile, tessellator, rot, tile.rotation);
 
 		// glRotatef(180, 1, 0, 0);
 
@@ -105,9 +107,10 @@ public class RenderTileEcoBeamGenerator extends TileEntitySpecialRenderer {
 
 		// for (int i = 0; i < 1; i++) {
 		glPushMatrix();
-		glRotatef(90 * dir, 0, -1, 1);
+		glRotatef(90 * tile.rotation, 0, -1, 1);
 		glPushMatrix();
 		glRotatef(rot, 0, 1, 0);
+
 		for (int j = 0; j < 4; j++) {
 			drawPowerTranslucent(tile, tessellator, dir);
 			glRotatef(-90, 0, 1f, 0);
@@ -131,20 +134,9 @@ public class RenderTileEcoBeamGenerator extends TileEntitySpecialRenderer {
 		// blockOffset++;
 		// }
 		tessellator.startDrawingQuads();
-		switch (type) {
-		case 0:
-			tessellator.setColorRGBA(255 - new Random().nextInt(15), 0, 0, 100);
-			break;
-		case 1:
-			tessellator.setColorRGBA(0, 255 - new Random().nextInt(15), 0, 100);
-			break;
-		case 2:
-			tessellator.setColorRGBA(0, 0, 255 - new Random().nextInt(15), 100);
-			break;
-		case 3:
-			tessellator.setColorRGBA(255 - new Random().nextInt(15), 246 - new Random().nextInt(15), 0, 100);
-			break;
-		}
+		Color col = new Color(tile.color);
+		tessellator.setColorRGBA(col.getRed() - new Random().nextInt(15), col.getGreen() - new Random().nextInt(15), col.getBlue() - new Random().nextInt(15), 100);
+
 		tessellator.addVertex(-width, startPt, -width);
 		tessellator.addVertex(width, startPt, -width);
 		tessellator.addVertex(width, endPt, -width);

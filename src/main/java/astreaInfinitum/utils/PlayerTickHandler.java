@@ -38,7 +38,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.ItemProjectileSpell;
 import astreaInfinitum.api.ItemSpell;
 import astreaInfinitum.entities.properties.EntityData;
@@ -120,18 +120,18 @@ public class PlayerTickHandler {
 				if (getPlayerKnowledge(player)) {
 					int rand = new Random().nextInt(10);
 					if (rand == 0) {
-						if (getPlayerEco(player, EnumEco.light) < getPlayerEcoMax(player, EnumEco.light)) {
-							addEco(player, EnumEco.light, 1);
+						if (getPlayerEco(player, EnumPlayerEco.light) < getPlayerEcoMax(player, EnumPlayerEco.light)) {
+							addEco(player, EnumPlayerEco.light, 1);
 						}
-						if (getPlayerEco(player, EnumEco.dark) < getPlayerEcoMax(player, EnumEco.dark)) {
-							addEco(player, EnumEco.dark, 1);
+						if (getPlayerEco(player, EnumPlayerEco.dark) < getPlayerEcoMax(player, EnumPlayerEco.dark)) {
+							addEco(player, EnumPlayerEco.dark, 1);
 						}
 
 						if (getPlayerMaxXP(player) > 0)
 							levelUp(player);
 					}
 				}
-				PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumEco.light), getPlayerEco(player, EnumEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumEco.light), getPlayerEcoMax(player, EnumEco.dark)));
+				PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumPlayerEco.light), getPlayerEco(player, EnumPlayerEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.dark)));
 			}
 	}
 
@@ -143,19 +143,19 @@ public class PlayerTickHandler {
 				Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
 				Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) + 91, e.resolution.getScaledHeight() - 12, 6, 2, 102, 12);
 				Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 91 - 102, e.resolution.getScaledHeight() - 12, 6, 18, 102, 12);
-				if (getPlayerEco(player, EnumEco.light) > 0) {
-					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerEco(player, EnumEco.light) + ":" + getPlayerEcoMax(player, EnumEco.light) + ":" + getScaledBar(102, getPlayerEco(player, EnumEco.light), getPlayerEcoMax(player, EnumEco.light)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 500, 0xFFFFFF, true);
+				if (getPlayerEco(player, EnumPlayerEco.light) > 0) {
+					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerEco(player, EnumPlayerEco.light) + ":" + getPlayerEcoMax(player, EnumPlayerEco.light) + ":" + getScaledBar(102, getPlayerEco(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.light)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 500, 0xFFFFFF, true);
 					Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
-					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) + 93, e.resolution.getScaledHeight() - 11, 120, 3, getScaledBar(102, getPlayerEco(player, EnumEco.light), getPlayerEcoMax(player, EnumEco.light)), 12);
+					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) + 93, e.resolution.getScaledHeight() - 11, 120, 3, getScaledBar(102, getPlayerEco(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.light)), 12);
 				}
-				if (getPlayerEco(player, EnumEco.dark) > 0) {
-					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerEco(player, EnumEco.dark) + ":" + getPlayerEcoMax(player, EnumEco.dark) + ":" + getScaledBar(102, getPlayerEco(player, EnumEco.dark), getPlayerEcoMax(player, EnumEco.dark)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 550, 0xccaacc, true);
+				if (getPlayerEco(player, EnumPlayerEco.dark) > 0) {
+					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerEco(player, EnumPlayerEco.dark) + ":" + getPlayerEcoMax(player, EnumPlayerEco.dark) + ":" + getScaledBar(102, getPlayerEco(player, EnumPlayerEco.dark), getPlayerEcoMax(player, EnumPlayerEco.dark)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 550, 0xccaacc, true);
 					Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
 					/**
 					 * Draws a textured rectangle at the stored z-value. Args:
 					 * x, y, u, v, width, height
 					 */
-					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 93 - 98, e.resolution.getScaledHeight() - 11, 222 - getScaledBar(102, getPlayerEco(player, EnumEco.dark), getPlayerEcoMax(player, EnumEco.dark)), 19, getScaledBar(102, getPlayerEco(player, EnumEco.dark), getPlayerEcoMax(player, EnumEco.dark)), 12);
+					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 93 - 98, e.resolution.getScaledHeight() - 11, 222 - getScaledBar(102, getPlayerEco(player, EnumPlayerEco.dark), getPlayerEcoMax(player, EnumPlayerEco.dark)), 19, getScaledBar(102, getPlayerEco(player, EnumPlayerEco.dark), getPlayerEcoMax(player, EnumPlayerEco.dark)), 12);
 				}
 				Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerLevel(player), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 44, 0xFF55FF, true);
 

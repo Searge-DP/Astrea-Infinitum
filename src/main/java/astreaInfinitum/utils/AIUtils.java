@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.entities.properties.EntityData;
 import astreaInfinitum.network.MessagePlayerSync;
 import astreaInfinitum.network.PacketHandler;
@@ -17,20 +17,20 @@ public class AIUtils {
 	public static void initPlayer(EntityPlayer player) {
 		setPlayerKnowledge(player, true);
 		setPlayerLevel(player, 1);
-		setPlayerEco(player, EnumEco.light, 0);
-		setPlayerEco(player, EnumEco.dark, 0);
-		setPlayerMaxEco(player, EnumEco.light, 40);
-		setPlayerMaxEco(player, EnumEco.dark, 40);
+		setPlayerEco(player, EnumPlayerEco.light, 0);
+		setPlayerEco(player, EnumPlayerEco.dark, 0);
+		setPlayerMaxEco(player, EnumPlayerEco.light, 40);
+		setPlayerMaxEco(player, EnumPlayerEco.dark, 40);
 		setPlayerMaxXP(player, 10);
 		setPlayerXP(player, 0);
 		addChatMessage(player, "level:" + getPlayerLevel(player));
-		addChatMessage(player, "maxLight:" + getPlayerEcoMax(player, EnumEco.light));
-		addChatMessage(player, "maxDark:" + getPlayerEcoMax(player, EnumEco.dark));
-		addChatMessage(player, "currentLight:" + getPlayerEco(player, EnumEco.light));
-		addChatMessage(player, "currentDark:" + getPlayerEco(player, EnumEco.dark));
+		addChatMessage(player, "maxLight:" + getPlayerEcoMax(player, EnumPlayerEco.light));
+		addChatMessage(player, "maxDark:" + getPlayerEcoMax(player, EnumPlayerEco.dark));
+		addChatMessage(player, "currentLight:" + getPlayerEco(player, EnumPlayerEco.light));
+		addChatMessage(player, "currentDark:" + getPlayerEco(player, EnumPlayerEco.dark));
 		addChatMessage(player, "maxXP:" + getPlayerMaxXP(player));
 		addChatMessage(player, "xp:" + getPlayerXP(player));
-		PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumEco.light), getPlayerEco(player, EnumEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumEco.light), getPlayerEcoMax(player, EnumEco.dark)));
+		PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumPlayerEco.light), getPlayerEco(player, EnumPlayerEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.dark)));
 
 	}
 
@@ -46,21 +46,21 @@ public class AIUtils {
 		return getEntityData(player).isKnowledge();
 	}
 
-	public static int getPlayerEco(EntityPlayer player, EnumEco eco) {
-		if (eco == EnumEco.light) {
+	public static int getPlayerEco(EntityPlayer player, EnumPlayerEco eco) {
+		if (eco == EnumPlayerEco.light) {
 			return getEntityData(player).getEcoLight();
 		}
-		if (eco == EnumEco.dark) {
+		if (eco == EnumPlayerEco.dark) {
 			return getEntityData(player).getEcoDark();
 		}
 		return 0;
 	}
 
-	public static int getPlayerEcoMax(EntityPlayer player, EnumEco eco) {
-		if (eco == EnumEco.light) {
+	public static int getPlayerEcoMax(EntityPlayer player, EnumPlayerEco eco) {
+		if (eco == EnumPlayerEco.light) {
 			return getEntityData(player).getEcoMaxLight();
 		}
-		if (eco == EnumEco.dark) {
+		if (eco == EnumPlayerEco.dark) {
 			return getEntityData(player).getEcoMaxDark();
 		}
 		return 0;
@@ -82,11 +82,11 @@ public class AIUtils {
 		getEntityData(player).setKnowledge(bool);
 	}
 
-	public static void setPlayerEco(EntityPlayer player, EnumEco eco, int amount) {
-		if (eco == EnumEco.light) {
+	public static void setPlayerEco(EntityPlayer player, EnumPlayerEco eco, int amount) {
+		if (eco == EnumPlayerEco.light) {
 			getEntityData(player).setEcoLight(amount);
 		}
-		if (eco == EnumEco.dark) {
+		if (eco == EnumPlayerEco.dark) {
 			getEntityData(player).setEcoDark(amount);
 		}
 	}
@@ -103,21 +103,21 @@ public class AIUtils {
 		getEntityData(player).setLevel(level);
 	}
 
-	public static void setPlayerMaxEco(EntityPlayer player, EnumEco eco, int max) {
-		if (eco == EnumEco.light) {
+	public static void setPlayerMaxEco(EntityPlayer player, EnumPlayerEco eco, int max) {
+		if (eco == EnumPlayerEco.light) {
 			getEntityData(player).setEcoMaxLight(max);
 		}
-		if (eco == EnumEco.dark) {
+		if (eco == EnumPlayerEco.dark) {
 			getEntityData(player).setEcoMaxDark(max);
 		}
 	}
 
-	public static void removeEco(EntityPlayer player, EnumEco eco, int amount) {
+	public static void removeEco(EntityPlayer player, EnumPlayerEco eco, int amount) {
 		int ecoA = 0;
-		if (eco == EnumEco.light) {
+		if (eco == EnumPlayerEco.light) {
 			ecoA = getEntityData(player).getEcoLight();
 		}
-		if (eco == EnumEco.dark) {
+		if (eco == EnumPlayerEco.dark) {
 			ecoA = getEntityData(player).getEcoDark();
 		}
 		ecoA -= amount;
@@ -128,13 +128,13 @@ public class AIUtils {
 		if (getPlayerXP(player) >= getPlayerMaxXP(player)) {
 			setPlayerXP(player, 0);
 			setPlayerMaxXP(player, getPlayerMaxXP(player) + (getPlayerMaxXP(player) / 2));
-			setPlayerMaxEco(player, EnumEco.light, (getPlayerEcoMax(player, EnumEco.light) / 2) + getPlayerEcoMax(player, EnumEco.light));
-			setPlayerMaxEco(player, EnumEco.dark, (getPlayerEcoMax(player, EnumEco.dark) / 2) + getPlayerEcoMax(player, EnumEco.dark));
+			setPlayerMaxEco(player, EnumPlayerEco.light, (getPlayerEcoMax(player, EnumPlayerEco.light) / 2) + getPlayerEcoMax(player, EnumPlayerEco.light));
+			setPlayerMaxEco(player, EnumPlayerEco.dark, (getPlayerEcoMax(player, EnumPlayerEco.dark) / 2) + getPlayerEcoMax(player, EnumPlayerEco.dark));
 			setPlayerLevel(player, getPlayerLevel(player) + 1);
 		}
 	}
 
-	public static void addEco(EntityPlayer player, EnumEco eco, int amount) {
+	public static void addEco(EntityPlayer player, EnumPlayerEco eco, int amount) {
 		int ecoA = getPlayerEco(player, eco);
 		ecoA += amount;
 		setPlayerEco(player, eco, ecoA);
@@ -146,7 +146,7 @@ public class AIUtils {
 		setPlayerXP(player, xp);
 	}
 
-	public static boolean drainEco(EntityPlayer player, EnumEco eco, int amount) {
+	public static boolean drainEco(EntityPlayer player, EnumPlayerEco eco, int amount) {
 		int ecoA = getPlayerEco(player, eco);
 		if (ecoA >= amount) {
 			ecoA -= amount;

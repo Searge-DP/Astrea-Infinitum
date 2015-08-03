@@ -1,6 +1,6 @@
 package astreaInfinitum.api;
 
-public enum EnumEco {
+public enum EnumPlayerEco {
 	light {
 		public String getNBTName() {
 			return "AIPlayerEcoLight";

@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.spell.ISpell;
 import astreaInfinitum.utils.RenderingUtils;
 
@@ -19,8 +19,8 @@ public class SpellDay implements ISpell {
 	}
 
 	@Override
-	public EnumEco getEcoType() {
-		return EnumEco.light;
+	public EnumPlayerEco getEcoType() {
+		return EnumPlayerEco.light;
 	}
 
 }

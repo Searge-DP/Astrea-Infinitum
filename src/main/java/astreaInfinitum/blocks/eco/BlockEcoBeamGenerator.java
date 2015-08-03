@@ -3,10 +3,15 @@ package astreaInfinitum.blocks.eco;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import astreaInfinitum.api.wands.IWand;
+import astreaInfinitum.items.eco.ItemEcoOrb;
+import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
 
 public class BlockEcoBeamGenerator extends Block implements ITileEntityProvider {
@@ -39,29 +44,24 @@ public class BlockEcoBeamGenerator extends Block implements ITileEntityProvider 
 
 	@Override
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float hitX, float hitY, float hitZ) {
-		if (player.inventory.getCurrentItem().getItem() != null) {
-			if (player.inventory.getCurrentItem().getItem() == Items.stick) {
-				TileEntityEcoBeamGenerator test = (TileEntityEcoBeamGenerator) world.getTileEntity(x, y, z);
-				test.setType(0);
+		TileEntityEcoBeamGenerator tile = (TileEntityEcoBeamGenerator) world.getTileEntity(x, y, z);
+		if (!world.isRemote) {
+			if (player.inventory.getCurrentItem() != null && (player.inventory.getCurrentItem().getItem() instanceof ItemEcoOrb) && tile.getStackInSlot(0) == null) {
+				ItemStack stack = player.inventory.getCurrentItem().copy();
+				stack.stackSize = 1;
+				tile.setInventorySlotContents(0, stack);
+				player.inventory.decrStackSize(player.inventory.currentItem, 1);
 				return true;
 			}
-			if (player.inventory.getCurrentItem().getItem() == Items.arrow) {
-				TileEntityEcoBeamGenerator test = (TileEntityEcoBeamGenerator) world.getTileEntity(x, y, z);
-				test.setType(1);
-				return true;
-			}
-			if (player.inventory.getCurrentItem().getItem() == Items.apple) {
-				TileEntityEcoBeamGenerator test = (TileEntityEcoBeamGenerator) world.getTileEntity(x, y, z);
-				test.setType(2);
-				return true;
-			}
-			if (player.inventory.getCurrentItem().getItem() == Items.beef) {
-				TileEntityEcoBeamGenerator test = (TileEntityEcoBeamGenerator) world.getTileEntity(x, y, z);
-				test.setType(3);
+			if (tile.getStackInSlot(0) != null && player.inventory.getCurrentItem() == null) {
+				if (!world.isRemote) {
+					world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 1.5, z + 0.5, tile.getStackInSlot(0)));
+					tile.setInventorySlotContents(0, null);
+				}
 				return true;
 			}
 		}
-
-		return false;
+		return true;
 	}
+
 }

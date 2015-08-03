@@ -1,6 +1,6 @@
 package astreaInfinitum.api.recipes;
 
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import net.minecraft.item.ItemStack;
 
 public class RecipeEcoAltar {
@@ -11,10 +11,10 @@ public class RecipeEcoAltar {
 	private ItemStack southItem;
 	private ItemStack eastItem;
 	private ItemStack westItem;
-	private EnumEco eco;
+	private EnumPlayerEco eco;
 	private int ecoDustNeeded;
 
-	public RecipeEcoAltar(ItemStack output, ItemStack baseItem, ItemStack northItem, ItemStack southItem, ItemStack eastItem, ItemStack westItem, EnumEco eco, int ecoDustNeeded) {
+	public RecipeEcoAltar(ItemStack output, ItemStack baseItem, ItemStack northItem, ItemStack southItem, ItemStack eastItem, ItemStack westItem, EnumPlayerEco eco, int ecoDustNeeded) {
 		this.baseItem = baseItem;
 		this.output = output;
 		this.northItem = northItem;
@@ -49,7 +49,7 @@ public class RecipeEcoAltar {
 		return westItem;
 	}
 
-	public EnumEco getEco() {
+	public EnumPlayerEco getEco() {
 		return eco;
 	}
 

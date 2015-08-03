@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 
 public class EntityData implements IExtendedEntityProperties {
 
@@ -23,10 +23,10 @@ public class EntityData implements IExtendedEntityProperties {
 
 	public static final String tagKnowledge = "AIKnowledge";
 	public static final String taglevel = "AILevel";
-	public static final String tagEcoLight = EnumEco.light.getNBTName();
-	public static final String tagEcoDark = EnumEco.dark.getNBTName();
-	public static final String tagEcoMaxLight = EnumEco.light.getNBTName() + "Max";
-	public static final String tagEcoMaxDark = EnumEco.dark.getNBTName() + "Max";
+	public static final String tagEcoLight = EnumPlayerEco.light.getNBTName();
+	public static final String tagEcoDark = EnumPlayerEco.dark.getNBTName();
+	public static final String tagEcoMaxLight = EnumPlayerEco.light.getNBTName() + "Max";
+	public static final String tagEcoMaxDark = EnumPlayerEco.dark.getNBTName() + "Max";
 	public static final String tagXP = "AIXP";
 	public static final String tagXPMax = "AIXPMax";
 

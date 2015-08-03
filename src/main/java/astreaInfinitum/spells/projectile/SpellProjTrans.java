@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.spell.IProjectileSpell;
 import astreaInfinitum.entities.EntitySpell;
 
@@ -42,8 +42,8 @@ public class SpellProjTrans implements IProjectileSpell {
 	}
 
 	@Override
-	public EnumEco getEcoType() {
-		return EnumEco.dark;
+	public EnumPlayerEco getEcoType() {
+		return EnumPlayerEco.dark;
 	}
 
 	@Override

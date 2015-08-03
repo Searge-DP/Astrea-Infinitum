@@ -16,6 +16,7 @@ public class PacketHandler {
 		INSTANCE.registerMessage(MessageAltarSync.class, MessageAltarSync.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(MessageParticles.class, MessageParticles.class, id++, Side.CLIENT);
 		INSTANCE.registerMessage(MessagePedestalSync.class, MessagePedestalSync.class, id++, Side.CLIENT);
+		INSTANCE.registerMessage(MessageEcoBeamGeneratorSync.class, MessageEcoBeamGeneratorSync.class, id++, Side.CLIENT);
 		
 		
 	}

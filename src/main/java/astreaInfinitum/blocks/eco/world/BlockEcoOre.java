@@ -3,20 +3,18 @@ package astreaInfinitum.blocks.eco.world;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.logging.Level;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
-import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.ModProps;
+import astreaInfinitum.items.AIItems;
 
 public class BlockEcoOre extends Block {
 
@@ -30,12 +28,14 @@ public class BlockEcoOre extends Block {
 		setHarvestLevel("pickaxe", 2);
 	}
 
-	
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
-		return super.getDrops(world, x, y, z, metadata, fortune);
+		drops.add(new ItemStack(AIItems.ecoDust, 2 + new Random().nextInt(4)));
+		drops.add(new ItemStack(this, 1, metadata));
+		return drops;
 	}
+
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < names.length; i++) {

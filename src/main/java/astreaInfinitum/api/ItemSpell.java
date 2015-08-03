@@ -59,7 +59,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 					NBTHelper.setInteger(stack, "castTime", -1);
 					AIUtils.addXP(player, new Random().nextInt(3));
 					player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerLevel(player) + ":" + AIUtils.getPlayerMaxXP(player) + ":" + AIUtils.getPlayerXP(player)));
-					player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerEcoMax(player, EnumEco.light) + ":" + AIUtils.getPlayerEco(player, EnumEco.light)));
+					player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerEcoMax(player, EnumPlayerEco.light) + ":" + AIUtils.getPlayerEco(player, EnumPlayerEco.light)));
 
 				}
 			} else if (!AIUtils.getPlayerKnowledge(player)) {
@@ -82,7 +82,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		return ecoUsage;
 	}
 
-	public boolean canCast(EntityPlayer player, EnumEco eco) {
+	public boolean canCast(EntityPlayer player, EnumPlayerEco eco) {
 		if (AIUtils.getPlayerKnowledge(player)) {
 			if (AIUtils.getPlayerEco(player, spell.getEcoType()) >= getEcoUsage()) {
 				return true;

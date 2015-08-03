@@ -13,7 +13,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
-import astreaInfinitum.api.EnumEco;
+import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.dust.EnumDust;
 import astreaInfinitum.api.dust.IDust;
 import astreaInfinitum.api.recipes.RecipeEcoAltar;
@@ -73,7 +73,7 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 					return;
 				}
 				if (dustArcane > 0) {
-					RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumEco.light);
+					RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumPlayerEco.light);
 					if (recipe != null && dustArcane >= recipe.getEcoDustNeeded()) {
 						dustArcane = recipe.getEcoDustNeeded();
 						for (int posX = -3; posX < 4; posX++) {
@@ -96,7 +96,7 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 
 				}
 				if (dustEco > 0) {
-					RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumEco.dark);
+					RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumPlayerEco.dark);
 					if (recipe != null && dustEco >= recipe.getEcoDustNeeded()) {
 						dustEco = recipe.getEcoDustNeeded();
 						for (int posX = -2; posX < 3; posX++) {
@@ -231,7 +231,6 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 	public void readFromNBT(NBTTagCompound nbt) {
 		super.readFromNBT(nbt);
 		readInventoryFromNBT(nbt);
-
 	}
 
 	public void readInventoryFromNBT(NBTTagCompound tags) {

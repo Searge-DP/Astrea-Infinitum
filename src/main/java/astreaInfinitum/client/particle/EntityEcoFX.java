@@ -17,7 +17,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public  class EntityEcoFX extends EntityFX {
+public class EntityEcoFX extends EntityFX {
 	private static final ResourceLocation tex = new ResourceLocation(ModProps.MODID + ":textures/particles/soft.png");
 
 	private double targetX, targetY, targetZ;
@@ -27,12 +27,35 @@ public  class EntityEcoFX extends EntityFX {
 		super(world, x, y, z);
 		motionX = motionY = motionZ = particleAlpha = 0;
 
-		//		particleRed = 0.727F;
-//		particleGreen = 0.684F;
-//		particleBlue = 0.527F;
-		particleRed = rand.nextFloat()*rand.nextFloat();
-		particleGreen = rand.nextFloat()*rand.nextFloat();
-		particleBlue = rand.nextFloat()*rand.nextFloat();
+		// particleRed = 0.727F;
+		// particleGreen = 0.684F;
+		// particleBlue = 0.527F;
+		particleRed = rand.nextFloat() * rand.nextFloat();
+		particleGreen = rand.nextFloat() * rand.nextFloat();
+		particleBlue = rand.nextFloat() * rand.nextFloat();
+		indexX = (byte) rand.nextInt(4);
+		indexY = (byte) rand.nextInt(4);
+
+		particleScale = (targetX != 0D && targetY != 0D && targetZ != 0D ? 0.5F : 1F) * rand.nextFloat() * 0.2F + 0.3F;
+		maxAge = (byte) (2 + rand.nextInt(20));
+
+		this.targetX = targetX;
+		this.targetY = targetY;
+		this.targetZ = targetZ;
+
+		if (targetX == 0D && targetZ == 0D)
+			motionY = targetY;
+	}
+
+	public EntityEcoFX(World world, double x, double y, double z, double motionY, float red, float green, float blue) {
+		super(world, x, y, z);
+		motionX = motionY = motionZ = particleAlpha = 0;
+		double targetX = 0;
+		double targetY = motionY;
+		double targetZ = 0;
+		particleRed = red;
+		particleGreen = green;
+		particleBlue = blue;
 		indexX = (byte) rand.nextInt(4);
 		indexY = (byte) rand.nextInt(4);
 
@@ -60,7 +83,7 @@ public  class EntityEcoFX extends EntityFX {
 		prevPosX = posX;
 		prevPosY = posY;
 		prevPosZ = posZ;
-		
+
 		if (++age > maxAge)
 			setDead();
 		if (age < 1)
@@ -72,7 +95,7 @@ public  class EntityEcoFX extends EntityFX {
 
 		if (--breakCheckTimer < 0) {
 			breakCheckTimer = 10;
-//			age = (byte) (maxAge - 18);
+			// age = (byte) (maxAge - 18);
 		}
 
 		if (rand.nextInt(3) == 0)
@@ -130,7 +153,7 @@ public  class EntityEcoFX extends EntityFX {
 		tessellator.startDrawingQuads();
 		tessellator.setColorRGBA_F(particleRed, particleGreen, particleBlue, 1f);
 		tessellator.setNormal(0F, 1F, 0F);
-		tessellator.setBrightness(65);
+		tessellator.setBrightness(0xFFFFFF);
 		tessellator.addVertexWithUV(x - rotX * particleScale - rotYZ * particleScale, y - rotXZ * particleScale, z - rotZ * particleScale - rotXY * particleScale, right, bottom);
 		tessellator.addVertexWithUV(x - rotX * particleScale + rotYZ * particleScale, y + rotXZ * particleScale, z - rotZ * particleScale + rotXY * particleScale, right, top);
 		tessellator.addVertexWithUV(x + rotX * particleScale + rotYZ * particleScale, y + rotXZ * particleScale, z + rotZ * particleScale + rotXY * particleScale, left, top);
