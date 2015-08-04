@@ -11,12 +11,16 @@ import astreaInfinitum.AITab;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.ItemProjectileSpell;
 import astreaInfinitum.api.ItemSpell;
-import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.items.dusts.ItemArcaneDust;
 import astreaInfinitum.items.dusts.ItemEcoDust;
 import astreaInfinitum.items.eco.ItemEcoOrb;
 import astreaInfinitum.items.learning.ItemBookBasic;
+import astreaInfinitum.items.lore.ItemLoreBook;
 import astreaInfinitum.items.runes.ItemRune;
+import astreaInfinitum.items.runes.ItemRuneFunction;
+import astreaInfinitum.items.runes.ItemRuneIcon;
+import astreaInfinitum.items.runes.ItemRuneSubFunction;
+import astreaInfinitum.items.runes.ItemRuneType;
 import astreaInfinitum.items.tablets.ItemKnowledgeTablet;
 import astreaInfinitum.items.wands.ItemWand;
 import astreaInfinitum.spells.SpellAreaRegen;
@@ -50,10 +54,19 @@ public class AIItems {
 	public static Item wand = new ItemWand().setFull3D();
 
 	public static Item rune = new ItemRune();
+	public static Item runeIcon = new ItemRuneIcon();
+	public static Item runeFunction= new ItemRuneFunction();
+	public static Item runeType= new ItemRuneType();
+	public static Item runeSubFunction= new ItemRuneSubFunction();
+	
+	
+	
 	public static Item ecoOrb = new ItemEcoOrb();
 
 	public static Item arcaneDust = new ItemArcaneDust();
 	public static Item ecoDust = new ItemEcoDust();
+	
+	public static Item loreBook = new ItemLoreBook();
 
 	private static void registerItems() {
 		tab = new AITab();
@@ -67,10 +80,17 @@ public class AIItems {
 		registerSpell(spellProjTrans, "projTrans", "projTrans");
 		registerSpell(spellProjRain, "projRain", "projRain");
 		registerItemNoTexture(rune, "basicRune", "rune");
+		registerItemNoTexture(runeIcon, "basicRuneIcon", "runeIcon");
+		registerItemNoTexture(runeFunction, "basicRuneFunction", "runeFunction");
+		registerItemNoTexture(runeType, "basicRuneType", "runeType");
+		registerItemNoTexture(runeSubFunction, "basicRuneSubFunction", "runeSubFunction");
+		
+		
 		registerItem(ecoOrb, "ecoOrb", "ecoOrb");
 		registerItem(arcaneDust, "arcaneDust", "arcaneDust", "dust/arcaneDust");
 		registerItem(ecoDust, "ecoDust", "ecoDust", "dust/ecoDust");
 
+		registerItem(loreBook, "loreBook", "lorebook");
 	}
 
 	private static void registerRecipes() {

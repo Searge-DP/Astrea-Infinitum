@@ -8,6 +8,7 @@ import astreaInfinitum.handlers.RecipeHandler;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.proxy.CommonProxy;
+import astreaInfinitum.runes.AIRunes;
 import astreaInfinitum.utils.ClientHandler;
 import astreaInfinitum.utils.Lang;
 import astreaInfinitum.utils.PlayerTickHandler;
@@ -39,6 +40,7 @@ public class AstreaInfinitum {
 		PacketHandler.init();
 		AIItems.init();
 		AIBlocks.init();
+		AIRunes.preInit();
 		EntityRegistry.registerModEntity(EntitySpell.class, "spell", 0, INSTANCE, 30, 30, true);
 		proxy.renderSpell();
 		// proxy.registerClientHandler();

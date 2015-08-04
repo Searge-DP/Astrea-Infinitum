@@ -1,17 +1,15 @@
 package astreaInfinitum.utils;
 
 import static astreaInfinitum.utils.AIUtils.addEco;
-import static astreaInfinitum.utils.AIUtils.getPlayerKnowledge;
-import static astreaInfinitum.utils.AIUtils.getPlayerLevel;
 import static astreaInfinitum.utils.AIUtils.getPlayerEco;
 import static astreaInfinitum.utils.AIUtils.getPlayerEcoMax;
+import static astreaInfinitum.utils.AIUtils.getPlayerKnowledge;
+import static astreaInfinitum.utils.AIUtils.getPlayerLevel;
 import static astreaInfinitum.utils.AIUtils.getPlayerMaxXP;
 import static astreaInfinitum.utils.AIUtils.getPlayerXP;
 import static astreaInfinitum.utils.AIUtils.levelUp;
 
 import java.util.Random;
-
-import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
@@ -21,14 +19,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemShears;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.RenderWorldEvent;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.event.entity.EntityEvent.EntityConstructing;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
@@ -46,8 +38,6 @@ import astreaInfinitum.items.AIItems;
 import astreaInfinitum.network.MessagePlayerSync;
 import astreaInfinitum.network.PacketHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.common.gameevent.TickEvent.WorldTickEvent;
 
 public class PlayerTickHandler {
 

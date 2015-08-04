@@ -4,14 +4,14 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.item.Item;
 import astreaInfinitum.ModProps;
 
-public class ItemRune extends Item {
+public class ItemRuneFunction extends Item {
 
-	public ItemRune() {
+	public ItemRuneFunction() {
 	}
 
 	@Override
 	public void registerIcons(IIconRegister icons) {
-		this.itemIcon = icons.registerIcon(ModProps.modid + ":runes/basicRune");
+		this.itemIcon = icons.registerIcon(ModProps.modid + ":runes/basicRuneFunction");
 	}
 
 

@@ -9,4 +9,6 @@ public interface ISpell {
 	public boolean onCast(ItemStack stack, World world, EntityPlayer player, int x, int y, int z);
 
 	public EnumPlayerEco getEcoType();
+	
+	
 }

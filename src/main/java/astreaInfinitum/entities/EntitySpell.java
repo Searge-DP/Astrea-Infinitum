@@ -48,7 +48,6 @@ public class EntitySpell extends EntityThrowable {
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
-
 		if (!worldObj.isRemote && worldObj != null && mop != null && spell != null) {
 			spell.onHit(worldObj, caster, mop, this.posX, this.posY, this.posZ);
 			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumPlayerEco.light)));
