@@ -1,14 +1,13 @@
 package astreaInfinitum.items.tablets;
 
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.utils.AIUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.utils.AIUtils;
 
 public class ItemResetTablet extends Item {
 

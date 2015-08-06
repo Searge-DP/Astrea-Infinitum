@@ -2,7 +2,6 @@ package astreaInfinitum.entities.properties;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IExtendedEntityProperties;
@@ -11,6 +10,7 @@ import astreaInfinitum.api.EnumPlayerEco;
 
 public class EntityData implements IExtendedEntityProperties {
 
+	@SuppressWarnings("unused")
 	private EntityLivingBase entity;
 	private boolean knowledge;
 	private int level;

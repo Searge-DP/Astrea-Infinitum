@@ -174,6 +174,9 @@ public class AIUtils {
 				NBTHelper.setInteger(stack, "AIItemLevel", level);
 				NBTHelper.setInteger(stack, "AIItemXP", xp);
 				NBTHelper.setInteger(stack, "AIItemXPMax", xpMax);
+			}else if(level >=5){
+				xp = 0;
+				xpMax = 0;
 			}
 		}
 
@@ -181,7 +184,7 @@ public class AIUtils {
 
 	public static void addSpellXP(ItemStack stack, int amount) {
 		int xp = NBTHelper.getInt(stack, "AIItemXP");
-		xp += new Random().nextInt(amount * NBTHelper.getInt(stack, "AIItemLevel"));
+		xp += new Random().nextInt(amount * (NBTHelper.getInt(stack, "AIItemLevel")+1));
 		NBTHelper.setInteger(stack, "AIItemXP", xp);
 	}
 

@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
+@SuppressWarnings("unused")
 @SideOnly(Side.CLIENT)
 public class EntitySphereFX extends EntityFX {
 	/** the scale of the flame FX */

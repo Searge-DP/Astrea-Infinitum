@@ -1,4 +1,4 @@
-package astreaInfinitum.utils;
+package astreaInfinitum.handlers;
 
 import static astreaInfinitum.utils.AIUtils.addEco;
 import static astreaInfinitum.utils.AIUtils.getPlayerEco;
@@ -37,6 +37,7 @@ import astreaInfinitum.entities.properties.EntityData;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.network.MessagePlayerSync;
 import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.utils.AIUtils;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class PlayerTickHandler {
@@ -119,6 +120,12 @@ public class PlayerTickHandler {
 
 						if (getPlayerMaxXP(player) > 0)
 							levelUp(player);
+					}
+					if (getPlayerEcoMax(player, EnumPlayerEco.light) < getPlayerEco(player, EnumPlayerEco.light)) {
+						AIUtils.setPlayerEco(player, EnumPlayerEco.light, getPlayerEcoMax(player, EnumPlayerEco.light));
+					}
+					if (getPlayerEcoMax(player, EnumPlayerEco.dark) < getPlayerEco(player, EnumPlayerEco.dark)) {
+						AIUtils.setPlayerEco(player, EnumPlayerEco.dark, getPlayerEcoMax(player, EnumPlayerEco.dark));
 					}
 				}
 				PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumPlayerEco.light), getPlayerEco(player, EnumPlayerEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.dark)));

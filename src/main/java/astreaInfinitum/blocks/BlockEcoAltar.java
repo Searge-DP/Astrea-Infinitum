@@ -1,17 +1,13 @@
 package astreaInfinitum.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import astreaInfinitum.api.IEcoAltarBlock;
-import astreaInfinitum.client.particle.EntityEcoFX;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.tileEntities.TileEntityEcoAltar;
 

@@ -3,11 +3,8 @@ package astreaInfinitum.blocks.eco;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoInfuser;
 
 public class BlockEcoInfuser extends Block implements ITileEntityProvider {

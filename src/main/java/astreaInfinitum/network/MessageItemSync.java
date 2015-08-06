@@ -1,13 +1,7 @@
 package astreaInfinitum.network;
 
-import astreaInfinitum.AstreaInfinitum;
-import astreaInfinitum.utils.AIUtils;
-import astreaInfinitum.utils.ClientUtils;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.tileentity.TileEntity;
-import cpw.mods.fml.common.network.ByteBufUtils;
+import astreaInfinitum.utils.ClientUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;

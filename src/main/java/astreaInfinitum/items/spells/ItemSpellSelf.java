@@ -22,7 +22,7 @@ import astreaInfinitum.utils.AIUtils;
 import astreaInfinitum.utils.NBTHelper;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
-public class ItemSpell extends Item implements IPrimarySpell {
+public class ItemSpellSelf extends Item implements IPrimarySpell {
 
 	public int castTimeTotal = 0;
 	public String name;
@@ -32,7 +32,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 	public IIcon spellIcon = null;
 	public String spellIconName = "";
 
-	public ItemSpell(int castTimeTotal, String name, int ecoUsage, Spell spell) {
+	public ItemSpellSelf(int castTimeTotal, String name, int ecoUsage, Spell spell) {
 		this.castTimeTotal = castTimeTotal;
 		this.name = name;
 		this.ecoUsage = ecoUsage;
@@ -41,7 +41,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		setMaxDamage(castTimeTotal);
 	}
 
-	public ItemSpell() {
+	public ItemSpellSelf() {
 		setMaxStackSize(1);
 		setMaxDamage(castTimeTotal);
 	}
@@ -110,7 +110,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 			if (NBTHelper.getBoolean(stack, "canCast") && canCast(player, spell.function.action.getEcoUsed())) {
 				int eco = AIUtils.getPlayerEco(player, spell.function.action.getEcoUsed());
 				if (spell.function.action.canCast(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z)) {
-					eco -= spell.function.action.onHitTouch(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z, world.getBlock(x, y, z));
+					eco -= spell.function.action.onHitSelf(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z);
 					AIUtils.addSpellXP(stack, 3);
 					AIUtils.setPlayerEco(player, spell.function.action.getEcoUsed(), eco);
 					NBTHelper.setInteger(stack, "castTime", -1);

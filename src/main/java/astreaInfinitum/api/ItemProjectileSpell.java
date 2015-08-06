@@ -34,6 +34,7 @@ public class ItemProjectileSpell extends Item implements IPrimarySpell {
 		setMaxDamage(castTimeTotal);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {
 		list.add(String.valueOf(NBTHelper.getInt(stack, "AIItemLevel")));
@@ -99,6 +100,7 @@ public class ItemProjectileSpell extends Item implements IPrimarySpell {
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	public void onUpdate(ItemStack stack, World world, Entity entity, int meta, boolean par5) {
 		NBTHelper.setInteger(stack, "castTimeTotal", castTimeTotal);
 		stack.setItemDamage(NBTHelper.getInt(stack, "castTimeTotal"));

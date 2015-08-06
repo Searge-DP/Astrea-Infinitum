@@ -1,7 +1,6 @@
 package astreaInfinitum.network;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.util.internal.SystemPropertyUtil;
 import net.minecraft.tileentity.TileEntity;
 import astreaInfinitum.tileEntities.TileEntityEcoAltar;
 import cpw.mods.fml.client.FMLClientHandler;

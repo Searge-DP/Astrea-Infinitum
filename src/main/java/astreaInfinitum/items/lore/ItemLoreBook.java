@@ -13,6 +13,7 @@ import net.minecraftforge.common.util.Constants;
 
 public class ItemLoreBook extends Item {
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean part4) {
 		if (NBTHelper.getTag(stack) != null) {

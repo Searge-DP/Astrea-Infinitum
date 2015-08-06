@@ -1,34 +1,49 @@
 package astreaInfinitum.client.render.tile.eco;
 
+import static org.lwjgl.opengl.GL11.GL_ALL_ATTRIB_BITS;
+import static org.lwjgl.opengl.GL11.GL_ALPHA_TEST;
+import static org.lwjgl.opengl.GL11.GL_BLEND;
+import static org.lwjgl.opengl.GL11.GL_CULL_FACE;
+import static org.lwjgl.opengl.GL11.GL_ONE;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SMOOTH;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
+import static org.lwjgl.opengl.GL11.GL_ZERO;
+import static org.lwjgl.opengl.GL11.glDepthMask;
+import static org.lwjgl.opengl.GL11.glDisable;
+import static org.lwjgl.opengl.GL11.glEnable;
+import static org.lwjgl.opengl.GL11.glPopAttrib;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushAttrib;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRotatef;
+import static org.lwjgl.opengl.GL11.glShadeModel;
+import static org.lwjgl.opengl.GL11.glTranslated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+
 import java.awt.Color;
 import java.util.Random;
 
-import org.lwjgl.opengl.GL11;
-
-import io.netty.util.internal.SystemPropertyUtil;
-import astreaInfinitum.AstreaInfinitum;
-import astreaInfinitum.ModProps;
-import astreaInfinitum.client.render.model.EcoBeamGenerator;
-import astreaInfinitum.client.render.model.ModelPedestal;
-import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
-import astreaInfinitum.utils.ClientHandler;
-import astreaInfinitum.utils.RenderingUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.ResourceLocation;
-import static org.lwjgl.opengl.GL11.*;
 
+import org.lwjgl.opengl.GL11;
+
+import astreaInfinitum.ModProps;
+import astreaInfinitum.client.render.model.EcoBeamGenerator;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
+
+@SuppressWarnings("unused")
 public class RenderTileEcoBeamGenerator extends TileEntitySpecialRenderer {
 	private EcoBeamGenerator model = new EcoBeamGenerator();
+
 	private Random random = new Random();
 	private RenderBlocks renderBlock = new RenderBlocks();
 	private Minecraft mc = Minecraft.getMinecraft();

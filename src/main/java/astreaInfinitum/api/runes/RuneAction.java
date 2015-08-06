@@ -10,7 +10,6 @@ public abstract class RuneAction {
 
 	public abstract boolean canCast(World world, EntityPlayer caster, int spellLevel, int x, int y, int z);
 
-
 	public abstract int onHitEntity(World world, EntityPlayer caster, int spellLevel, int x, int y, int z, Entity entity);
 
 	public abstract int onHitBlock(World world, EntityPlayer caster, int spellLevel, int x, int y, int z, Block block);
@@ -24,4 +23,5 @@ public abstract class RuneAction {
 
 	public abstract int getSpellUsage(int spellLevel);
 
+	public abstract EnumSpellType[] getActionTypes();
 }

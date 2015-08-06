@@ -1,11 +1,5 @@
 package astreaInfinitum.tileEntities.eco;
 
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
-import astreaInfinitum.items.AIItems;
-import astreaInfinitum.items.eco.ItemEcoOrb;
-import astreaInfinitum.network.MessageEcoBeamGeneratorSync;
-import astreaInfinitum.network.MessagePedestalSync;
-import astreaInfinitum.network.PacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -15,6 +9,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import astreaInfinitum.items.eco.ItemEcoOrb;
+import astreaInfinitum.network.MessageEcoBeamGeneratorSync;
+import astreaInfinitum.network.PacketHandler;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileEntityEcoBeamGenerator extends TileEntity implements IInventory {
 

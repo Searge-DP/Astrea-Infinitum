@@ -2,17 +2,13 @@ package astreaInfinitum.client.render.items;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
 
 import org.lwjgl.opengl.GL11;
 
-import cpw.mods.fml.common.FMLLog;
 import astreaInfinitum.ModProps;
-import astreaInfinitum.blocks.AIBlocks;
-import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.client.render.model.ModelPedestal;
 
 public class RenderItemPedestal implements IItemRenderer {

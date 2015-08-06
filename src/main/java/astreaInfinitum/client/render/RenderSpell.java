@@ -1,7 +1,5 @@
 package astreaInfinitum.client.render;
 
-import astreaInfinitum.client.particle.EntityEcoFX;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;

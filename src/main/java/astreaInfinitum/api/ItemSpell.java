@@ -1,16 +1,13 @@
 package astreaInfinitum.api;
 
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import astreaInfinitum.api.spell.IPrimarySpell;
 import astreaInfinitum.api.spell.ISpell;
@@ -33,10 +30,6 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		setMaxDamage(castTimeTotal);
 	}
 
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean par4) {
-
-	}
 
 	public int getDisplayDamage(ItemStack stack) {
 		return NBTHelper.getInt(stack, "castTimeTotal") - NBTHelper.getInt(stack, "castTime");
@@ -91,6 +84,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	public void onUpdate(ItemStack stack, World world, Entity entity, int meta, boolean par5) {
 		NBTHelper.setInteger(stack, "castTimeTotal", castTimeTotal);
 		stack.setItemDamage(NBTHelper.getInt(stack, "castTimeTotal"));

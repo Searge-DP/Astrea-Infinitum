@@ -5,13 +5,10 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import astreaInfinitum.api.wands.IWand;
 import astreaInfinitum.items.eco.ItemEcoOrb;
-import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
 
 public class BlockEcoBeamGenerator extends Block implements ITileEntityProvider {

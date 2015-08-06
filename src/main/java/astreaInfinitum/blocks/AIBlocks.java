@@ -60,6 +60,7 @@ public class AIBlocks {
 		GameRegistry.registerBlock(block, key);
 	}
 
+	@SuppressWarnings("unused")
 	private static void registerBlockNoTexture(Block block, String name, String key) {
 		block.setBlockName(name).setCreativeTab(AIItems.tab);
 		GameRegistry.registerBlock(block, key);
@@ -75,6 +76,7 @@ public class AIBlocks {
 		GameRegistry.registerBlock(block, key);
 	}
 
+	@SuppressWarnings("unused")
 	private static void registerBlock(Block block, String name, String key, CreativeTabs tab) {
 		block.setBlockName(name).setBlockTextureName(ModProps.modid + ":" + key).setCreativeTab(tab);
 		GameRegistry.registerBlock(block, key);

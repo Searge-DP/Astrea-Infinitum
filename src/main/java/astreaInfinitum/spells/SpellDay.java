@@ -2,12 +2,9 @@ package astreaInfinitum.spells;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.spell.ISpell;
-import astreaInfinitum.utils.RenderingUtils;
 
 public class SpellDay implements ISpell {
 

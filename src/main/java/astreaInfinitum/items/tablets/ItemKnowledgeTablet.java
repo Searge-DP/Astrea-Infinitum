@@ -19,7 +19,6 @@ public class ItemKnowledgeTablet extends Item {
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerEco(player, EnumPlayerEco.light) + ""));
 				player.addChatComponentMessage(new ChatComponentText(AIUtils.getPlayerEco(player, EnumPlayerEco.dark) + ""));
 				AstreaInfinitum.proxy.readTablet();
-				AIUtils.getEntityData(player).setEcoMaxDark(40);
 			}
 		return stack;
 	}

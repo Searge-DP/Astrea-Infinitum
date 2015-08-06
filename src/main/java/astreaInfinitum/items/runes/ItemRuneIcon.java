@@ -71,6 +71,7 @@ public class ItemRuneIcon extends Item {
 		}
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < 12; i++) {

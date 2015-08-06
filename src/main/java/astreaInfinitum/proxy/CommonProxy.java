@@ -1,10 +1,8 @@
 package astreaInfinitum.proxy;
 
-import astreaInfinitum.utils.ClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 
 public class CommonProxy {
 	

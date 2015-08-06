@@ -33,6 +33,7 @@ public class RecipeHandler {
 		GameRegistry.addRecipe(new ShapelessOreRecipe(stack, Items.stick));
 	}
 
+	@SuppressWarnings("unused")
 	private static void writeLoreToNBT(NBTTagCompound tags, String lore) {
 		NBTTagList nbttaglist = new NBTTagList();
 		NBTTagCompound tagList = new NBTTagCompound();
@@ -54,6 +55,7 @@ public class RecipeHandler {
 		tags.setTag("Lore", nbttaglist);
 	}
 
+	@SuppressWarnings("unused")
 	private static ArrayList<String> readLoreFromNBT(NBTTagCompound tags) {
 		ArrayList<String> lore = new ArrayList<String>();
 		NBTTagList nbttaglist = tags.getTagList("Lore", Constants.NBT.TAG_COMPOUND);

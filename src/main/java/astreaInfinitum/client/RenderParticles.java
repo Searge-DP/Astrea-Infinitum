@@ -2,9 +2,7 @@ package astreaInfinitum.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
-import net.minecraft.client.particle.EntityReddustFX;
 import net.minecraft.world.World;
-import astreaInfinitum.client.particle.EntityEcoFX;
 import astreaInfinitum.client.particle.EntityFluxFX;
 import astreaInfinitum.client.particle.EntitySphereFX;
 

@@ -24,13 +24,13 @@ import static org.lwjgl.opengl.GL11.glTranslatef;
 
 import java.util.Random;
 
-import org.lwjgl.opengl.GL11;
-
 import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+
+import org.lwjgl.opengl.GL11;
+
 import astreaInfinitum.tileEntities.eco.TileEntityEcoInfuser;
 
 public class RenderTileEcoInfuser extends TileEntitySpecialRenderer {

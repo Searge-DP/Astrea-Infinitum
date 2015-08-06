@@ -1,6 +1,5 @@
 package astreaInfinitum.client.particle;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.RenderHelper;
@@ -18,7 +17,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class EntityEcoFX extends EntityFX {
-	private static final ResourceLocation tex = new ResourceLocation(ModProps.MODID + ":textures/particles/soft.png");
+	private static final ResourceLocation tex = new ResourceLocation(ModProps.MODID + ":textures/particles/lightning.png");
 
 	private double targetX, targetY, targetZ;
 	private byte indexX, indexY, age, maxAge, breakCheckTimer = 10;
@@ -148,6 +147,7 @@ public class EntityEcoFX extends EntityFX {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
 		GL11.glColor4f(1F, 1F, 1F, 1F);
+//		GL11.glRotated(player.worldObj.rand.nextInt(), player.worldObj.rand.nextDouble(), player.worldObj.rand.nextDouble(), player.worldObj.rand.nextDouble());
 		RenderHelper.disableStandardItemLighting();
 
 		tessellator.startDrawingQuads();

@@ -16,6 +16,7 @@ import astreaInfinitum.utils.AIUtils;
 
 public class SpellAreaRegen implements ISpell {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onCast(ItemStack stack, World world, EntityPlayer player, int x, int y, int z) {
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.getBoundingBox(x - 2, y - 2, z - 2, x + 2, y + 2, z + 2));

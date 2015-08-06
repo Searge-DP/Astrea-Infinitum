@@ -3,9 +3,8 @@ package astreaInfinitum.api.recipes;
 import java.util.ArrayList;
 import java.util.List;
 
-import astreaInfinitum.api.EnumPlayerEco;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.ForgeEventFactory;
+import astreaInfinitum.api.EnumPlayerEco;
 
 public class RecipeRegistry {
 

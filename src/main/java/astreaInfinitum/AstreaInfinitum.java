@@ -3,7 +3,9 @@ package astreaInfinitum;
 import net.minecraftforge.common.MinecraftForge;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.gui.GuiHandler;
+import astreaInfinitum.config.Configuration;
 import astreaInfinitum.entities.EntitySpell;
+import astreaInfinitum.handlers.PlayerTickHandler;
 import astreaInfinitum.handlers.RecipeHandler;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.network.PacketHandler;
@@ -11,15 +13,17 @@ import astreaInfinitum.proxy.CommonProxy;
 import astreaInfinitum.runes.AIRunes;
 import astreaInfinitum.utils.ClientHandler;
 import astreaInfinitum.utils.Lang;
-import astreaInfinitum.utils.PlayerTickHandler;
+import astreaInfinitum.world.GenerationHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = ModProps.modid, name = ModProps.name, version = ModProps.version)
 public class AstreaInfinitum {
@@ -36,17 +40,24 @@ public class AstreaInfinitum {
 
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent e) {
+		Configuration.preInit(e.getSuggestedConfigurationFile());
 		MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());
 		PacketHandler.init();
+		AIRunes.preInit();
 		AIItems.init();
 		AIBlocks.init();
-		AIRunes.preInit();
+
 		EntityRegistry.registerModEntity(EntitySpell.class, "spell", 0, INSTANCE, 30, 30, true);
 		proxy.renderSpell();
 		// proxy.registerClientHandler();
 		MinecraftForge.EVENT_BUS.register(new ClientHandler());
 		proxy.registerRenderers();
 		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new GuiHandler());
+	}
+
+	@EventHandler
+	public void init(FMLInitializationEvent e) {
+		GameRegistry.registerWorldGenerator(new GenerationHandler(), 0);
 	}
 
 	@EventHandler

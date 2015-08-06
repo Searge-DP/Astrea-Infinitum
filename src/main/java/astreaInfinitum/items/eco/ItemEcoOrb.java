@@ -19,6 +19,7 @@ public class ItemEcoOrb extends Item {
 		setMaxStackSize(16);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < names.length; i++) {

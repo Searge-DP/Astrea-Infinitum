@@ -1,6 +1,7 @@
 package astreaInfinitum.utils;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.MovingObjectPosition;
 
 public class BlockPos {
 
@@ -13,6 +14,12 @@ public class BlockPos {
 		this.y = y;
 		this.z = z;
 	}
+	public BlockPos(MovingObjectPosition mop) {
+		this.x = mop.blockX;
+		this.y = mop.blockY;
+		this.z = mop.blockZ;
+	}
+	
 
 	public NBTTagCompound writeToNbt(NBTTagCompound tag) {
 		tag.setInteger("x", x);

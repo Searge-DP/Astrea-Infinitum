@@ -1,16 +1,9 @@
 package astreaInfinitum.client.gui.spell;
 
-import org.lwjgl.opengl.GL11;
-
-import astreaInfinitum.ModProps;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import astreaInfinitum.ModProps;
 
 public class GuiSpell extends GuiContainer {
 	public GuiSpell(InventoryPlayer player) {

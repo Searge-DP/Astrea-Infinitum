@@ -1,10 +1,9 @@
 package astreaInfinitum.api.runes;
 
 import astreaInfinitum.runes.AIRunes;
-import astreaInfinitum.runes.RuneActionDig;
 
 public enum EnumRuneFunction {
-	dig("dig", AIRunes.dig);
+	dig("dig", AIRunes.dig), heal("heal", AIRunes.heal);
 
 	public RuneAction action;
 	public String name;

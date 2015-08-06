@@ -147,7 +147,7 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 	}
 
 	public void setPedestalItem(World world, int x, int y, int z, ForgeDirection dir, ItemStack stack) {
-		if (!(dir == dir.DOWN) || !(dir == dir.UP))
+		if (!(dir == ForgeDirection.DOWN) || !(dir == ForgeDirection.UP))
 			if (world.getBlock(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3)) != null) {
 				if (world.getTileEntity(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3)) != null && world.getTileEntity(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3)) instanceof TileEntityPedestal) {
 					TileEntityPedestal tile = (TileEntityPedestal) world.getTileEntity(x + (dir.offsetX * 3), y + (dir.offsetY * 3), z + (dir.offsetZ * 3));

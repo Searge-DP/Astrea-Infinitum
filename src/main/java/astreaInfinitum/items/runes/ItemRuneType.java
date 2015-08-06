@@ -15,6 +15,7 @@ public class ItemRuneType extends Item {
 		setHasSubtypes(true);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < EnumSpellType.values().length; i++) {

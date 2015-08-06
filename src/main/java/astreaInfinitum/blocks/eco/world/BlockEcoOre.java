@@ -36,6 +36,7 @@ public class BlockEcoOre extends Block {
 		return drops;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < names.length; i++) {
