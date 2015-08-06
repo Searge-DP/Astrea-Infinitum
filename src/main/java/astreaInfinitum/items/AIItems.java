@@ -102,7 +102,6 @@ public class AIItems {
 //		registerItem(spellHeal, "spellHeal", "spellHeal");
 //		
 		AISpells.registerSpells();
-
 	}
 
 	private static void registerRecipes() {

@@ -42,8 +42,8 @@ dependencies {
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-	shade "CTMLib-1.2.0-9-deobf"
-//	shade fileTree(dir: 'libs', include: '*.jar')
+	//shade "CTMLib-1.2.0-9-deobf"
+	shade fileTree(dir: 'shades', include: '*.jar')
 }
 
 processResources
