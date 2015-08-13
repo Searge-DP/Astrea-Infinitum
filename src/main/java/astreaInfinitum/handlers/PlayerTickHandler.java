@@ -1,16 +1,15 @@
 package astreaInfinitum.handlers;
 
-import static astreaInfinitum.utils.AIUtils.addEco;
-import static astreaInfinitum.utils.AIUtils.getPlayerEco;
-import static astreaInfinitum.utils.AIUtils.getPlayerEcoMax;
-import static astreaInfinitum.utils.AIUtils.getPlayerKnowledge;
-import static astreaInfinitum.utils.AIUtils.getPlayerLevel;
-import static astreaInfinitum.utils.AIUtils.getPlayerMaxXP;
-import static astreaInfinitum.utils.AIUtils.getPlayerXP;
-import static astreaInfinitum.utils.AIUtils.levelUp;
-
-import java.util.Random;
-
+import astreaInfinitum.AstreaInfinitum;
+import astreaInfinitum.ModProps;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.entities.properties.EntityData;
+import astreaInfinitum.items.AIItems;
+import astreaInfinitum.items.spells.ItemSpell;
+import astreaInfinitum.network.MessagePlayerSync;
+import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.utils.AIUtils;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
@@ -28,17 +27,10 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import astreaInfinitum.AstreaInfinitum;
-import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.api.ItemProjectileSpell;
-import astreaInfinitum.api.ItemSpell;
-import astreaInfinitum.entities.properties.EntityData;
-import astreaInfinitum.items.AIItems;
-import astreaInfinitum.network.MessagePlayerSync;
-import astreaInfinitum.network.PacketHandler;
-import astreaInfinitum.utils.AIUtils;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
+import java.util.Random;
+
+import static astreaInfinitum.utils.AIUtils.*;
 
 public class PlayerTickHandler {
 
@@ -49,21 +41,14 @@ public class PlayerTickHandler {
 			e.toolTip.add("Casting Eco: " + spell.getEcoUsage());
 
 		}
-		if (e.itemStack.getItem() instanceof ItemProjectileSpell) {
-			ItemProjectileSpell spell = (ItemProjectileSpell) e.itemStack.getItem();
-			e.toolTip.add("Casting Eco: " + spell.getEcoUsage());
-
-		}
-
 	}
 
 	@SubscribeEvent
 	public void clayDrop(BlockEvent.HarvestDropsEvent e) {
 		if (e.harvester != null && !e.isSilkTouching && e.block == Blocks.clay) {
-			if (new Random().nextInt(100) == 5)
-				if (!getPlayerKnowledge(e.harvester)) {
-					e.drops.add(new ItemStack(AIItems.tabletKnowledge));
-				}
+			if (new Random().nextInt(100) == 5) if (!getPlayerKnowledge(e.harvester)) {
+				e.drops.add(new ItemStack(AIItems.tabletKnowledge));
+			}
 		}
 	}
 
@@ -86,50 +71,47 @@ public class PlayerTickHandler {
 
 	@SubscribeEvent
 	public void mobSpells(LivingUpdateEvent e) {
-		if (!e.entity.worldObj.isRemote)
-			if (e.entity.getEntityData().getBoolean("trans")) {
-				int transTime = e.entity.getEntityData().getInteger("transTime");
-				if (transTime > 0) {
-					e.entity.getEntityData().setInteger("transTime", transTime - 1);
-				}
-				if (e.entity.getEntityData().getInteger("transTime") <= 0) {
-					e.entity.getEntityData().setBoolean("trans", false);
-					EntityLiving ent = (EntityLiving) EntityList.createEntityByName(e.entity.getEntityData().getString("prevEntName"), e.entity.worldObj);
-					ent.readEntityFromNBT(e.entity.getEntityData().getCompoundTag("prevEnt"));
-					ent.setPosition(e.entity.posX, e.entity.posY, e.entity.posZ);
-					e.entity.worldObj.spawnEntityInWorld(ent);
-					e.entity.setDead();
-				}
+		if (!e.entity.worldObj.isRemote) if (e.entity.getEntityData().getBoolean("trans")) {
+			int transTime = e.entity.getEntityData().getInteger("transTime");
+			if (transTime > 0) {
+				e.entity.getEntityData().setInteger("transTime", transTime - 1);
 			}
+			if (e.entity.getEntityData().getInteger("transTime") <= 0) {
+				e.entity.getEntityData().setBoolean("trans", false);
+				EntityLiving ent = (EntityLiving) EntityList.createEntityByName(e.entity.getEntityData().getString("prevEntName"), e.entity.worldObj);
+				ent.readEntityFromNBT(e.entity.getEntityData().getCompoundTag("prevEnt"));
+				ent.setPosition(e.entity.posX, e.entity.posY, e.entity.posZ);
+				e.entity.worldObj.spawnEntityInWorld(ent);
+				e.entity.setDead();
+			}
+		}
 	}
 
 	@SubscribeEvent
 	public void generateEco(LivingUpdateEvent e) {
-		if (!e.entity.worldObj.isRemote)
-			if (e.entity instanceof EntityPlayer) {
-				EntityPlayer player = (EntityPlayer) e.entity;
-				if (getPlayerKnowledge(player)) {
-					int rand = new Random().nextInt(10);
-					if (rand == 0) {
-						if (getPlayerEco(player, EnumPlayerEco.light) < getPlayerEcoMax(player, EnumPlayerEco.light)) {
-							addEco(player, EnumPlayerEco.light, 1);
-						}
-						if (getPlayerEco(player, EnumPlayerEco.dark) < getPlayerEcoMax(player, EnumPlayerEco.dark)) {
-							addEco(player, EnumPlayerEco.dark, 1);
-						}
+		if (!e.entity.worldObj.isRemote) if (e.entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) e.entity;
+			if (getPlayerKnowledge(player)) {
+				int rand = new Random().nextInt(10);
+				if (rand == 0) {
+					if (getPlayerEco(player, EnumPlayerEco.light) < getPlayerEcoMax(player, EnumPlayerEco.light)) {
+						addEco(player, EnumPlayerEco.light, 1);
+					}
+					if (getPlayerEco(player, EnumPlayerEco.dark) < getPlayerEcoMax(player, EnumPlayerEco.dark)) {
+						addEco(player, EnumPlayerEco.dark, 1);
+					}
 
-						if (getPlayerMaxXP(player) > 0)
-							levelUp(player);
-					}
-					if (getPlayerEcoMax(player, EnumPlayerEco.light) < getPlayerEco(player, EnumPlayerEco.light)) {
-						AIUtils.setPlayerEco(player, EnumPlayerEco.light, getPlayerEcoMax(player, EnumPlayerEco.light));
-					}
-					if (getPlayerEcoMax(player, EnumPlayerEco.dark) < getPlayerEco(player, EnumPlayerEco.dark)) {
-						AIUtils.setPlayerEco(player, EnumPlayerEco.dark, getPlayerEcoMax(player, EnumPlayerEco.dark));
-					}
+					if (getPlayerMaxXP(player) > 0) levelUp(player);
 				}
-				PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumPlayerEco.light), getPlayerEco(player, EnumPlayerEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.dark)));
+				if (getPlayerEcoMax(player, EnumPlayerEco.light) < getPlayerEco(player, EnumPlayerEco.light)) {
+					AIUtils.setPlayerEco(player, EnumPlayerEco.light, getPlayerEcoMax(player, EnumPlayerEco.light));
+				}
+				if (getPlayerEcoMax(player, EnumPlayerEco.dark) < getPlayerEco(player, EnumPlayerEco.dark)) {
+					AIUtils.setPlayerEco(player, EnumPlayerEco.dark, getPlayerEcoMax(player, EnumPlayerEco.dark));
+				}
 			}
+			PacketHandler.INSTANCE.sendToAll(new MessagePlayerSync(getPlayerKnowledge(player), getPlayerEco(player, EnumPlayerEco.light), getPlayerEco(player, EnumPlayerEco.dark), getPlayerLevel(player), getPlayerXP(player), getPlayerMaxXP(player), getPlayerEcoMax(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.dark)));
+		}
 	}
 
 	@SubscribeEvent

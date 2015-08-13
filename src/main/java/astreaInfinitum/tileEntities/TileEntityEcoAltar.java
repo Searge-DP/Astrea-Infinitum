@@ -1,25 +1,23 @@
 package astreaInfinitum.tileEntities;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import astreaInfinitum.api.IEcoAltarBlock;
+import astreaInfinitum.blocks.AIBlocks;
+import astreaInfinitum.network.MessageAltarSync;
+import astreaInfinitum.network.MessageParticles;
+import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.utils.BlockPos;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import astreaInfinitum.api.IEcoAltarBlock;
-import astreaInfinitum.blocks.AIBlocks;
-import astreaInfinitum.client.particle.EntityEcoFX;
-import astreaInfinitum.network.MessageAltarSync;
-import astreaInfinitum.network.MessageParticles;
-import astreaInfinitum.network.PacketHandler;
-import astreaInfinitum.utils.BlockPos;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class TileEntityEcoAltar extends TileEntity {
 
@@ -36,22 +34,25 @@ public class TileEntityEcoAltar extends TileEntity {
 	public boolean isAltarActivated(World world, int x, int y, int z) {
 		for (int X = x - 3; X <= x + 3; X++) {
 			for (int Z = z - 3; Z <= z + 3; Z++) {
-				if (X != x && Z != z)
-					if (!(world.getBlock(X, y, Z) instanceof IEcoAltarBlock)) {
-						return false;
-					}
+				if (X != x && Z != z) if (!(world.getBlock(X, y, Z) instanceof IEcoAltarBlock)) {
+					return false;
+				}
 			}
 		}
 		return true;
 	}
 
+
 	@Override
 	public void updateEntity() {
-		if (worldObj.isRemote) {
-			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 0.1));
-			Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(worldObj, xCoord + 0.5, yCoord + 1, zCoord + 0.5, 0.1));
-
-		}
+		//		if (worldObj.isRemote) {
+		//
+		//			EntityPlayer player = worldObj.getClosestPlayer(xCoord, yCoord, zCoord, 600);
+		//			// ParticleBeamFX fx = new ParticleBeamFX(worldObj, player, xCoord,
+		//			// yCoord, zCoord, 0, 0.2f, 0.5f, 10);
+		//			EntityEcoBeamFX f1 = new EntityEcoBeamFX(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, player.posX, player.posY, player.posZ, new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 10);
+		//				Minecraft.getMinecraft().effectRenderer.addEffect(f1);
+		//		}
 
 		if (!worldObj.isRemote) {
 			if (isAltarActivated(worldObj, xCoord, yCoord, zCoord)) {

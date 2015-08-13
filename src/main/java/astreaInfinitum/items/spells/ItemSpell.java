@@ -1,8 +1,16 @@
 package astreaInfinitum.items.spells;
 
-import java.util.List;
-import java.util.Random;
-
+import astreaInfinitum.ModProps;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.api.runes.EnumSpellType;
+import astreaInfinitum.api.spell.IPrimarySpell;
+import astreaInfinitum.api.spell.Spell;
+import astreaInfinitum.entities.EntitySpell;
+import astreaInfinitum.network.MessageItemSync;
+import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.utils.AIUtils;
+import astreaInfinitum.utils.NBTHelper;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,15 +20,10 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import astreaInfinitum.ModProps;
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.api.spell.IPrimarySpell;
-import astreaInfinitum.api.spell.Spell;
-import astreaInfinitum.network.MessageItemSync;
-import astreaInfinitum.network.PacketHandler;
-import astreaInfinitum.utils.AIUtils;
-import astreaInfinitum.utils.NBTHelper;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class ItemSpell extends Item implements IPrimarySpell {
 
@@ -32,13 +35,14 @@ public class ItemSpell extends Item implements IPrimarySpell {
 	public IIcon spellIcon = null;
 	public String spellIconName = "";
 
-	public ItemSpell(int castTimeTotal, String name, int ecoUsage, Spell spell) {
+	public ItemSpell(int castTimeTotal, String name, int ecoUsage, Spell spell, String spellIconName) {
 		this.castTimeTotal = castTimeTotal;
 		this.name = name;
 		this.ecoUsage = ecoUsage;
 		this.spell = spell;
 		setMaxStackSize(1);
 		setMaxDamage(castTimeTotal);
+		this.spellIconName = spellIconName;
 	}
 
 	public ItemSpell() {
@@ -66,8 +70,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 	public IIcon getIconFromDamageForRenderPass(int damage, int pass) {
 		if (pass == 1) {
 			return spellIcon;
-		} else
-			return itemIcon;
+		} else return itemIcon;
 	}
 
 	@Override
@@ -86,10 +89,11 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		spellIcon = icons.registerIcon(ModProps.modid + ":runes/icons/" + spellIconName);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {
-		list.add(String.valueOf(NBTHelper.getInt(stack, "AIItemLevel")));
+		list.add("Type: " + getSpellType(stack));
+		list.add("Level: " + NBTHelper.getInt(stack, "AIItemLevel"));
 		list.add(String.valueOf(NBTHelper.getInt(stack, "AIItemXP")));
 		list.add(String.valueOf(NBTHelper.getInt(stack, "AIItemXPMax")));
 	}
@@ -106,11 +110,29 @@ public class ItemSpell extends Item implements IPrimarySpell {
 	}
 
 	public void onCast(ItemStack stack, World world, EntityPlayer player, int x, int y, int z) {
+		System.out.println(0);
 		if (!world.isRemote) {
 			if (NBTHelper.getBoolean(stack, "canCast") && canCast(player, spell.function.action.getEcoUsed())) {
 				int eco = AIUtils.getPlayerEco(player, spell.function.action.getEcoUsed());
+
 				if (spell.function.action.canCast(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z)) {
-					eco -= spell.function.action.onHitTouch(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z, world.getBlock(x, y, z));
+					switch (EnumSpellType.valueOf(NBTHelper.getString(stack, "AISpellType"))) {
+						case touch:
+							eco -= spell.function.action.onHitTouch(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z, world.getBlock(x, y, z));
+							break;
+						case self:
+							eco -= spell.function.action.onHitSelf(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z);
+							break;
+						case projectile:
+							EntitySpell eSpell = new EntitySpell(world, player);
+							eSpell.setSpell(spell);
+							eSpell.caster = player;
+							eSpell.spellLevel = NBTHelper.getInt(stack, "AIItemLevel");
+							world.spawnEntityInWorld(eSpell);
+							eco -= spell.function.action.getSpellUsage(NBTHelper.getInt(stack, "AIItemLevel"));
+							break;
+					}
+
 					AIUtils.addSpellXP(stack, 3);
 					AIUtils.setPlayerEco(player, spell.function.action.getEcoUsed(), eco);
 					NBTHelper.setInteger(stack, "castTime", -1);
@@ -148,6 +170,72 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		return false;
 	}
 
+	public EnumSpellType getSpellType(ItemStack stack) {
+		if (NBTHelper.getString(stack, "AISpellType").isEmpty()) {
+			NBTHelper.setString(stack, "AISpellType", spell.function.action.getActionTypes()[0].name());
+		}
+		return EnumSpellType.valueOf(NBTHelper.getString(stack, "AISpellType"));
+	}
+
+	public void changeSpellType(ItemStack stack, EnumSpellType type) {
+		EnumSpellType[] types = spell.function.action.getActionTypes();
+		List<EnumSpellType> typeList = new ArrayList<EnumSpellType>();
+		for (EnumSpellType typez : types) {
+			typeList.add(typez);
+		}
+		if (typeList.contains(type)) {
+			NBTHelper.setString(stack, "AISpellType", type.name());
+		}
+	}
+
+	public boolean canSpellHaveType(ItemStack stack, EnumSpellType type) {
+		EnumSpellType[] types = spell.function.action.getActionTypes();
+		List<EnumSpellType> typeList = new ArrayList<EnumSpellType>();
+		for (EnumSpellType typez : types) {
+			typeList.add(typez);
+		}
+		if (typeList.contains(type)) {
+			return true;
+		}
+		return false;
+	}
+
+	public void cycleSpellType(ItemStack stack) {
+		EnumSpellType[] types = spell.function.action.getActionTypes();
+		EnumSpellType type = getSpellType(stack);
+		EnumSpellType newType = null;
+		switch (type) {
+			case touch:
+				newType = EnumSpellType.self;
+				if (!canSpellHaveType(stack, newType)) {
+					newType = EnumSpellType.projectile;
+				}
+				if (!canSpellHaveType(stack, newType)) {
+					newType = EnumSpellType.touch;
+				}
+				break;
+			case self:
+				newType = EnumSpellType.projectile;
+				if (!canSpellHaveType(stack, newType)) {
+					newType = EnumSpellType.touch;
+				}
+				if (!canSpellHaveType(stack, newType)) {
+					newType = EnumSpellType.self;
+				}
+				break;
+			case projectile:
+				newType = EnumSpellType.touch;
+				if (!canSpellHaveType(stack, newType)) {
+					newType = EnumSpellType.touch;
+				}
+				if (!canSpellHaveType(stack, newType)) {
+					newType = EnumSpellType.projectile;
+				}
+				break;
+		}
+		NBTHelper.setString(stack, "AISpellType", newType.name());
+	}
+
 	@SuppressWarnings("unused")
 	public void onUpdate(ItemStack stack, World world, Entity entity, int meta, boolean par5) {
 
@@ -159,7 +247,6 @@ public class ItemSpell extends Item implements IPrimarySpell {
 				NBTHelper.setBoolean(stack, "init", true);
 			}
 
-			AIUtils.levelUpSpell(stack);
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
 				if (NBTHelper.getBoolean(stack, "setCasting")) {
@@ -184,27 +271,37 @@ public class ItemSpell extends Item implements IPrimarySpell {
 				} else {
 					Spell.WriteSpellFromNbt(stack.stackTagCompound, spell);
 				}
+
+				if (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == this) {
+					AIUtils.updateSpell(stack);
+					PacketHandler.INSTANCE.sendToAllAround(new MessageItemSync(NBTHelper.getInt(stack, "AIItemXP"), NBTHelper.getInt(stack, "AIItemXPMax"), NBTHelper.getInt(stack, "AIItemLevel"), getSpellType(stack)), new TargetPoint(world.provider.dimensionId, entity.posX, entity.posY, entity.posZ, 128D));
+				}
 			}
-			PacketHandler.INSTANCE.sendToAllAround(new MessageItemSync(NBTHelper.getInt(stack, "AIItemXP"), NBTHelper.getInt(stack, "AIItemXPMax"), NBTHelper.getInt(stack, "AIItemLevel")), new TargetPoint(world.provider.dimensionId, entity.posX, entity.posY, entity.posZ, 128D));
+
 		}
 	}
 
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
 		if (!world.isRemote) {
+			if (player.isSneaking()) {
+				cycleSpellType(stack);
+				return stack;
+			}
 			if (NBTHelper.getInt(stack, "castTime") <= 0 && AIUtils.getPlayerEco(player, spell.function.action.getEcoUsed()) >= ecoUsage && AIUtils.getPlayerKnowledge(player)) {
 				NBTHelper.setBoolean(stack, "setCasting", true);
 			}
 			onCast(stack, world, player, (int) player.posX, (int) player.posY, (int) player.posZ);
-
 		}
-		// player.setItemInUse(stack, 2000);
 		return stack;
 	}
 
 	@Override
 	public boolean onItemUse(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int meta, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
-
+			if (player.isSneaking()) {
+				cycleSpellType(stack);
+				return true;
+			}
 			if (NBTHelper.getInt(stack, "castTime") <= 0 && AIUtils.getPlayerEco(player, spell.function.action.getEcoUsed()) >= ecoUsage && AIUtils.getPlayerKnowledge(player)) {
 				NBTHelper.setBoolean(stack, "setCasting", true);
 			}

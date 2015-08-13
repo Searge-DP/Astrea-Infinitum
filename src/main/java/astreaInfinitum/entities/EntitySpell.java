@@ -1,33 +1,35 @@
 package astreaInfinitum.entities;
 
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.api.spell.Spell;
+import astreaInfinitum.client.particle.EntityEcoFX;
+import astreaInfinitum.utils.AIUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.api.spell.IProjectileSpell;
-import astreaInfinitum.client.particle.EntityEcoFX;
-import astreaInfinitum.utils.AIUtils;
 
 public class EntitySpell extends EntityThrowable {
 
-	public EntitySpell(World p_i1777_1_, EntityLivingBase p_i1777_2_) {
-		super(p_i1777_1_, p_i1777_2_);
+	public Spell spell;
+	public EntityPlayer caster;
+	public int spellLevel;
+
+	public EntitySpell(World world, EntityLivingBase entity) {
+		super(world, entity);
 	}
 
-	public EntitySpell(World p_i1778_1_, double p_i1778_2_, double p_i1778_4_, double p_i1778_6_) {
-		super(p_i1778_1_, p_i1778_2_, p_i1778_4_, p_i1778_6_);
+	public EntitySpell(World world, double x, double y, double z) {
+		super(world, x, y, z);
 	}
 
 	public EntitySpell(World world) {
 		super(world);
 	}
-
-	public IProjectileSpell spell;
-	public EntityPlayer caster;
 
 	@Override
 	public void onEntityUpdate() {
@@ -37,14 +39,19 @@ public class EntitySpell extends EntityThrowable {
 		}
 
 		if (spell != null) {
-			spell.update(worldObj, caster, this, posX, posY, posZ);
+			spell.function.action.onProjectileUpdate(worldObj, caster, this, spellLevel, posX, posY, posZ);
 		}
 	}
 
 	@Override
 	protected void onImpact(MovingObjectPosition mop) {
 		if (!worldObj.isRemote && worldObj != null && mop != null && spell != null) {
-			spell.onHit(worldObj, caster, mop, this.posX, this.posY, this.posZ);
+			if (mop.typeOfHit == MovingObjectType.BLOCK) {
+				spell.function.action.onHitBlock(worldObj, caster, spellLevel, mop.blockX, mop.blockY, mop.blockZ, worldObj.getBlock(mop.blockX, mop.blockY, mop.blockZ));
+			}
+			if (mop.typeOfHit == MovingObjectType.ENTITY) {
+				spell.function.action.onHitEntity(worldObj, caster, spellLevel, mop.entityHit.posX, mop.entityHit.posY, mop.entityHit.posZ, mop.entityHit);
+			}
 			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumPlayerEco.light)));
 			caster.addChatComponentMessage(new ChatComponentText("" + AIUtils.getPlayerEco(caster, EnumPlayerEco.dark)));
 
@@ -52,11 +59,11 @@ public class EntitySpell extends EntityThrowable {
 		}
 	}
 
-	public IProjectileSpell getSpell() {
+	public Spell getSpell() {
 		return spell;
 	}
 
-	public void setSpell(IProjectileSpell spell) {
+	public void setSpell(Spell spell) {
 		this.spell = spell;
 	}
 

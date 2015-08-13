@@ -1,6 +1,5 @@
 package astreaInfinitum;
 
-import net.minecraftforge.common.MinecraftForge;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.gui.GuiHandler;
 import astreaInfinitum.config.Configuration;
@@ -9,6 +8,7 @@ import astreaInfinitum.handlers.PlayerTickHandler;
 import astreaInfinitum.handlers.RecipeHandler;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.potions.AIPotions;
 import astreaInfinitum.proxy.CommonProxy;
 import astreaInfinitum.runes.AIRunes;
 import astreaInfinitum.utils.ClientHandler;
@@ -24,6 +24,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraftforge.common.MinecraftForge;
 
 @Mod(modid = ModProps.modid, name = ModProps.name, version = ModProps.version)
 public class AstreaInfinitum {
@@ -58,6 +59,7 @@ public class AstreaInfinitum {
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
 		GameRegistry.registerWorldGenerator(new GenerationHandler(), 0);
+		AIPotions.init();
 	}
 
 	@EventHandler

@@ -1,17 +1,17 @@
 package astreaInfinitum.items.runes;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import astreaInfinitum.ModProps;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import scala.util.Random;
-import astreaInfinitum.ModProps;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ItemRuneIcon extends Item {
 	public List<String> iconStrings = new ArrayList<String>();
@@ -28,7 +28,7 @@ public class ItemRuneIcon extends Item {
 	@Override
 	public void registerIcons(IIconRegister icons) {
 		this.itemIcon = icons.registerIcon(ModProps.modid + ":runes/basicRuneIcon");
-		registerIcon(icons, "horus");
+		registerIcon(icons, "eye");
 		registerIcon(icons, "melon");
 		registerIcon(icons, "scooter");
 		registerIcon(icons, "shark");
@@ -40,7 +40,6 @@ public class ItemRuneIcon extends Item {
 		registerIcon(icons, "eye");
 		registerIcon(icons, "hex");
 		registerIcon(icons, "bio");
-		
 	}
 
 	private void registerIcon(IIconRegister icons, String name) {
@@ -71,7 +70,7 @@ public class ItemRuneIcon extends Item {
 		}
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void getSubItems(Item item, CreativeTabs tab, List list) {
 		for (int i = 0; i < 12; i++) {
@@ -87,7 +86,7 @@ public class ItemRuneIcon extends Item {
 	@Override
 	public int getColorFromItemStack(ItemStack stack, int pass) {
 		if (pass != 0) {
-			return new Random().nextInt()>>new Random().nextInt(256)/255;
+			return new Random().nextInt() >> new Random().nextInt(256) / 255;
 		}
 		return 0xFFFFFF;
 	}
