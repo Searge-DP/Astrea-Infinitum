@@ -9,7 +9,7 @@ import com.cricketcraft.ctmlib.ISubmapManager;
 
 public abstract class BlockCtm extends Block {
 
-	protected BlockCtm(Material p_i45394_1_) {
+	public BlockCtm(Material p_i45394_1_) {
 		super(p_i45394_1_);
 	}
 

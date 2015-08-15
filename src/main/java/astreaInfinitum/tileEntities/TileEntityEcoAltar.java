@@ -1,12 +1,9 @@
 package astreaInfinitum.tileEntities;
 
-import astreaInfinitum.api.IEcoAltarBlock;
-import astreaInfinitum.blocks.AIBlocks;
-import astreaInfinitum.network.MessageAltarSync;
-import astreaInfinitum.network.MessageParticles;
-import astreaInfinitum.network.PacketHandler;
-import astreaInfinitum.utils.BlockPos;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,10 +11,13 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import astreaInfinitum.api.IEcoAltarBlock;
+import astreaInfinitum.blocks.AIBlocks;
+import astreaInfinitum.network.MessageAltarSync;
+import astreaInfinitum.network.MessageParticles;
+import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.utils.BlockPos;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileEntityEcoAltar extends TileEntity {
 
@@ -45,14 +45,6 @@ public class TileEntityEcoAltar extends TileEntity {
 
 	@Override
 	public void updateEntity() {
-		//		if (worldObj.isRemote) {
-		//
-		//			EntityPlayer player = worldObj.getClosestPlayer(xCoord, yCoord, zCoord, 600);
-		//			// ParticleBeamFX fx = new ParticleBeamFX(worldObj, player, xCoord,
-		//			// yCoord, zCoord, 0, 0.2f, 0.5f, 10);
-		//			EntityEcoBeamFX f1 = new EntityEcoBeamFX(worldObj, xCoord + 0.5, yCoord + 0.5, zCoord + 0.5, player.posX, player.posY, player.posZ, new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 10);
-		//				Minecraft.getMinecraft().effectRenderer.addEffect(f1);
-		//		}
 
 		if (!worldObj.isRemote) {
 			if (isAltarActivated(worldObj, xCoord, yCoord, zCoord)) {

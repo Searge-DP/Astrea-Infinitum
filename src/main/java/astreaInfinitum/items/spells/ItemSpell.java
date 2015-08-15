@@ -70,7 +70,8 @@ public class ItemSpell extends Item implements IPrimarySpell {
 	public IIcon getIconFromDamageForRenderPass(int damage, int pass) {
 		if (pass == 1) {
 			return spellIcon;
-		} else return itemIcon;
+		} else
+			return itemIcon;
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class ItemSpell extends Item implements IPrimarySpell {
 		spellIcon = icons.registerIcon(ModProps.modid + ":runes/icons/" + spellIconName);
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked"})
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {
 		list.add("Type: " + getSpellType(stack));
@@ -117,20 +118,20 @@ public class ItemSpell extends Item implements IPrimarySpell {
 
 				if (spell.function.action.canCast(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z)) {
 					switch (EnumSpellType.valueOf(NBTHelper.getString(stack, "AISpellType"))) {
-						case touch:
-							eco -= spell.function.action.onHitTouch(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z, world.getBlock(x, y, z));
-							break;
-						case self:
-							eco -= spell.function.action.onHitSelf(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z);
-							break;
-						case projectile:
-							EntitySpell eSpell = new EntitySpell(world, player);
-							eSpell.setSpell(spell);
-							eSpell.caster = player;
-							eSpell.spellLevel = NBTHelper.getInt(stack, "AIItemLevel");
-							world.spawnEntityInWorld(eSpell);
-							eco -= spell.function.action.getSpellUsage(NBTHelper.getInt(stack, "AIItemLevel"));
-							break;
+					case touch:
+						eco -= spell.function.action.onHitTouch(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z, world.getBlock(x, y, z));
+						break;
+					case self:
+						eco -= spell.function.action.onHitSelf(world, player, NBTHelper.getInt(stack, "AIItemLevel"), x, y, z);
+						break;
+					case projectile:
+						EntitySpell eSpell = new EntitySpell(world, player);
+						eSpell.setSpell(spell);
+						eSpell.caster = player;
+						eSpell.spellLevel = NBTHelper.getInt(stack, "AIItemLevel");
+						world.spawnEntityInWorld(eSpell);
+						eco -= spell.function.action.getSpellUsage(NBTHelper.getInt(stack, "AIItemLevel"));
+						break;
 					}
 
 					AIUtils.addSpellXP(stack, 3);
@@ -201,42 +202,40 @@ public class ItemSpell extends Item implements IPrimarySpell {
 	}
 
 	public void cycleSpellType(ItemStack stack) {
-		EnumSpellType[] types = spell.function.action.getActionTypes();
 		EnumSpellType type = getSpellType(stack);
 		EnumSpellType newType = null;
 		switch (type) {
-			case touch:
-				newType = EnumSpellType.self;
-				if (!canSpellHaveType(stack, newType)) {
-					newType = EnumSpellType.projectile;
-				}
-				if (!canSpellHaveType(stack, newType)) {
-					newType = EnumSpellType.touch;
-				}
-				break;
-			case self:
+		case touch:
+			newType = EnumSpellType.self;
+			if (!canSpellHaveType(stack, newType)) {
 				newType = EnumSpellType.projectile;
-				if (!canSpellHaveType(stack, newType)) {
-					newType = EnumSpellType.touch;
-				}
-				if (!canSpellHaveType(stack, newType)) {
-					newType = EnumSpellType.self;
-				}
-				break;
-			case projectile:
+			}
+			if (!canSpellHaveType(stack, newType)) {
 				newType = EnumSpellType.touch;
-				if (!canSpellHaveType(stack, newType)) {
-					newType = EnumSpellType.touch;
-				}
-				if (!canSpellHaveType(stack, newType)) {
-					newType = EnumSpellType.projectile;
-				}
-				break;
+			}
+			break;
+		case self:
+			newType = EnumSpellType.projectile;
+			if (!canSpellHaveType(stack, newType)) {
+				newType = EnumSpellType.touch;
+			}
+			if (!canSpellHaveType(stack, newType)) {
+				newType = EnumSpellType.self;
+			}
+			break;
+		case projectile:
+			newType = EnumSpellType.touch;
+			if (!canSpellHaveType(stack, newType)) {
+				newType = EnumSpellType.touch;
+			}
+			if (!canSpellHaveType(stack, newType)) {
+				newType = EnumSpellType.projectile;
+			}
+			break;
 		}
 		NBTHelper.setString(stack, "AISpellType", newType.name());
 	}
 
-	@SuppressWarnings("unused")
 	public void onUpdate(ItemStack stack, World world, Entity entity, int meta, boolean par5) {
 
 		if (!world.isRemote) {

@@ -7,7 +7,10 @@ import astreaInfinitum.ModProps;
 import astreaInfinitum.blocks.dusts.BlockArcaneDust;
 import astreaInfinitum.blocks.dusts.BlockEcoDust;
 import astreaInfinitum.blocks.eco.BlockEcoBeamGenerator;
+import astreaInfinitum.blocks.eco.BlockEcoBlock;
 import astreaInfinitum.blocks.eco.BlockEcoInfuser;
+import astreaInfinitum.blocks.eco.BlockEcoVent;
+import astreaInfinitum.blocks.eco.ItemBlockEcoBlock;
 import astreaInfinitum.blocks.eco.world.BlockEcoOre;
 import astreaInfinitum.blocks.eco.world.ItemBlockEcoOre;
 import astreaInfinitum.items.AIItems;
@@ -35,6 +38,10 @@ public class AIBlocks {
 	public static Block ecoDust = new BlockEcoDust();
 	public static Block arcaneDust = new BlockArcaneDust();
 
+	public static Block ecoBlock = new BlockEcoBlock();
+	public static Block ecoVent= new BlockEcoVent();
+	
+
 	private static void registerBlocks() {
 		registerBlock(ecoAltarBlock, "ecoAltarBlock", "ecoAltarBlock");
 		registerBlock(ecoAltar, "ecoAltar", "ecoAltar");
@@ -46,6 +53,8 @@ public class AIBlocks {
 		registerBlock(ecoBeamGenerator, "ecoBeamGenerator", "ecoBeamGenerator");
 		registerBlock(ecoInfuser, "ecoInfuser", "ecoInfuser");
 		registerItemBlockNoTexture(ecoOre, "ecoOre", "ecoOre", ItemBlockEcoOre.class);
+		registerItemBlockNoTexture(ecoBlock, "ecoBlock", "ecoBlock", ItemBlockEcoBlock.class);
+		registerBlock(ecoVent, "ecoVent", "ecoVent");
 
 	}
 

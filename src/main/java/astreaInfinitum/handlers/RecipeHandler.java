@@ -42,6 +42,7 @@ public class RecipeHandler {
 		tags.setTag("Lore", nbttaglist);
 	}
 
+	@SuppressWarnings("unused")
 	private static void writeLoreToNBT(NBTTagCompound tags, List<String> lore) {
 		NBTTagList nbttaglist = new NBTTagList();
 		for (int iter = 0; iter < lore.size(); iter++) {
