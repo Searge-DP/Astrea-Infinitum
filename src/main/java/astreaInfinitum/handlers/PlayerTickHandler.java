@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntitySnowman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemShears;
@@ -31,6 +32,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.client.particle.EntityEcoFX;
 import astreaInfinitum.entities.properties.EntityData;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.items.spells.ItemSpell;
@@ -79,7 +81,7 @@ public class PlayerTickHandler {
 
 	@SubscribeEvent
 	public void mobSpells(LivingUpdateEvent e) {
-		if (!e.entity.worldObj.isRemote)
+		if (!e.entity.worldObj.isRemote) {
 			if (e.entity.getEntityData().getBoolean("trans")) {
 				int transTime = e.entity.getEntityData().getInteger("transTime");
 				if (transTime > 0) {
@@ -94,6 +96,11 @@ public class PlayerTickHandler {
 					e.entity.setDead();
 				}
 			}
+//			if (e.entity instanceof EntitySnowman) {
+//				Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(e.entity.worldObj, e.entity.posX+0.5, e.entity.posY+(e.entity.height/2), e.entity.posZ+0.5));
+//			}
+		}
+
 	}
 
 	@SubscribeEvent
