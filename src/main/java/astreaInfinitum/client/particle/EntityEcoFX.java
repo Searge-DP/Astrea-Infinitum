@@ -48,25 +48,21 @@ public class EntityEcoFX extends EntityFX {
 
 	public EntityEcoFX(World world, double x, double y, double z, double motionY, float red, float green, float blue) {
 		super(world, x, y, z);
-		motionX = motionY = motionZ = particleAlpha = 0;
-		double targetX = 0;
-		double targetY = motionY;
-		double targetZ = 0;
-		particleRed = red;
-		particleGreen = green;
-		particleBlue = blue;
+		motionX  = motionZ = particleAlpha = 0;
+
+//		particleRed = 0.727F;
+//		particleGreen = 0.684F;
+//		particleBlue = 0.527F;
+		 particleRed = red;
+		 particleGreen = green;
+		 particleBlue = blue;
 		indexX = (byte) rand.nextInt(4);
 		indexY = (byte) rand.nextInt(4);
-
 		particleScale = (targetX != 0D && targetY != 0D && targetZ != 0D ? 0.5F : 1F) * rand.nextFloat() * 0.2F + 0.3F;
 		maxAge = (byte) (2 + rand.nextInt(20));
 
-		this.targetX = targetX;
-		this.targetY = targetY;
-		this.targetZ = targetZ;
-
 		if (targetX == 0D && targetZ == 0D)
-			motionY = targetY;
+			this.motionY = motionY;
 	}
 
 	public EntityEcoFX(World world, double x, double y, double z) {

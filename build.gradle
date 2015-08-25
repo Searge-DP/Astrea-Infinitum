@@ -22,7 +22,7 @@ group= "astreaInfinitum" // http://maven.apache.org/guides/mini/guide-naming-con
 archivesBaseName = "Astrea~Infinitum"
 
 minecraft {
-    version = "1.7.10-10.13.3.1373-1.7.10"
+    version = "1.7.10-10.13.4.1492-1.7.10"
     runDir = "eclipse"
 }
 configurations {

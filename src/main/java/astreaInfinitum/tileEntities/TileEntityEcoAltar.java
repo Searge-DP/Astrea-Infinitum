@@ -34,18 +34,17 @@ public class TileEntityEcoAltar extends TileEntity {
 	public boolean isAltarActivated(World world, int x, int y, int z) {
 		for (int X = x - 3; X <= x + 3; X++) {
 			for (int Z = z - 3; Z <= z + 3; Z++) {
-				if (X != x && Z != z) if (!(world.getBlock(X, y, Z) instanceof IEcoAltarBlock)) {
-					return false;
-				}
+				if (X != x && Z != z)
+					if (!(world.getBlock(X, y, Z) instanceof IEcoAltarBlock)) {
+						return false;
+					}
 			}
 		}
 		return true;
 	}
 
-
 	@Override
 	public void updateEntity() {
-
 		if (!worldObj.isRemote) {
 			if (isAltarActivated(worldObj, xCoord, yCoord, zCoord)) {
 				activated = true;
@@ -96,9 +95,10 @@ public class TileEntityEcoAltar extends TileEntity {
 		for (int X = x - 3; X <= x + 3; X++) {
 			for (int Z = z - 3; Z <= z + 3; Z++) {
 				Block block = world.getBlock(X, y, Z);
-				if (block == Blocks.nether_brick || block == Blocks.quartz_block) {
-					blocksToConvert.add(new BlockPos(X, y, Z));
-				}
+				if (block != null)
+					if (block == Blocks.nether_brick || block == Blocks.quartz_block) {
+						blocksToConvert.add(new BlockPos(X, y, Z));
+					}
 			}
 		}
 	}

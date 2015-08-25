@@ -16,6 +16,8 @@ import astreaInfinitum.blocks.eco.world.ItemBlockEcoOre;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.tileEntities.TileEntityEcoAltar;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoBlock;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoVent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class AIBlocks {
@@ -41,6 +43,7 @@ public class AIBlocks {
 	public static Block ecoBlock = new BlockEcoBlock();
 	public static Block ecoVent= new BlockEcoVent();
 	
+	public static Block hidden = new BlockHidden();
 
 	private static void registerBlocks() {
 		registerBlock(ecoAltarBlock, "ecoAltarBlock", "ecoAltarBlock");
@@ -55,13 +58,15 @@ public class AIBlocks {
 		registerItemBlockNoTexture(ecoOre, "ecoOre", "ecoOre", ItemBlockEcoOre.class);
 		registerItemBlockNoTexture(ecoBlock, "ecoBlock", "ecoBlock", ItemBlockEcoBlock.class);
 		registerBlock(ecoVent, "ecoVent", "ecoVent");
+		registerBlock(hidden, "hidden", "hidden");
 
 	}
 
 	private static void registerTileEntities() {
 		GameRegistry.registerTileEntity(TileEntityPedestal.class, "pedestal");
 		GameRegistry.registerTileEntity(TileEntityEcoAltar.class, "ecoAltar");
-
+		GameRegistry.registerTileEntity(TileEntityEcoVent.class, "ecoVent");
+		GameRegistry.registerTileEntity(TileEntityEcoBlock.class, "ecoBlock");
 	}
 
 	private static void registerBlock(Block block, String name, String key) {

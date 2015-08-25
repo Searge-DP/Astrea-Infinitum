@@ -11,6 +11,7 @@ import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.gui.GuiBookBasic;
 import astreaInfinitum.client.gui.GuiKnowledgeTablet;
 import astreaInfinitum.client.render.RenderEcoAltarBlock;
+import astreaInfinitum.client.render.RenderEcoVent;
 import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.client.render.RenderSpell;
 import astreaInfinitum.client.render.items.RenderItemPedestal;
@@ -22,6 +23,7 @@ import astreaInfinitum.items.AIItems;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoInfuser;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoVent;
 import astreaInfinitum.utils.ClientHandler;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -68,6 +70,7 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.registerTileEntity(TileEntityPedestal.class, "pedestalRender", new RenderPedestal());
 		ClientRegistry.registerTileEntity(TileEntityEcoBeamGenerator.class, "ecoBeamGeneratorRender", new RenderTileEcoBeamGenerator());
 		ClientRegistry.registerTileEntity(TileEntityEcoInfuser.class, "ecoInfuserRender", new RenderTileEcoInfuser());
+		ClientRegistry.registerTileEntity(TileEntityEcoVent.class, "ecoVentRender", new RenderEcoVent());
 
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.pedestal), new RenderItemPedestal());
 		AstreaInfinitum.ctmID = RenderingRegistry.getNextAvailableRenderId();
@@ -76,5 +79,10 @@ public class ClientProxy extends CommonProxy {
 		RenderingRegistry.registerBlockHandler(new RenderEcoAltarBlock());
 		MinecraftForgeClient.registerItemRenderer(AIItems.wand, new RenderItemWand());
 
+	}
+	
+	@Override
+	public void renderBeam() {
+		
 	}
 }
