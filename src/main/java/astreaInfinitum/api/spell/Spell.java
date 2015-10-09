@@ -1,8 +1,8 @@
 package astreaInfinitum.api.spell;
 
-import astreaInfinitum.api.runes.EnumRuneFunction;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import astreaInfinitum.api.runes.EnumRuneFunction;
 
 public class Spell {
 

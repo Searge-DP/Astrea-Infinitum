@@ -15,7 +15,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntitySnowman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemShears;
@@ -32,7 +31,6 @@ import net.minecraftforge.event.world.BlockEvent;
 import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.client.particle.EntityEcoFX;
 import astreaInfinitum.entities.properties.EntityData;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.items.spells.ItemSpell;
@@ -96,9 +94,11 @@ public class PlayerTickHandler {
 					e.entity.setDead();
 				}
 			}
-//			if (e.entity instanceof EntitySnowman) {
-//				Minecraft.getMinecraft().effectRenderer.addEffect(new EntityEcoFX(e.entity.worldObj, e.entity.posX+0.5, e.entity.posY+(e.entity.height/2), e.entity.posZ+0.5));
-//			}
+			// if (e.entity instanceof EntitySnowman) {
+			// Minecraft.getMinecraft().effectRenderer.addEffect(new
+			// EntityEcoFX(e.entity.worldObj, e.entity.posX+0.5,
+			// e.entity.posY+(e.entity.height/2), e.entity.posZ+0.5));
+			// }
 		}
 
 	}
@@ -108,6 +108,7 @@ public class PlayerTickHandler {
 		if (!e.entity.worldObj.isRemote)
 			if (e.entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) e.entity;
+
 				if (getPlayerKnowledge(player)) {
 					int rand = new Random().nextInt(10);
 					if (rand == 0) {
@@ -136,23 +137,23 @@ public class PlayerTickHandler {
 	public void renderGUI(RenderGameOverlayEvent.Text e) {
 		if ((e.type == RenderGameOverlayEvent.ElementType.CROSSHAIRS) || (e.type == RenderGameOverlayEvent.ElementType.TEXT)) {
 			EntityPlayer player = AstreaInfinitum.proxy.getClientPlayer();
+
 			if (getPlayerKnowledge(player)) {
 				Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
 				Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) + 91, e.resolution.getScaledHeight() - 12, 6, 2, 102, 12);
 				Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 91 - 102, e.resolution.getScaledHeight() - 12, 6, 18, 102, 12);
 				if (getPlayerEco(player, EnumPlayerEco.light) > 0) {
-					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerEco(player, EnumPlayerEco.light) + ":" + getPlayerEcoMax(player, EnumPlayerEco.light) + ":" + getScaledBar(102, getPlayerEco(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.light)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 500, 0xFFFFFF, true);
 					Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
 					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) + 93, e.resolution.getScaledHeight() - 11, 120, 3, getScaledBar(102, getPlayerEco(player, EnumPlayerEco.light), getPlayerEcoMax(player, EnumPlayerEco.light)), 12);
 				}
 				if (getPlayerEco(player, EnumPlayerEco.dark) > 0) {
-					Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerEco(player, EnumPlayerEco.dark) + ":" + getPlayerEcoMax(player, EnumPlayerEco.dark) + ":" + getScaledBar(102, getPlayerEco(player, EnumPlayerEco.dark), getPlayerEcoMax(player, EnumPlayerEco.dark)), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 550, 0xccaacc, true);
 					Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(ModProps.modid, "textures/gui/overlay.png"));
 					Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect((e.resolution.getScaledWidth() / 2) - 93 - 98, e.resolution.getScaledHeight() - 11, 222 - getScaledBar(102, getPlayerEco(player, EnumPlayerEco.dark), getPlayerEcoMax(player, EnumPlayerEco.dark)), 19, getScaledBar(102, getPlayerEco(player, EnumPlayerEco.dark), getPlayerEcoMax(player, EnumPlayerEco.dark)), 12);
 				}
 				Minecraft.getMinecraft().fontRenderer.drawString("" + getPlayerLevel(player), e.resolution.getScaledWidth() / 2, e.resolution.getScaledHeight() - 44, 0xFF55FF, true);
 
 			}
+
 		}
 	}
 

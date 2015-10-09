@@ -12,12 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import astreaInfinitum.ModProps;
-import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.render.model.EcoVent;
-import astreaInfinitum.client.render.model.ModelPedestal;
-import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoVent;
-import astreaInfinitum.utils.RenderingUtils;
 
 @SuppressWarnings("unused")
 public class RenderEcoVent extends TileEntitySpecialRenderer {

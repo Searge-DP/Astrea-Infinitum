@@ -1,11 +1,11 @@
 package astreaInfinitum.api.runes;
 
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.entities.EntitySpell;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.entities.EntitySpell;
 
 public abstract class RuneAction {
 

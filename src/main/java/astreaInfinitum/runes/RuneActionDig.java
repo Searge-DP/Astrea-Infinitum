@@ -1,14 +1,14 @@
 package astreaInfinitum.runes;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.runes.EnumSpellType;
 import astreaInfinitum.api.runes.RuneAction;
 import astreaInfinitum.entities.EntitySpell;
 import astreaInfinitum.utils.AIUtils;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
 
 public class RuneActionDig extends RuneAction {
 
@@ -24,7 +24,6 @@ public class RuneActionDig extends RuneAction {
 		return false;
 	}
 
-
 	@Override
 	public int onHitEntity(World world, EntityPlayer caster, int spellLevel, double x, double y, double z, Entity entity) {
 		return 0;
@@ -34,7 +33,8 @@ public class RuneActionDig extends RuneAction {
 	public int onHitBlock(World world, EntityPlayer caster, int spellLevel, int x, int y, int z, Block block) {
 		if (block.getBlockHardness(world, x, y, z) <= 2 + (spellLevel * 0.5) && block.getBlockHardness(world, x, y, z) >= 0) {
 			block.breakBlock(world, x, y, z, block, world.getBlockMetadata(x, y, z));
-			block.harvestBlock(world, caster, x, y, z, world.getBlockMetadata(x, y, z));
+			if (!caster.capabilities.isCreativeMode)
+				block.harvestBlock(world, caster, x, y, z, world.getBlockMetadata(x, y, z));
 			world.setBlockToAir(x, y, z);
 			return getSpellUsage(spellLevel);
 		}
@@ -69,7 +69,7 @@ public class RuneActionDig extends RuneAction {
 
 	@Override
 	public EnumSpellType[] getActionTypes() {
-		return new EnumSpellType[]{EnumSpellType.projectile, EnumSpellType.touch};
+		return new EnumSpellType[] { EnumSpellType.projectile, EnumSpellType.touch };
 	}
 
 	@Override

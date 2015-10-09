@@ -3,6 +3,7 @@ package astreaInfinitum.proxy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import astreaInfinitum.api.utils.TileEntityClientServer;
 
 public class CommonProxy {
 	
@@ -41,6 +42,11 @@ public class CommonProxy {
 	
 	public void renderBeam(){
 		
+	}
+
+
+	public void updateTile(TileEntityClientServer tile){
+		tile.updateServer();
 	}
 	
 }

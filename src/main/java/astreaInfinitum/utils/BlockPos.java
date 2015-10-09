@@ -23,8 +23,8 @@ public class BlockPos {
 
 	public NBTTagCompound writeToNbt(NBTTagCompound tag) {
 		tag.setInteger("x", x);
-		tag.setInteger("x", y);
-		tag.setInteger("x", z);
+		tag.setInteger("y", y);
+		tag.setInteger("z", z);
 
 		return tag;
 	}

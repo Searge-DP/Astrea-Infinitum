@@ -1,9 +1,9 @@
 package astreaInfinitum.config;
 
+import java.io.File;
+
 import astreaInfinitum.reference.PotionReference;
 import astreaInfinitum.reference.SpellReference;
-
-import java.io.File;
 
 public class Configuration {
 

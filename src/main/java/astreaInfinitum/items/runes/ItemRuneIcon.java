@@ -1,17 +1,17 @@
 package astreaInfinitum.items.runes;
 
-import astreaInfinitum.ModProps;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import scala.util.Random;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import astreaInfinitum.ModProps;
 
 public class ItemRuneIcon extends Item {
 	public List<String> iconStrings = new ArrayList<String>();

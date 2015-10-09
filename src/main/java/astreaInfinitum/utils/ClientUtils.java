@@ -1,10 +1,10 @@
 package astreaInfinitum.utils;
 
+import net.minecraft.entity.player.EntityPlayer;
 import astreaInfinitum.AstreaInfinitum;
 import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.network.MessageItemSync;
 import astreaInfinitum.network.MessagePlayerSync;
-import net.minecraft.entity.player.EntityPlayer;
 
 public class ClientUtils {
 

@@ -1,34 +1,25 @@
 package astreaInfinitum.handlers;
 
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.api.recipes.RecipeEcoAltar;
-import astreaInfinitum.api.recipes.RecipeRegistry;
-import astreaInfinitum.items.AIItems;
-import cpw.mods.fml.common.registry.GameRegistry;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-
-import java.util.ArrayList;
-import java.util.List;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.api.recipes.RecipeEcoAltar;
+import astreaInfinitum.api.recipes.RecipeRegistry;
+import astreaInfinitum.items.AIItems;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class RecipeHandler {
 
 	public static void postInit() {
-		RecipeRegistry.registerEcoAltarRecipe(new RecipeEcoAltar(new ItemStack(Blocks.diamond_block), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), EnumPlayerEco.light, 12));
-		RecipeRegistry.registerEcoAltarRecipe(new RecipeEcoAltar(new ItemStack(Blocks.diamond_block), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), EnumPlayerEco.dark, 12));
-		//		List<String> lores = new ArrayList<String>();
-		//		lores.add("Current researched chapters are:");
-		//		lores.add("Something Old");
-		//		lores.add("Something New");
-		//		lores.add("Something Blue... and Green, Red and Yellow");
-		//
-		//		ItemStack stack = new ItemStack(AIItems.loreBook);
-		//		writeLoreToNBT(NBTHelper.getTag(stack), lores);
-		//		GameRegistry.addRecipe(new ShapelessOreRecipe(stack, Items.stick));
+		RecipeRegistry.registerEcoAltarRecipe(new RecipeEcoAltar(new ItemStack(Blocks.diamond_block), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), EnumPlayerEco.light, 12, null));
+		RecipeRegistry.registerEcoAltarRecipe(new RecipeEcoAltar(new ItemStack(Blocks.diamond_block), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), new ItemStack(Blocks.dirt), EnumPlayerEco.dark, 12, null));
 		GameRegistry.addRecipe(new ShapedOreRecipe(AIItems.rune, " S ", "SSS", " S ", 'S', "stone"));
 	}
 

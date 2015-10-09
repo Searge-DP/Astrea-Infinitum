@@ -1,7 +1,9 @@
 package astreaInfinitum.client.render.items;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.IItemRenderer;
@@ -71,7 +73,6 @@ public class RenderItemWand implements IItemRenderer {
 		Minecraft.getMinecraft().renderEngine.bindTexture(new ResourceLocation(ModProps.modid + ":textures/models/wand.png"));
 		ModelWand wand = new ModelWand();
 		wand.render(0.125f);
-
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
 	}
 

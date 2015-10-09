@@ -7,6 +7,7 @@ import astreaInfinitum.blocks.AIBlocks;
 
 public class MultiBlockEcoVent extends MultiBlockBase {
 
+	@SuppressWarnings("unused")
 	@Override
 	public boolean canForm(IBlockAccess world, int x, int y, int z) {
 		boolean allow = false;

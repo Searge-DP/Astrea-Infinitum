@@ -1,5 +1,10 @@
 package astreaInfinitum;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.WeightedRandomChestContent;
+import net.minecraftforge.common.ChestGenHooks;
+import net.minecraftforge.common.MinecraftForge;
+import astreaInfinitum.api.runes.EnumRuneFunction;
 import astreaInfinitum.blocks.AIBlocks;
 import astreaInfinitum.client.gui.GuiHandler;
 import astreaInfinitum.config.Configuration;
@@ -10,6 +15,7 @@ import astreaInfinitum.items.AIItems;
 import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.potions.AIPotions;
 import astreaInfinitum.proxy.CommonProxy;
+import astreaInfinitum.reference.BuffReference;
 import astreaInfinitum.runes.AIRunes;
 import astreaInfinitum.utils.ClientHandler;
 import astreaInfinitum.utils.Lang;
@@ -24,12 +30,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraftforge.common.MinecraftForge;
 
-@Mod(modid = ModProps.modid, name = ModProps.name, version = ModProps.version)
+@Mod(modid = ModProps.modid, name = ModProps.name, version = ModProps.version, dependencies = ModProps.dependencies)
 public class AstreaInfinitum {
 
-	public static int ctmID, oreID;
+	public static int ctmID, oreID, carvingID;
 
 	@Instance(ModProps.modid)
 	public static AstreaInfinitum INSTANCE;
@@ -47,7 +52,12 @@ public class AstreaInfinitum {
 		AIRunes.preInit();
 		AIItems.init();
 		AIBlocks.init();
+		BuffReference.init();
+		for (int i = 0; i < EnumRuneFunction.values().length; i++) {
+			ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(new ItemStack(AIItems.runeFunction, 1, i), 1, 1, 5));
+			ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST, new WeightedRandomChestContent(new ItemStack(AIItems.runeFunction, 1, i), 1, 1, 5));
 
+		}
 		EntityRegistry.registerModEntity(EntitySpell.class, "spell", 0, INSTANCE, 30, 30, true);
 		proxy.renderSpell();
 		// proxy.registerClientHandler();

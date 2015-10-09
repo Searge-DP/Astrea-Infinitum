@@ -2,11 +2,11 @@ package astreaInfinitum.world;
 
 import java.util.Random;
 
-import astreaInfinitum.blocks.AIBlocks;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.feature.WorldGenMinable;
+import astreaInfinitum.blocks.AIBlocks;
 import cpw.mods.fml.common.IWorldGenerator;
 
 public class GenerationHandler implements IWorldGenerator {

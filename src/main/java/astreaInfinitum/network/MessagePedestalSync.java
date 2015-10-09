@@ -13,7 +13,6 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 public class MessagePedestalSync implements IMessage, IMessageHandler<MessagePedestalSync, IMessage> {
 
 	public ItemStack item;
-	public float angle;
 	public int x;
 	public int y;
 	public int z;
@@ -22,16 +21,15 @@ public class MessagePedestalSync implements IMessage, IMessageHandler<MessagePed
 
 	}
 
-	public MessagePedestalSync(ItemStack item, float angle, int x, int y, int z) {
+	public MessagePedestalSync(ItemStack item, int x, int y, int z) {
 		this.item = item;
-		this.angle = angle;
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
 	public MessagePedestalSync(TileEntityPedestal tile) {
-		this(tile.getStackInSlot(0), tile.angle, tile.xCoord, tile.yCoord, tile.zCoord);
+		this(tile.getStackInSlot(0), tile.xCoord, tile.yCoord, tile.zCoord);
 	}
 
 	@Override
@@ -39,7 +37,6 @@ public class MessagePedestalSync implements IMessage, IMessageHandler<MessagePed
 		x = buf.readInt();
 		y = buf.readInt();
 		z = buf.readInt();
-		angle = buf.readFloat();
 		item = ByteBufUtils.readItemStack(buf);
 	}
 
@@ -48,7 +45,6 @@ public class MessagePedestalSync implements IMessage, IMessageHandler<MessagePed
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);
-		buf.writeFloat(angle);
 		ByteBufUtils.writeItemStack(buf, item);
 	}
 
@@ -56,7 +52,6 @@ public class MessagePedestalSync implements IMessage, IMessageHandler<MessagePed
 	public IMessage onMessage(MessagePedestalSync message, MessageContext ctx) {
 		TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (tileEntity instanceof TileEntityPedestal) {
-			((TileEntityPedestal) tileEntity).angle = message.angle;
 			((TileEntityPedestal) tileEntity).setInventorySlotContents(0, message.item);
 		}
 

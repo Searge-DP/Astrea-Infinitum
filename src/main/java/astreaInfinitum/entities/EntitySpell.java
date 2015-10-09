@@ -1,9 +1,5 @@
 package astreaInfinitum.entities;
 
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.api.spell.Spell;
-import astreaInfinitum.client.particle.EntityEcoFX;
-import astreaInfinitum.utils.AIUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,6 +8,10 @@ import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.MovingObjectPosition.MovingObjectType;
 import net.minecraft.world.World;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.api.spell.Spell;
+import astreaInfinitum.client.particle.EntityEcoFX;
+import astreaInfinitum.utils.AIUtils;
 
 public class EntitySpell extends EntityThrowable {
 

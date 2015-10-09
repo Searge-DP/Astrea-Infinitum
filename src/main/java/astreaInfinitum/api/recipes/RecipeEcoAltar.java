@@ -1,7 +1,10 @@
 package astreaInfinitum.api.recipes;
 
-import astreaInfinitum.api.EnumPlayerEco;
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.api.crafting.CraftingCondition;
 
 public class RecipeEcoAltar {
 
@@ -13,8 +16,9 @@ public class RecipeEcoAltar {
 	private ItemStack westItem;
 	private EnumPlayerEco eco;
 	private int ecoDustNeeded;
+	private CraftingCondition condtion;
 
-	public RecipeEcoAltar(ItemStack output, ItemStack baseItem, ItemStack northItem, ItemStack southItem, ItemStack eastItem, ItemStack westItem, EnumPlayerEco eco, int ecoDustNeeded) {
+	public RecipeEcoAltar(ItemStack output, ItemStack baseItem, ItemStack northItem, ItemStack southItem, ItemStack eastItem, ItemStack westItem, EnumPlayerEco eco, int ecoDustNeeded, CraftingCondition condition) {
 		this.baseItem = baseItem;
 		this.output = output;
 		this.northItem = northItem;
@@ -23,6 +27,15 @@ public class RecipeEcoAltar {
 		this.westItem = westItem;
 		this.eco = eco;
 		this.ecoDustNeeded = ecoDustNeeded;
+		this.condtion = condition;
+	}
+
+	public CraftingCondition getCondtion() {
+		return condtion;
+	}
+
+	public boolean hasCraftingCondition() {
+		return this.condtion != null;
 	}
 
 	public ItemStack getBaseItem() {

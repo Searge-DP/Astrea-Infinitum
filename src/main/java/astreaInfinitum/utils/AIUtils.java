@@ -1,5 +1,18 @@
 package astreaInfinitum.utils;
 
+import java.util.List;
+import java.util.Random;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.MathHelper;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
+import net.minecraft.world.World;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.runes.EnumSpellType;
@@ -7,17 +20,6 @@ import astreaInfinitum.entities.properties.EntityData;
 import astreaInfinitum.items.spells.ItemSpell;
 import astreaInfinitum.network.MessagePlayerSync;
 import astreaInfinitum.network.PacketHandler;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
-import net.minecraft.world.World;
-
-import java.util.Random;
 
 public class AIUtils {
 
@@ -238,4 +240,42 @@ public class AIUtils {
 		return world.func_147447_a(vec, var23, par3, !par3, false);
 	}
 
+	@SuppressWarnings("rawtypes")
+	public static Entity getPointedEntity(World world, EntityLivingBase entityplayer, double range, double collideRadius, boolean nonCollide) {
+		Entity pointedEntity = null;
+		double d = range;
+		Vec3 vec3d = Vec3.createVectorHelper(entityplayer.posX, entityplayer.posY + entityplayer.getEyeHeight(), entityplayer.posZ);
+		Vec3 vec3d1 = entityplayer.getLookVec();
+		Vec3 vec3d2 = vec3d.addVector(vec3d1.xCoord * d, vec3d1.yCoord * d, vec3d1.zCoord * d);
+		double f1 = collideRadius;
+		List list = world.getEntitiesWithinAABBExcludingEntity(entityplayer, entityplayer.boundingBox.addCoord(vec3d1.xCoord * d, vec3d1.yCoord * d, vec3d1.zCoord * d).expand(f1, f1, f1));
+
+		double d2 = 0.0D;
+		for (int i = 0; i < list.size(); i++) {
+			Entity entity = (Entity) list.get(i);
+			MovingObjectPosition mop = world.rayTraceBlocks(
+					Vec3.createVectorHelper(entityplayer.posX, entityplayer.posY + entityplayer.getEyeHeight(), entityplayer.posZ),
+					Vec3.createVectorHelper(entity.posX, entity.posY + entity.getEyeHeight(), entity.posZ),
+					false);
+			if (((entity.canBeCollidedWith()) || (nonCollide)) && mop == null) {
+				float f2 = Math.max(0.8F, entity.getCollisionBorderSize());
+				AxisAlignedBB axisalignedbb = entity.boundingBox.expand(f2, f2, f2);
+				MovingObjectPosition movingobjectposition = axisalignedbb.calculateIntercept(vec3d, vec3d2);
+				if (axisalignedbb.isVecInside(vec3d)) {
+					if ((0.0D < d2) || (d2 == 0.0D)) {
+						pointedEntity = entity;
+						d2 = 0.0D;
+					}
+
+				} else if (movingobjectposition != null) {
+					double d3 = vec3d.distanceTo(movingobjectposition.hitVec);
+					if ((d3 < d2) || (d2 == 0.0D)) {
+						pointedEntity = entity;
+						d2 = d3;
+					}
+				}
+			}
+		}
+		return pointedEntity;
+	}
 }

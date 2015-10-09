@@ -1,11 +1,11 @@
 package astreaInfinitum.client.particle;
 
-import astreaInfinitum.ModProps;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EntityFX;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import astreaInfinitum.ModProps;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 @SuppressWarnings("unused")

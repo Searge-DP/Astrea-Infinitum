@@ -2,6 +2,7 @@ package astreaInfinitum.utils;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class NBTHelper {
 	public static boolean hasTag(ItemStack itemStack, String keyName) {
@@ -17,12 +18,11 @@ public class NBTHelper {
 	/**
 	 * Initializes the NBT Tag Compound for the given ItemStack if it is null
 	 *
-	 * @param itemStack
-	 *            The ItemStack for which its NBT Tag Compound is being checked
-	 *            for initialization
+	 * @param itemStack The ItemStack for which its NBT Tag Compound is being
+	 *        checked for initialization
 	 */
 	private static void initNBTTagCompound(ItemStack itemStack) {
-		if (itemStack !=null && itemStack.stackTagCompound == null) {
+		if (itemStack != null && itemStack.stackTagCompound == null) {
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
 	}
@@ -163,9 +163,28 @@ public class NBTHelper {
 		itemStack.stackTagCompound.setDouble(keyName, keyValue);
 	}
 
-	public static NBTTagCompound getTag(ItemStack stack) {
-		initNBTTagCompound(stack);
-		return stack.stackTagCompound;
+	public static NBTTagCompound getTag(ItemStack itemStack) {
+		initNBTTagCompound(itemStack);
+		return itemStack.stackTagCompound;
+	}
+
+	public static NBTTagList getTagList(ItemStack itemStack, String keyName, int type) {
+		initNBTTagCompound(itemStack);
+		return itemStack.stackTagCompound.getTagList(keyName, type);
+	}
+
+	public static void setTagList(ItemStack itemStack, String keyName, NBTTagList list) {
+		initNBTTagCompound(itemStack);
+
+		itemStack.stackTagCompound.setTag(keyName, list);
+
+	}
+
+	public static boolean isStackEqual(ItemStack stack1, ItemStack stack2)
+	{
+		initNBTTagCompound(stack1);
+		initNBTTagCompound(stack2);
+		return stack1.isItemEqual(stack2) && stack1.stackTagCompound.equals(stack2.stackTagCompound);
 	}
 
 }

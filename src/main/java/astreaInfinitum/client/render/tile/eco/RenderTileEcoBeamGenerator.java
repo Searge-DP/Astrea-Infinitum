@@ -38,7 +38,6 @@ import org.lwjgl.opengl.GL11;
 
 import astreaInfinitum.ModProps;
 import astreaInfinitum.client.render.model.AI_PylonModel;
-import astreaInfinitum.client.render.model.EcoBeamGenerator;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
 
 @SuppressWarnings("unused")

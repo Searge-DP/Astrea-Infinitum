@@ -31,16 +31,18 @@ public class BlockPedestal extends BlockContainer {
 				stack.stackSize = 1;
 				tile.setInventorySlotContents(0, stack);
 				player.inventory.decrStackSize(player.inventory.currentItem, 1);
+				tile.markDirty();
 				return true;
 			}
 			if (player.inventory.getCurrentItem() != null && player.inventory.getCurrentItem().getItem() instanceof IWand) {
-				tile.infuse(world, x, y, z);
+				tile.infuse(world, player, x, y, z);
 				return true;
 			}
 			if (tile.getStackInSlot(0) != null && player.inventory.getCurrentItem() == null) {
 				if (!world.isRemote) {
 					world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 1.5, z + 0.5, tile.getStackInSlot(0)));
 					tile.setInventorySlotContents(0, null);
+					tile.markDirty();
 				}
 				return true;
 			}
@@ -79,4 +81,5 @@ public class BlockPedestal extends BlockContainer {
 		if (tile.getStackInSlot(0) != null)
 			world.spawnEntityInWorld(new EntityItem(world, x + 0.5, y + 0.5, z + 0.5, tile.getStackInSlot(0)));
 	}
+
 }

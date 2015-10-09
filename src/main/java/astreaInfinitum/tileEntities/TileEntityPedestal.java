@@ -1,14 +1,7 @@
 package astreaInfinitum.tileEntities;
 
-import astreaInfinitum.api.EnumPlayerEco;
-import astreaInfinitum.api.dust.EnumDust;
-import astreaInfinitum.api.dust.IDust;
-import astreaInfinitum.api.recipes.RecipeEcoAltar;
-import astreaInfinitum.api.recipes.RecipeRegistry;
-import astreaInfinitum.blocks.BlockEcoAltar;
-import astreaInfinitum.network.MessagePedestalSync;
-import astreaInfinitum.network.PacketHandler;
-import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
+import java.util.ArrayList;
+
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -20,104 +13,127 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.ForgeDirection;
-
-import java.util.ArrayList;
+import astreaInfinitum.api.EnumPlayerEco;
+import astreaInfinitum.api.dust.EnumDust;
+import astreaInfinitum.api.dust.IDust;
+import astreaInfinitum.api.recipes.RecipeEcoAltar;
+import astreaInfinitum.api.recipes.RecipeRegistry;
+import astreaInfinitum.blocks.BlockEcoAltar;
+import astreaInfinitum.network.MessagePedestalSync;
+import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoAltar;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileEntityPedestal extends TileEntity implements IInventory {
 
 	public ItemStack[] items = new ItemStack[1];
 	public float angle;
+	public boolean dirty = false;
 
 	@Override
 	public void updateEntity() {
-		angle += 6;
+		if (worldObj.isRemote)
+			angle += 6;
 		if (!worldObj.isRemote) {
-			PacketHandler.INSTANCE.sendToAllAround(new MessagePedestalSync(this), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
+			if (worldObj.getTotalWorldTime() % 20 == 0) {
+				dirty = true;
+				markDirty();
+			}
 		}
+
 	}
 
-	public void infuse(World world, int x, int y, int z) {
-		if (!world.isRemote) if (getStackInSlot(0) != null) {
-			ArrayList<ItemStack> pedestalItems = new ArrayList<ItemStack>();
-			if (getPedestalItem(world, x, y, z, ForgeDirection.NORTH) != null) {
-				pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.NORTH));
-			}
-			if (getPedestalItem(world, x, y, z, ForgeDirection.SOUTH) != null) {
-				pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.SOUTH));
-			}
-			if (getPedestalItem(world, x, y, z, ForgeDirection.EAST) != null) {
-				pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.EAST));
-			}
-			if (getPedestalItem(world, x, y, z, ForgeDirection.WEST) != null) {
-				pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.WEST));
-			}
-			int dustArcane = 0;
-			int dustEco = 0;
-			if (pedestalItems.size() == 4 && isValidAltar(world, x, y, z)) {
-				for (int posX = -4; posX < 4; posX++) {
-					for (int posZ = -4; posZ < 4; posZ++) {
-						if (world.getBlock(x + posX, y, z + posZ) != null && world.getBlock(x + posX, y, z + posZ) instanceof IDust) {
-							IDust dust = (IDust) world.getBlock(x + posX, y, z + posZ);
-							if (dust.getDustType() == EnumDust.arcane) {
-								dustArcane++;
-							}
-							if (dust.getDustType() == EnumDust.eco) {
-								dustEco++;
+	public void infuse(World world, EntityPlayer player, int x, int y, int z) {
+		if (!world.isRemote)
+			if (getStackInSlot(0) != null) {
+				ArrayList<ItemStack> pedestalItems = new ArrayList<ItemStack>();
+				if (getPedestalItem(world, x, y, z, ForgeDirection.NORTH) != null) {
+					pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.NORTH));
+				}
+				if (getPedestalItem(world, x, y, z, ForgeDirection.SOUTH) != null) {
+					pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.SOUTH));
+				}
+				if (getPedestalItem(world, x, y, z, ForgeDirection.EAST) != null) {
+					pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.EAST));
+				}
+				if (getPedestalItem(world, x, y, z, ForgeDirection.WEST) != null) {
+					pedestalItems.add(getPedestalItem(world, x, y, z, ForgeDirection.WEST));
+				}
+				int dustArcane = 0;
+				int dustEco = 0;
+				if (pedestalItems.size() == 4 && isValidAltar(world, x, y, z)) {
+					for (int posX = -4; posX < 4; posX++) {
+						for (int posZ = -4; posZ < 4; posZ++) {
+							if (world.getBlock(x + posX, y, z + posZ) != null && world.getBlock(x + posX, y, z + posZ) instanceof IDust) {
+								IDust dust = (IDust) world.getBlock(x + posX, y, z + posZ);
+								if (dust.getDustType() == EnumDust.arcane) {
+									dustArcane++;
+								}
+								if (dust.getDustType() == EnumDust.eco) {
+									dustEco++;
+								}
 							}
 						}
 					}
-				}
 
-				if (dustEco > 0 && dustArcane > 0) {
-					return;
-				}
-				if (dustArcane > 0) {
-					RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumPlayerEco.light);
-					if (recipe != null && dustArcane >= recipe.getEcoDustNeeded()) {
-						dustArcane = recipe.getEcoDustNeeded();
-						for (int posX = -3; posX < 4; posX++) {
-							if (dustArcane > 0) for (int posZ = -3; posZ < 4; posZ++) {
+					if (dustEco > 0 && dustArcane > 0) {
+						return;
+					}
+					if (dustArcane > 0) {
+						RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumPlayerEco.light);
+
+						if (recipe != null && dustArcane >= recipe.getEcoDustNeeded()) {
+							if (recipe.hasCraftingCondition()) {
+								if (!recipe.getCondtion().canCraft(worldObj, player, x, y, z)) {
+									return;
+								}
+							}
+							dustArcane = recipe.getEcoDustNeeded();
+							for (int posX = -3; posX < 4; posX++) {
 								if (dustArcane > 0)
-									if (world.getBlock(x + posX, y, z + posZ) != null && world.getBlock(x + posX, y, z + posZ) instanceof IDust) {
-										world.setBlockToAir(x + posX, y, z + posZ);
-										dustArcane--;
-										world.addWeatherEffect(new EntityLightningBolt(world, x + posX, y, z + posZ));
-										setInventorySlotContents(0, recipe.getOutput().copy());
-										for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-											setPedestalItem(world, x, y, z, dir, null);
-										}
-										markDirty();
+									for (int posZ = -3; posZ < 4; posZ++) {
+										if (dustArcane > 0)
+											if (world.getBlock(x + posX, y, z + posZ) != null && world.getBlock(x + posX, y, z + posZ) instanceof IDust) {
+												world.setBlockToAir(x + posX, y, z + posZ);
+												dustArcane--;
+												world.addWeatherEffect(new EntityLightningBolt(world, x + posX, y, z + posZ));
+												setInventorySlotContents(0, recipe.getOutput().copy());
+												for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+													setPedestalItem(world, x, y, z, dir, null);
+												}
+												markDirty();
+											}
 									}
 							}
 						}
-					}
 
-				}
-				if (dustEco > 0) {
-					RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumPlayerEco.dark);
-					if (recipe != null && dustEco >= recipe.getEcoDustNeeded()) {
-						dustEco = recipe.getEcoDustNeeded();
-						for (int posX = -2; posX < 3; posX++) {
-							if (dustEco > 0) for (int posZ = -2; posZ < 3; posZ++) {
+					}
+					if (dustEco > 0) {
+						RecipeEcoAltar recipe = RecipeRegistry.getRecipeForItems(getStackInSlot(0), pedestalItems.get(0), pedestalItems.get(1), pedestalItems.get(2), pedestalItems.get(3), EnumPlayerEco.dark);
+						if (recipe != null && dustEco >= recipe.getEcoDustNeeded()) {
+							dustEco = recipe.getEcoDustNeeded();
+							for (int posX = -2; posX < 3; posX++) {
 								if (dustEco > 0)
-									if (world.getBlock(x + posX, y, z + posZ) != null && world.getBlock(x + posX, y, z + posZ) instanceof IDust) {
-										world.setBlockToAir(x + posX, y, z + posZ);
-										dustEco--;
-										world.setBlock(x + posX, y, z + posZ, Blocks.fire);
-										setInventorySlotContents(0, recipe.getOutput());
-										for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
-											setPedestalItem(world, x, y, z, dir, null);
-										}
-										markDirty();
+									for (int posZ = -2; posZ < 3; posZ++) {
+										if (dustEco > 0)
+											if (world.getBlock(x + posX, y, z + posZ) != null && world.getBlock(x + posX, y, z + posZ) instanceof IDust) {
+												world.setBlockToAir(x + posX, y, z + posZ);
+												dustEco--;
+												world.setBlock(x + posX, y, z + posZ, Blocks.fire);
+												setInventorySlotContents(0, recipe.getOutput());
+												for (ForgeDirection dir : ForgeDirection.VALID_DIRECTIONS) {
+													setPedestalItem(world, x, y, z, dir, null);
+												}
+												markDirty();
+											}
 									}
 							}
 						}
+
 					}
 
 				}
-
 			}
-		}
 
 	}
 
@@ -260,4 +276,5 @@ public class TileEntityPedestal extends TileEntity implements IInventory {
 
 		tags.setTag("Items", nbttaglist);
 	}
+
 }

@@ -7,15 +7,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import astreaInfinitum.api.IEcoAltarBlock;
 import astreaInfinitum.items.AIItems;
-import astreaInfinitum.tileEntities.TileEntityEcoAltar;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoAltar;
 
 public class BlockEcoAltar extends Block implements ITileEntityProvider {
 
-	protected BlockEcoAltar() {
+	public BlockEcoAltar() {
 		super(Material.rock);
-
 	}
 
 	@Override
@@ -24,9 +22,29 @@ public class BlockEcoAltar extends Block implements ITileEntityProvider {
 		if (player.getCurrentEquippedItem() != null) {
 			if (player.getCurrentEquippedItem().getItem() == AIItems.bookBasic) {
 				TileEntityEcoAltar tile = (TileEntityEcoAltar) world.getTileEntity(x, y, z);
-				if (!world.isRemote && canActivate(world, x, y, z)) {
-					tile.shouldConvert = true;
-					tile.markDirty();
+				if (canActivate(world, x, y, z)) {
+					for (int X = x - 3; X <= x + 3; X++) {
+						for (int Z = z - 3; Z <= z + 3; Z++) {
+							Block block = world.getBlock(X, y, Z);
+							if (block != null) {
+								if (world.getBlock(X, y, Z) == Blocks.nether_brick) {
+									world.setBlock(X, y, Z, AIBlocks.ecoAltarBlock);
+									if (world.isRemote) {
+										for (int i = 0; i < 16; i++)
+											world.spawnParticle("blockdust_" + Block.getIdFromBlock(world.getBlock(X, y, Z)) + "_0", X + world.rand.nextDouble(), y, Z + world.rand.nextDouble(), 0, 0.8, 0);
+									}
+								}
+								if (world.getBlock(X, y, Z) == Blocks.quartz_block) {
+									world.setBlock(X, y, Z, AIBlocks.ecoRitualBlock);
+									if (world.isRemote) {
+										for (int i = 0; i < 16; i++)
+											world.spawnParticle("blockdust_" + Block.getIdFromBlock(world.getBlock(X, y, Z)) + "_0", X + world.rand.nextDouble(), y, Z + world.rand.nextDouble(), 0, 0.8, 0);
+									}
+								}
+							}
+						}
+					}
+					tile.activated = true;
 				}
 				return true;
 			}
@@ -38,7 +56,7 @@ public class BlockEcoAltar extends Block implements ITileEntityProvider {
 		for (int X = x - 3; X <= x + 3; X++) {
 			for (int Z = z - 3; Z <= z + 3; Z++) {
 				if (X != x && Z != z)
-					if (world.getBlock(X, y, Z) == null || !(world.getBlock(X, y, Z) == Blocks.nether_brick || (world.getBlock(X, y, Z) == Blocks.quartz_block || world.getBlock(X, y, Z) instanceof IEcoAltarBlock))) {
+					if (world.getBlock(X, y, Z) == Blocks.air || !(world.getBlock(X, y, Z) == Blocks.nether_brick || (world.getBlock(X, y, Z) == Blocks.quartz_block))) {
 						return false;
 					}
 			}
@@ -50,6 +68,5 @@ public class BlockEcoAltar extends Block implements ITileEntityProvider {
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
 		return new TileEntityEcoAltar();
 	}
-
 
 }

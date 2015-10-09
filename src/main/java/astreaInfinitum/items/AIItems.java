@@ -1,5 +1,12 @@
 package astreaInfinitum.items;
 
+import java.util.ArrayList;
+
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import astreaInfinitum.AITab;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.runes.EnumRuneFunction;
@@ -18,13 +25,6 @@ import astreaInfinitum.items.tablets.ItemKnowledgeTablet;
 import astreaInfinitum.items.wands.ItemWand;
 import astreaInfinitum.reference.SpellReference;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
-
-import java.util.ArrayList;
 
 public class AIItems {
 

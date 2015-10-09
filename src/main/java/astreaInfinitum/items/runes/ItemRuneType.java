@@ -1,14 +1,14 @@
 package astreaInfinitum.items.runes;
 
-import astreaInfinitum.ModProps;
-import astreaInfinitum.api.runes.EnumSpellType;
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-
-import java.util.List;
+import astreaInfinitum.ModProps;
+import astreaInfinitum.api.runes.EnumSpellType;
 
 public class ItemRuneType extends Item {
 

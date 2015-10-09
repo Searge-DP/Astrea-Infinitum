@@ -13,11 +13,13 @@ import astreaInfinitum.blocks.eco.BlockEcoVent;
 import astreaInfinitum.blocks.eco.ItemBlockEcoBlock;
 import astreaInfinitum.blocks.eco.world.BlockEcoOre;
 import astreaInfinitum.blocks.eco.world.ItemBlockEcoOre;
+import astreaInfinitum.blocks.rune.BlockRuneCarver;
 import astreaInfinitum.items.AIItems;
-import astreaInfinitum.tileEntities.TileEntityEcoAltar;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoAltar;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoBlock;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoVent;
+import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class AIBlocks {
@@ -44,6 +46,8 @@ public class AIBlocks {
 	public static Block ecoVent= new BlockEcoVent();
 	
 	public static Block hidden = new BlockHidden();
+	
+	public static Block runeCrafter = new BlockRuneCarver();
 
 	private static void registerBlocks() {
 		registerBlock(ecoAltarBlock, "ecoAltarBlock", "ecoAltarBlock");
@@ -59,6 +63,8 @@ public class AIBlocks {
 		registerItemBlockNoTexture(ecoBlock, "ecoBlock", "ecoBlock", ItemBlockEcoBlock.class);
 		registerBlock(ecoVent, "ecoVent", "ecoVent");
 		registerBlock(hidden, "hidden", "hidden");
+		
+		registerBlock(runeCrafter, "runeCrafter", "runeCrafter");
 
 	}
 
@@ -67,6 +73,8 @@ public class AIBlocks {
 		GameRegistry.registerTileEntity(TileEntityEcoAltar.class, "ecoAltar");
 		GameRegistry.registerTileEntity(TileEntityEcoVent.class, "ecoVent");
 		GameRegistry.registerTileEntity(TileEntityEcoBlock.class, "ecoBlock");
+		GameRegistry.registerTileEntity(TileEntityRuneCarver.class, "runeCarver");
+		
 	}
 
 	private static void registerBlock(Block block, String name, String key) {

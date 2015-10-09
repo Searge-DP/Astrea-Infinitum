@@ -1,10 +1,10 @@
 package astreaInfinitum.blocks.spell;
 
-import astreaInfinitum.AstreaInfinitum;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import astreaInfinitum.AstreaInfinitum;
 
 public class BlockWritingDesk extends Block {
 
