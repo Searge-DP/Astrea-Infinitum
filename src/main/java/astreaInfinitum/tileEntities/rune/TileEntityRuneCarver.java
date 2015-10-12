@@ -3,15 +3,6 @@ package astreaInfinitum.tileEntities.rune;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.MutablePair;
-
-import scala.reflect.api.Trees.PackageDefExtractor;
-import astreaInfinitum.network.PacketHandler;
-import astreaInfinitum.network.sync.MessageItemStackNBTSync;
-import astreaInfinitum.network.sync.MessageRuneCarverGUISync;
-import astreaInfinitum.network.sync.MessageRuneCarverSync;
-import astreaInfinitum.utils.NBTHelper;
-import fluxedCore.util.CoordinatePair;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -20,6 +11,14 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.Constants.NBT;
+
+import org.apache.commons.lang3.tuple.MutablePair;
+
+import astreaInfinitum.network.PacketHandler;
+import astreaInfinitum.network.sync.MessageItemStackNBTSync;
+import astreaInfinitum.network.sync.MessageRuneCarverSync;
+import astreaInfinitum.utils.NBTHelper;
+import fluxedCore.util.CoordinatePair;
 
 public class TileEntityRuneCarver extends TileEntity implements IInventory {
 
@@ -31,23 +30,23 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 	public ItemStack prevStack = null;
 
 	public TileEntityRuneCarver() {
-		items = new ItemStack[2];
+		items = new ItemStack[3];
 	}
 
 	@Override
 	public void updateEntity() {
 		if (!worldObj.isRemote) {
-			if (getStackInSlot(0) != null) {
+			if (getStackInSlot(1) != null) {
 				if (prevStack == null) {
 					PacketHandler.INSTANCE.sendToAll(new MessageRuneCarverSync(this));
-					prevStack = getStackInSlot(0).copy();
+					prevStack = getStackInSlot(1).copy();
 				}
-				if (prevStack != null && !NBTHelper.isStackEqual(prevStack, getStackInSlot(0))) {
+				if (prevStack != null && !NBTHelper.isStackEqual(prevStack, getStackInSlot(1))) {
 					PacketHandler.INSTANCE.sendToAll(new MessageRuneCarverSync(this));
-					prevStack = getStackInSlot(0).copy();
+					prevStack = getStackInSlot(1).copy();
 					lines.clear();
 				}
-				ItemStack rune = getStackInSlot(0);
+				ItemStack rune = getStackInSlot(1).copy();
 				if (lines.isEmpty()) {
 					for (int i = 0; i < NBTHelper.getTagList(rune, "linesLeft", NBT.TAG_COMPOUND).tagCount(); i++) {
 						NBTTagCompound leftLine = NBTHelper.getTagList(rune, "linesLeft", NBT.TAG_COMPOUND).getCompoundTagAt(i);
@@ -77,7 +76,6 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 					lines.clear();
 				}
 			}
-			System.out.println("lines: " + lines.size());
 		}
 	}
 
@@ -108,10 +106,8 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		System.out.println("start read NBT");
 		super.readFromNBT(nbt);
 		readInventoryFromNBT(nbt);
-		System.out.println("stop read NBT");
 	}
 
 	public void readInventoryFromNBT(NBTTagCompound tags) {
@@ -127,11 +123,8 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 
 	@Override
 	public void writeToNBT(NBTTagCompound tag) {
-		System.out.println("start save NBT");
 		super.writeToNBT(tag);
 		writeInventoryToNBT(tag);
-
-		System.out.println("stop save NBT");
 	}
 
 	public void writeInventoryToNBT(NBTTagCompound tags) {

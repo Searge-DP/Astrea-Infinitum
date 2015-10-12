@@ -54,8 +54,8 @@ public class MessageItemStackNBTSync implements IMessage, IMessageHandler<Messag
 		TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (tileEntity instanceof TileEntityRuneCarver) {
 			TileEntityRuneCarver tile = (TileEntityRuneCarver) tileEntity;
-			if (tile.getStackInSlot(0) != null)
-				tile.getStackInSlot(0).stackTagCompound = message.stack.stackTagCompound;
+			if (tile.getStackInSlot(1) != null)
+				tile.getStackInSlot(1).stackTagCompound = message.stack.stackTagCompound;
 		}
 		return null;
 	}

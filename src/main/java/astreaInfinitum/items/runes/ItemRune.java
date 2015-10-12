@@ -16,6 +16,10 @@ import astreaInfinitum.ModProps;
 import astreaInfinitum.utils.NBTHelper;
 
 public class ItemRune extends Item {
+	
+	public ItemRune() {
+		setMaxStackSize(1);
+	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean p_77624_4_) {

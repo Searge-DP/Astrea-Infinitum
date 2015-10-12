@@ -3,7 +3,6 @@ package astreaInfinitum.network.sync;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -30,7 +29,7 @@ public class MessageRuneCarverSync implements IMessage, IMessageHandler<MessageR
 	}
 
 	public MessageRuneCarverSync(TileEntityRuneCarver tile) {
-		this(tile.getStackInSlot(0), tile.xCoord, tile.yCoord, tile.zCoord);
+		this(tile.getStackInSlot(1), tile.xCoord, tile.yCoord, tile.zCoord);
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class MessageRuneCarverSync implements IMessage, IMessageHandler<MessageR
 	public IMessage onMessage(MessageRuneCarverSync message, MessageContext ctx) {
 		TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (tileEntity instanceof TileEntityRuneCarver) {
-			((TileEntityRuneCarver) tileEntity).setInventorySlotContents(0, message.item);
+			((TileEntityRuneCarver) tileEntity).setInventorySlotContents(1, message.item);
 		}
 
 		return null;

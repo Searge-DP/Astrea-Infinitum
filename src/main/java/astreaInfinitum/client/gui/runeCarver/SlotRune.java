@@ -1,18 +1,9 @@
 package astreaInfinitum.client.gui.runeCarver;
 
-import org.apache.commons.lang3.tuple.MutablePair;
-
-import fluxedCore.util.CoordinatePair;
-import astreaInfinitum.network.PacketHandler;
-import astreaInfinitum.network.sync.MessageItemStackNBTSync;
-import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
-import astreaInfinitum.utils.NBTHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 
 public class SlotRune extends Slot {
 
@@ -27,20 +18,21 @@ public class SlotRune extends Slot {
 
 	@Override
 	public void onPickupFromSlot(EntityPlayer player, ItemStack stack) {
-		ItemStack rune = inventory.getStackInSlot(0);
+		ItemStack rune = inventory.getStackInSlot(1);
 		player.inventory.setItemStack(rune);
-		inventory.setInventorySlotContents(0, null);
+		inventory.setInventorySlotContents(1, null);
 		super.onPickupFromSlot(player, stack);
 	}
 
 	@Override
 	public boolean getHasStack() {
-		return inventory.getStackInSlot(0) != null;
+		return inventory.getStackInSlot(1) != null;
 	}
 
 	@Override
 	public ItemStack getStack() {
-		return inventory.getStackInSlot(0);
+		return inventory.getStackInSlot(1) != null ? inventory.getStackInSlot(1).copy() : null;
 	}
+	
 
 }

@@ -121,6 +121,8 @@ public class TileEntityEcoVent extends TileEntity {
 						break;
 					}
 				PacketHandler.INSTANCE.sendToAllAround(new MessageEcoVentSync(this), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
+			}else{
+				changeVisibility(worldObj, xCoord, yCoord, zCoord, true);
 			}
 			if (!blockToBreak.isEmpty())
 				blockToBreak.clear();
@@ -165,19 +167,17 @@ public class TileEntityEcoVent extends TileEntity {
 	}
 
 	public void changeVisibility(World world, int x, int y, int z, boolean visible) {
-		if (isActive(world, x, y, z)) {
 			for (int[] i : coords) {
 				int X = i[0];
 				int Y = i[1];
 				int Z = i[2];
-				if (world.getBlock(x + X, y + Y, z + Z) instanceof BlockEcoBlock) {
+				if (!world.isAirBlock(x+X, y+Y, z+Z) && world.getBlock(x + X, y + Y, z + Z) instanceof BlockEcoBlock) {
 					TileEntityEcoBlock tile = (TileEntityEcoBlock) world.getTileEntity(x + X, y + Y, z + Z);
 					tile.setVisible(visible);
 					PacketHandler.INSTANCE.sendToAllAround(new MessageEcoBlockSync(tile), new TargetPoint(world.provider.dimensionId, x + X, y + Y, z + Z, 128D));
 					world.getBlock(x + X, y + Y, z + Z).onNeighborBlockChange(world, x + X, y + Y, z + Z, world.getBlock(x + X, y + Y, z + Z));
 				}
 			}
-		}
 	}
 
 	@Override

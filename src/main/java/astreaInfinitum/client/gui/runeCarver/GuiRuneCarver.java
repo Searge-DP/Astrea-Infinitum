@@ -5,26 +5,22 @@ import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants.NBT;
 
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.lwjgl.opengl.GL11;
 
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
-
 import astreaInfinitum.ModProps;
+import astreaInfinitum.client.gui.information.GuiInformation;
 import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.network.sync.MessageRuneCarverServerSync;
 import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
 import astreaInfinitum.utils.NBTHelper;
-import cpw.mods.fml.client.FMLClientHandler;
 import fluxedCore.util.CoordinatePair;
 import fluxedCore.util.RenderUtils;
 import fluxedCore.util.ResourceInformation;
@@ -38,6 +34,7 @@ public class GuiRuneCarver extends GuiContainer {
 	}
 
 	private static final ResourceLocation texture = new ResourceLocation(ModProps.modid, "textures/gui/GUICarving.png");
+	private static final ResourceLocation rune = new ResourceLocation(ModProps.modid, "textures/gui/GUICarving-Rune.png");
 	private static final ResourceInformation node = new ResourceInformation(texture, new CoordinatePair(0, 245), new CoordinatePair(8, 8));
 
 	int innerX, innerY;
@@ -55,7 +52,7 @@ public class GuiRuneCarver extends GuiContainer {
 		this.ySize = 245;
 
 		super.initGui();
-		this.innerX = guiLeft + 48;
+		this.innerX = guiLeft+47;
 		this.innerY = guiTop + 10;
 		this.nodes = tile.nodes;
 		this.lines = tile.lines;
@@ -64,7 +61,7 @@ public class GuiRuneCarver extends GuiContainer {
 
 	@Override
 	public void updateScreen() {
-		if (tile.getStackInSlot(0) == null && !nodes.isEmpty()) {
+		if (tile.getStackInSlot(1) == null && !nodes.isEmpty()) {
 			nodes.clear();
 		}
 	}
@@ -75,23 +72,25 @@ public class GuiRuneCarver extends GuiContainer {
 		nodes.clear();
 		GL11.glColor4d(1, 1, 1, 1);
 		GL11.glEnable(GL11.GL_LIGHTING);
-		if (tile.getStackInSlot(0) != null) {
+		if (tile.getStackInSlot(1) != null) {
 			if (prevStack == null) {
-				prevStack = tile.getStackInSlot(0).copy();
-			} else if (prevStack != null && !NBTHelper.isStackEqual(prevStack, tile.getStackInSlot(0))) {
+				prevStack = tile.getStackInSlot(1).copy();
+			} else if (prevStack != null && !NBTHelper.isStackEqual(prevStack, tile.getStackInSlot(1))) {
 				lines.clear();
-				prevStack = tile.getStackInSlot(0).copy();
+				prevStack = tile.getStackInSlot(1).copy();
 			}
 
-			// mc.renderEngine.bindTexture(texture);
-			// drawLine(innerX, innerY, mouseX, mouseY, 1, 0, 0, 3);
+			mc.renderEngine.bindTexture(this.rune);
+			drawTexturedModalRect(innerX, innerY, 0, 0, 128, 128);
+			mc.renderEngine.bindTexture(texture);
+
 			if (lines.isEmpty()) {
-				for(int i = 0;i< NBTHelper.getTagList(tile.getStackInSlot(0), "linesLeft", NBT.TAG_COMPOUND).tagCount();i++){
-					NBTTagCompound left = NBTHelper.getTagList(tile.getStackInSlot(0), "linesLeft", NBT.TAG_COMPOUND).getCompoundTagAt(i);
-					NBTTagCompound right= NBTHelper.getTagList(tile.getStackInSlot(0), "linesRight", NBT.TAG_COMPOUND).getCompoundTagAt(i);
+				for (int i = 0; i < NBTHelper.getTagList(tile.getStackInSlot(1), "linesLeft", NBT.TAG_COMPOUND).tagCount(); i++) {
+					NBTTagCompound left = NBTHelper.getTagList(tile.getStackInSlot(1), "linesLeft", NBT.TAG_COMPOUND).getCompoundTagAt(i);
+					NBTTagCompound right = NBTHelper.getTagList(tile.getStackInSlot(1), "linesRight", NBT.TAG_COMPOUND).getCompoundTagAt(i);
 					lines.add(new MutablePair<CoordinatePair, CoordinatePair>(CoordinatePair.readFromNBT(left), CoordinatePair.readFromNBT(right)));
 				}
-						
+
 			}
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			if (!lines.isEmpty()) {
@@ -108,7 +107,7 @@ public class GuiRuneCarver extends GuiContainer {
 							0.2f, 1);
 				}
 			}
-			ItemStack rune = tile.getStackInSlot(0);
+			ItemStack rune = tile.getStackInSlot(1);
 			NBTTagList nodes = NBTHelper.getTagList(rune, "nodes", NBT.TAG_COMPOUND);
 			for (int i = 0; i < nodes.tagCount(); i++) {
 				NBTTagCompound rnode = nodes.getCompoundTagAt(i);
@@ -179,11 +178,6 @@ public class GuiRuneCarver extends GuiContainer {
 		return false;
 	}
 
-	public void drawTexturedModelRect(int x, int y, ResourceInformation info) {
-		Minecraft.getMinecraft().renderEngine.bindTexture(info.getLocation());
-		drawTexturedModalRect(x, y, info.getUvPair().getX(), info.getUvPair().getY(), info.getSizePair().getX(), info.getSizePair().getY());
-	}
-
 	@Override
 	public void drawGuiContainerBackgroundLayer(float p_146976_1_, int p_146976_2_, int p_146976_3_) {
 		if (mc != null && mc.renderEngine != null) {
@@ -191,5 +185,68 @@ public class GuiRuneCarver extends GuiContainer {
 		}
 		drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 	}
+	
+//	@Override
+//	public void drawGuiContainerForegroundLayer(int mx, int my) {
+//		super.drawGuiContainerForegroundLayer(mx, my);
+//		nodes.clear();
+//		GL11.glColor4d(1, 1, 1, 1);
+//		GL11.glEnable(GL11.GL_LIGHTING);
+//		if (tile.getStackInSlot(1) != null) {
+//			if (prevStack == null) {
+//				prevStack = tile.getStackInSlot(1).copy();
+//			} else if (prevStack != null && !NBTHelper.isStackEqual(prevStack, tile.getStackInSlot(1))) {
+//				lines.clear();
+//				prevStack = tile.getStackInSlot(1).copy();
+//			}
+//			int innerX = 47;
+//			int innerY = 10;
+//			mc.renderEngine.bindTexture(rune);
+//			drawTexturedModalRect(innerX, innerY, 0, 0, innerWidth, innerHeight);
+//			mc.renderEngine.bindTexture(texture);
+//
+//			if (lines.isEmpty()) {
+//				for (int i = 0; i < NBTHelper.getTagList(tile.getStackInSlot(1), "linesLeft", NBT.TAG_COMPOUND).tagCount(); i++) {
+//					NBTTagCompound left = NBTHelper.getTagList(tile.getStackInSlot(1), "linesLeft", NBT.TAG_COMPOUND).getCompoundTagAt(i);
+//					NBTTagCompound right = NBTHelper.getTagList(tile.getStackInSlot(1), "linesRight", NBT.TAG_COMPOUND).getCompoundTagAt(i);
+//					lines.add(new MutablePair<CoordinatePair, CoordinatePair>(CoordinatePair.readFromNBT(left), CoordinatePair.readFromNBT(right)));
+//				}
+//
+//			}
+//			
+//			GL11.glDisable(GL11.GL_DEPTH_TEST);
+//			if (!lines.isEmpty()) {
+//				for (MutablePair<CoordinatePair, CoordinatePair> line : lines) {
+//					RenderUtils.drawLine(innerX + line.left.getX(), innerY + line.left.getY(), innerX + line.right.getX(), innerY + line.right.getY(), 1f, 1f, 1f,
+//							9);
+//					RenderUtils.drawLine(innerX + line.left.getX(), innerY + line.left.getY(), innerX + line.right.getX(), innerY + line.right.getY(), 0.8f, 0.8f,
+//							0.8f, 7);
+//					RenderUtils.drawLine(innerX + line.left.getX(), innerY + line.left.getY(), innerX + line.right.getX(), innerY + line.right.getY(), 0.6f, 0.6f,
+//							0.6f, 5);
+//					RenderUtils.drawLine(innerX + line.left.getX(), innerY + line.left.getY(), innerX + line.right.getX(), innerY + line.right.getY(), 0.4f, 0.4f,
+//							0.4f, 3);
+//					RenderUtils.drawLine(innerX + line.left.getX(), innerY + line.left.getY(), innerX + line.right.getX(), innerY + line.right.getY(), 0.2f, 0.2f,
+//							0.2f, 1);
+//				}
+//			}
+//			ItemStack rune = tile.getStackInSlot(1);
+//			NBTTagList nodes = NBTHelper.getTagList(rune, "nodes", NBT.TAG_COMPOUND);
+//			for (int i = 0; i < nodes.tagCount(); i++) {
+//				NBTTagCompound rnode = nodes.getCompoundTagAt(i);
+//				drawTexturedModelRect(innerX + rnode.getInteger("x"), innerY + rnode.getInteger("y"), node);
+//				this.nodes.add(new CoordinatePair(rnode.getInteger("x"), rnode.getInteger("y")));
+//			}
+//		} else {
+//			lines.clear();
+//			prevNode = null;
+//		}
+//
+//		GL11.glEnable(GL11.GL_LIGHTING);
+//		GL11.glEnable(GL11.GL_DEPTH_TEST);
+//	}
 
+	public void drawTexturedModelRect(int x, int y, ResourceInformation info) {
+		Minecraft.getMinecraft().renderEngine.bindTexture(info.getLocation());
+		drawTexturedModalRect(x, y, info.getUvPair().getX(), info.getUvPair().getY(), info.getSizePair().getX(), info.getSizePair().getY());
+	}
 }

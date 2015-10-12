@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.lwjgl.input.Mouse;
-
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import org.lwjgl.input.Mouse;
+
 import astreaInfinitum.ModProps;
-import astreaInfinitum.client.gui.GuiButtonItemStack;
 import fluxedCore.client.gui.GuiObject;
 import fluxedCore.client.gui.objects.GuiObjectItemButton;
 import fluxedCore.util.RenderUtils;

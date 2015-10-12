@@ -17,6 +17,7 @@ import astreaInfinitum.client.render.RenderEcoVent;
 import astreaInfinitum.client.render.RenderPedestal;
 import astreaInfinitum.client.render.RenderSpell;
 import astreaInfinitum.client.render.items.RenderItemPedestal;
+import astreaInfinitum.client.render.items.RenderItemRuneCrafter;
 import astreaInfinitum.client.render.items.RenderItemWand;
 import astreaInfinitum.client.render.tile.eco.RenderTileEcoBeamGenerator;
 import astreaInfinitum.client.render.tile.eco.RenderTileEcoInfuser;
@@ -77,12 +78,15 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.registerTileEntity(TileEntityRuneCarver.class, "runeCarverRender", new RenderCarving());
 
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.pedestal), new RenderItemPedestal());
+		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.runeCrafter), new RenderItemRuneCrafter());
+		
 		AstreaInfinitum.ctmID = RenderingRegistry.getNextAvailableRenderId();
 		AstreaInfinitum.oreID = RenderingRegistry.getNextAvailableRenderId();
 		AstreaInfinitum.carvingID = RenderingRegistry.getNextAvailableRenderId();
 
 		RenderingRegistry.registerBlockHandler(new RenderEcoAltarBlock());
 		MinecraftForgeClient.registerItemRenderer(AIItems.wand, new RenderItemWand());
+		
 		
 
 	}
