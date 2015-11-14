@@ -10,7 +10,6 @@ import astreaInfinitum.client.gui.spell.GuiSpell;
 import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
 import cpw.mods.fml.common.network.IGuiHandler;
 
-@SuppressWarnings("unused")
 public class GuiHandler implements IGuiHandler {
 
 	@Override

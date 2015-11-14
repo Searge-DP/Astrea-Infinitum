@@ -16,86 +16,60 @@ import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class TileEntityEcoBeamGenerator extends TileEntity implements IInventory {
 
-	public int rotation;
-	public int color;
 	public ItemStack[] items;
-	public TileEntityEcoInfuser infuser;
-
+	public TileEntityEcoCutter cutter;
+	public float red = 1, green = 0, blue = 0;
 	public boolean shouldSendEco = false;
+	public boolean foundCutter = false;
+	public int cutterX = xCoord;
+	public int cutterY = yCoord;
+	public int cutterZ = zCoord;
 
 	public TileEntityEcoBeamGenerator() {
 		items = new ItemStack[1];
-	}
-
-	public void setRotation(int rotation) {
-		this.rotation = rotation;
-
 	}
 
 	public void setShouldSendEco(boolean shouldSendEco) {
 		this.shouldSendEco = shouldSendEco;
 	}
 
-	public void setColor(int color) {
-		this.color = color;
-	}
-
 	@Override
 	public void updateEntity() {
 		if (!worldObj.isRemote) {
-
 			int x = xCoord, y = yCoord, z = zCoord;
-			if (isInfuser(worldObj, x + 3, y + 4, z + 3)) {
-				infuser = (TileEntityEcoInfuser) worldObj.getTileEntity(x + 3, y + 4, z + 3);
-				setShouldSendEco(true);
-				setRotation(0);
-			} else if (isInfuser(worldObj, x + 3, y + 4, z - 3)) {
-				infuser = (TileEntityEcoInfuser) worldObj.getTileEntity(x + 3, y + 4, z - 3);
-				setRotation(3);
-				setShouldSendEco(true);
-			} else if (isInfuser(worldObj, x - 3, y + 4, z - 3)) {
-				infuser = (TileEntityEcoInfuser) worldObj.getTileEntity(x - 3, y + 4, z - 3);
-				setRotation(2);
-				setShouldSendEco(true);
-			} else if (isInfuser(worldObj, x - 3, y + 4, z + 3)) {
-				infuser = (TileEntityEcoInfuser) worldObj.getTileEntity(x - 3, y + 4, z + 3);
-				setRotation(1);
-				setShouldSendEco(true);
+			if (isCutter(worldObj, x + 2, y - 1, z + 2)) {
+				foundCutter = true;
+				cutterX = x + 2;
+				cutterY = y - 1;
+				cutterZ = z + 2;
+				cutter = (TileEntityEcoCutter) worldObj.getTileEntity(x + 2, y - 1, z + 2);
+			} else if (isCutter(worldObj, x + 2, y - 1, z - 2)) {
+				foundCutter = true;
+				cutterX = x + 2;
+				cutterY = y - 1;
+				cutterZ = z - 2;
+				cutter = (TileEntityEcoCutter) worldObj.getTileEntity(x + 2, y - 1, z - 2);
+			} else if (isCutter(worldObj, x - 2, y - 1, z - 2)) {
+				foundCutter = true;
+				cutterX = x - 2;
+				cutterY = y - 1;
+				cutterZ = z - 2;
+				cutter = (TileEntityEcoCutter) worldObj.getTileEntity(x - 2, y - 1, z - 2);
+			} else if (isCutter(worldObj, x - 2, y - 1, z + 2)) {
+				foundCutter = true;
+				cutterX = x - 2;
+				cutterY = y - 1;
+				cutterZ = z + 2;
+				cutter = (TileEntityEcoCutter) worldObj.getTileEntity(x - 2, y - 1, z + 2);
 			} else {
-				setRotation(-1);
-				setShouldSendEco(false);
+				foundCutter = false;
+				cutterX = x;
+				cutterY = y;
+				cutterZ = z;
+				cutter = null;
 			}
-
-			if (getStackInSlot(0) != null) {
-				ItemStack stack = getStackInSlot(0);
-				switch (stack.getItemDamage()) {
-				case 0:
-					setColor(0xff0000);
-					break;
-				case 1:
-					setColor(0x00ff00);
-					break;
-				case 2:
-					setColor(0x0000ff);
-					break;
-				case 3:
-					setColor(0xffff00);
-					break;
-				case 4:
-					setColor(0x00ffff);
-					break;
-				case 5:
-					setColor(0xae7038);
-					break;
-				default:
-					setColor(0xFFFFFF);
-					break;
-				}
-			} else {
-				setShouldSendEco(false);
-			}
-
 			markDirty();
+
 		}
 
 	}
@@ -103,15 +77,15 @@ public class TileEntityEcoBeamGenerator extends TileEntity implements IInventory
 	@Override
 	public void markDirty() {
 		super.markDirty();
-		if (infuser != null) {
+		if (cutter != null) {
 			PacketHandler.INSTANCE.sendToAllAround(new MessageEcoBeamGeneratorSync(this), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
 		} else {
-			PacketHandler.INSTANCE.sendToAllAround(new MessageEcoBeamGeneratorSync(getStackInSlot(0), rotation, color, xCoord, yCoord, zCoord, 0, -1, 0, shouldSendEco), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
+			PacketHandler.INSTANCE.sendToAllAround(new MessageEcoBeamGeneratorSync(getStackInSlot(0), xCoord, yCoord, zCoord, 0, -1, 0, shouldSendEco), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
 		}
 	}
 
-	public boolean isInfuser(World world, int x, int y, int z) {
-		if (world.getTileEntity(x, y, z) != null && world.getTileEntity(x, y, z) instanceof TileEntityEcoInfuser) {
+	public boolean isCutter(World world, int x, int y, int z) {
+		if (world.getTileEntity(x, y, z) != null && world.getTileEntity(x, y, z) instanceof TileEntityEcoCutter) {
 			return true;
 		}
 		return false;

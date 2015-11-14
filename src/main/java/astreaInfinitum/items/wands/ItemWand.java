@@ -9,4 +9,5 @@ public class ItemWand extends Item implements IWand {
 		setFull3D();
 	}
 
+	
 }

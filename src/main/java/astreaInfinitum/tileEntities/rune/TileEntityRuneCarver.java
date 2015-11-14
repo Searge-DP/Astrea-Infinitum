@@ -18,6 +18,7 @@ import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.network.sync.MessageItemStackNBTSync;
 import astreaInfinitum.network.sync.MessageRuneCarverSync;
 import astreaInfinitum.utils.NBTHelper;
+import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import fluxedCore.util.CoordinatePair;
 
 public class TileEntityRuneCarver extends TileEntity implements IInventory {
@@ -36,18 +37,19 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 	@Override
 	public void updateEntity() {
 		if (!worldObj.isRemote) {
-			if (getStackInSlot(1) != null) {
+			if (getStackInSlot(0) != null) {
 				if (prevStack == null) {
-					PacketHandler.INSTANCE.sendToAll(new MessageRuneCarverSync(this));
-					prevStack = getStackInSlot(1).copy();
+//					PacketHandler.INSTANCE.sendToAllAround(new MessageRuneCarverSync(this), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
+					prevStack = getStackInSlot(0).copy();
 				}
-				if (prevStack != null && !NBTHelper.isStackEqual(prevStack, getStackInSlot(1))) {
-					PacketHandler.INSTANCE.sendToAll(new MessageRuneCarverSync(this));
-					prevStack = getStackInSlot(1).copy();
+				if (prevStack != null && !NBTHelper.isStackEqual(prevStack, getStackInSlot(0))) {
+//					PacketHandler.INSTANCE.sendToAllAround(new MessageRuneCarverSync(this), new TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord, zCoord, 128D));
+					prevStack = getStackInSlot(0).copy();
 					lines.clear();
 				}
-				ItemStack rune = getStackInSlot(1).copy();
+				ItemStack rune = getStackInSlot(0);
 				if (lines.isEmpty()) {
+					System.out.println("lines " + xCoord + ":" + yCoord + ":" + zCoord);
 					for (int i = 0; i < NBTHelper.getTagList(rune, "linesLeft", NBT.TAG_COMPOUND).tagCount(); i++) {
 						NBTTagCompound leftLine = NBTHelper.getTagList(rune, "linesLeft", NBT.TAG_COMPOUND).getCompoundTagAt(i);
 						NBTTagCompound rightLine = NBTHelper.getTagList(rune, "linesRight", NBT.TAG_COMPOUND).getCompoundTagAt(i);
@@ -56,24 +58,31 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 						lines.add(new MutablePair<CoordinatePair, CoordinatePair>(leftCoord, rightCoord));
 					}
 				}
-
-				NBTTagList left = new NBTTagList();
-				NBTTagList right = new NBTTagList();
-				for (MutablePair<CoordinatePair, CoordinatePair> pair : this.lines) {
-					NBTTagCompound leftLine = new NBTTagCompound();
-					NBTTagCompound rightLine = new NBTTagCompound();
-					pair.left.writeToNBT(leftLine);
-					pair.right.writeToNBT(rightLine);
-					left.appendTag(leftLine);
-					right.appendTag(rightLine);
+				if (!lines.isEmpty()) {
+					System.out.println("lines " + xCoord + ":" + yCoord + ":" + zCoord);
+					
+					NBTTagList left = new NBTTagList();
+					NBTTagList right = new NBTTagList();
+					for (MutablePair<CoordinatePair, CoordinatePair> pair : this.lines) {
+						NBTTagCompound leftLine = new NBTTagCompound();
+						NBTTagCompound rightLine = new NBTTagCompound();
+						pair.left.writeToNBT(leftLine);
+						pair.right.writeToNBT(rightLine);
+						left.appendTag(leftLine);
+						right.appendTag(rightLine);
+					}
+					NBTHelper.setTagList(rune, "linesLeft", left);
+					NBTHelper.setTagList(rune, "linesRight", right);
 				}
-				NBTHelper.setTagList(rune, "linesLeft", left);
-				NBTHelper.setTagList(rune, "linesRight", right);
-				PacketHandler.INSTANCE.sendToAll(new MessageItemStackNBTSync(rune, rune.stackTagCompound, xCoord, yCoord, zCoord));
+				// PacketHandler.INSTANCE.sendToAllAround(new
+				// MessageRuneCarverSync(this), new
+				// TargetPoint(worldObj.provider.dimensionId, xCoord, yCoord,
+				// zCoord, 128D));
 			} else {
 				if (prevStack != null) {
 					prevStack = null;
 					lines.clear();
+					nodes.clear();
 				}
 			}
 		}
@@ -106,8 +115,10 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
+		System.out.println("start read NBT");
 		super.readFromNBT(nbt);
 		readInventoryFromNBT(nbt);
+		System.out.println("stop read NBT");
 	}
 
 	public void readInventoryFromNBT(NBTTagCompound tags) {
@@ -123,8 +134,11 @@ public class TileEntityRuneCarver extends TileEntity implements IInventory {
 
 	@Override
 	public void writeToNBT(NBTTagCompound tag) {
+		System.out.println("start save NBT");
 		super.writeToNBT(tag);
 		writeInventoryToNBT(tag);
+
+		System.out.println("stop save NBT");
 	}
 
 	public void writeInventoryToNBT(NBTTagCompound tags) {

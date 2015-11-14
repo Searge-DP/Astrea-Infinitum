@@ -1,17 +1,15 @@
 package astreaInfinitum.network.sync;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import astreaInfinitum.tileEntities.eco.TileEntityEcoAltar;
 import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.ByteBufUtils;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.server.FMLServerHandler;
 
 public class MessageItemStackNBTSync implements IMessage, IMessageHandler<MessageItemStackNBTSync, IMessage> {
 
@@ -51,7 +49,7 @@ public class MessageItemStackNBTSync implements IMessage, IMessageHandler<Messag
 
 	@Override
 	public IMessage onMessage(MessageItemStackNBTSync message, MessageContext ctx) {
-		TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
+		TileEntity tileEntity = Minecraft.getMinecraft().theWorld.getTileEntity(message.x, message.y, message.z);
 		if (tileEntity instanceof TileEntityRuneCarver) {
 			TileEntityRuneCarver tile = (TileEntityRuneCarver) tileEntity;
 			if (tile.getStackInSlot(1) != null)

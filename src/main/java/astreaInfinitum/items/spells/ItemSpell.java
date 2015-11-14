@@ -7,26 +7,22 @@ import java.util.Random;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import astreaInfinitum.ModProps;
 import astreaInfinitum.api.EnumPlayerEco;
 import astreaInfinitum.api.runes.EnumSpellType;
 import astreaInfinitum.api.spell.IPrimarySpell;
 import astreaInfinitum.api.spell.Spell;
-import astreaInfinitum.client.render.RenderUtils;
 import astreaInfinitum.entities.EntitySpell;
 import astreaInfinitum.network.MessageItemSync;
 import astreaInfinitum.network.PacketHandler;
 import astreaInfinitum.utils.AIUtils;
 import astreaInfinitum.utils.NBTHelper;
-import astreaInfinitum.utils.SpellHelper;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 
 public class ItemSpell extends Item implements IPrimarySpell {

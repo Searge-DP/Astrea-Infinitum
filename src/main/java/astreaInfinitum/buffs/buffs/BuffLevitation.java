@@ -1,7 +1,8 @@
-package astreaInfinitum.buffs;
+package astreaInfinitum.buffs.buffs;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import astreaInfinitum.ModProps;
+import astreaInfinitum.buffs.AIBuffBase;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

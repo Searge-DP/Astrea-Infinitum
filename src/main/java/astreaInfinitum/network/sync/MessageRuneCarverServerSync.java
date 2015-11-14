@@ -10,11 +10,9 @@ import net.minecraft.tileentity.TileEntity;
 import org.apache.commons.lang3.tuple.MutablePair;
 
 import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-import cpw.mods.fml.server.FMLServerHandler;
 import fluxedCore.util.CoordinatePair;
 
 public class MessageRuneCarverServerSync implements IMessage, IMessageHandler<MessageRuneCarverServerSync, IMessage> {

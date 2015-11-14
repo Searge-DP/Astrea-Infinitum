@@ -56,11 +56,9 @@ public class AstreaInfinitum {
 		for (int i = 0; i < EnumRuneFunction.values().length; i++) {
 			ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST, new WeightedRandomChestContent(new ItemStack(AIItems.runeFunction, 1, i), 1, 1, 5));
 			ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST, new WeightedRandomChestContent(new ItemStack(AIItems.runeFunction, 1, i), 1, 1, 5));
-
 		}
 		EntityRegistry.registerModEntity(EntitySpell.class, "spell", 0, INSTANCE, 30, 30, true);
 		proxy.renderSpell();
-		// proxy.registerClientHandler();
 		MinecraftForge.EVENT_BUS.register(new ClientHandler());
 		proxy.registerRenderers();
 		NetworkRegistry.INSTANCE.registerGuiHandler(INSTANCE, new GuiHandler());

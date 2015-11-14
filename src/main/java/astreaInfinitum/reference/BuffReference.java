@@ -1,6 +1,6 @@
 package astreaInfinitum.reference;
 
-import astreaInfinitum.buffs.BuffLevitation;
+import astreaInfinitum.buffs.buffs.BuffLevitation;
 import fluxedCore.buffs.Buff;
 
 public class BuffReference {

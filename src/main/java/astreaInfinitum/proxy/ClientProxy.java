@@ -21,10 +21,12 @@ import astreaInfinitum.client.render.items.RenderItemRuneCrafter;
 import astreaInfinitum.client.render.items.RenderItemWand;
 import astreaInfinitum.client.render.tile.eco.RenderTileEcoBeamGenerator;
 import astreaInfinitum.client.render.tile.eco.RenderTileEcoInfuser;
+import astreaInfinitum.client.render.tile.eco.RenderTileEntityEcoCutter;
 import astreaInfinitum.entities.EntitySpell;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.tileEntities.TileEntityPedestal;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoCutter;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoInfuser;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoVent;
 import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
@@ -76,18 +78,17 @@ public class ClientProxy extends CommonProxy {
 		ClientRegistry.registerTileEntity(TileEntityEcoInfuser.class, "ecoInfuserRender", new RenderTileEcoInfuser());
 		ClientRegistry.registerTileEntity(TileEntityEcoVent.class, "ecoVentRender", new RenderEcoVent());
 		ClientRegistry.registerTileEntity(TileEntityRuneCarver.class, "runeCarverRender", new RenderCarving());
-
+		ClientRegistry.registerTileEntity(TileEntityEcoCutter.class, "ecoCutterRender", new RenderTileEntityEcoCutter());
+		
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.pedestal), new RenderItemPedestal());
 		MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(AIBlocks.runeCrafter), new RenderItemRuneCrafter());
-		
+
 		AstreaInfinitum.ctmID = RenderingRegistry.getNextAvailableRenderId();
 		AstreaInfinitum.oreID = RenderingRegistry.getNextAvailableRenderId();
 		AstreaInfinitum.carvingID = RenderingRegistry.getNextAvailableRenderId();
 
 		RenderingRegistry.registerBlockHandler(new RenderEcoAltarBlock());
 		MinecraftForgeClient.registerItemRenderer(AIItems.wand, new RenderItemWand());
-		
-		
 
 	}
 

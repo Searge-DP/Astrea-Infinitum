@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoBeamGenerator;
+import astreaInfinitum.tileEntities.eco.TileEntityEcoCutter;
 import astreaInfinitum.tileEntities.eco.TileEntityEcoInfuser;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.network.ByteBufUtils;
@@ -14,15 +15,13 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 public class MessageEcoBeamGeneratorSync implements IMessage, IMessageHandler<MessageEcoBeamGeneratorSync, IMessage> {
 
 	public ItemStack item;
-	public int rotation;
-	public int color;
 	public int x;
 	public int y;
 	public int z;
 
-	public int infuserX;
-	public int infuserY;
-	public int infuserZ;
+	public int cutterX;
+	public int cutterY;
+	public int cutterZ;
 
 	public boolean shouldSend;
 
@@ -30,22 +29,20 @@ public class MessageEcoBeamGeneratorSync implements IMessage, IMessageHandler<Me
 
 	}
 
-	public MessageEcoBeamGeneratorSync(ItemStack item, int rotation, int color, int x, int y, int z, int infuserX, int infuserY, int infuserZ, boolean shouldSend) {
+	public MessageEcoBeamGeneratorSync(ItemStack item, int x, int y, int z, int cutterX, int cutterY, int cutterZ, boolean shouldSend) {
 		this.item = item;
-		this.color = color;
-		this.rotation = rotation;
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.infuserX = infuserX;
-		this.infuserY = infuserY;
-		this.infuserZ = infuserZ;
+		this.cutterX = cutterX;
+		this.cutterY = cutterY;
+		this.cutterZ = cutterZ;
 		this.shouldSend = shouldSend;
 
 	}
 
 	public MessageEcoBeamGeneratorSync(TileEntityEcoBeamGenerator tile) {
-		this(tile.getStackInSlot(0), tile.rotation, tile.color, tile.xCoord, tile.yCoord, tile.zCoord, tile.infuser.xCoord, tile.infuser.yCoord, tile.infuser.zCoord, tile.shouldSendEco);
+		this(tile.getStackInSlot(0), tile.xCoord, tile.yCoord, tile.zCoord, tile.cutter.xCoord, tile.cutter.yCoord, tile.cutter.zCoord, tile.shouldSendEco);
 	}
 
 	@Override
@@ -53,13 +50,11 @@ public class MessageEcoBeamGeneratorSync implements IMessage, IMessageHandler<Me
 		x = buf.readInt();
 		y = buf.readInt();
 		z = buf.readInt();
-		rotation = buf.readInt();
-		color = buf.readInt();
 		item = ByteBufUtils.readItemStack(buf);
 
-		infuserX = buf.readInt();
-		infuserY = buf.readInt();
-		infuserZ = buf.readInt();
+		cutterX = buf.readInt();
+		cutterY = buf.readInt();
+		cutterZ = buf.readInt();
 
 		shouldSend = buf.readBoolean();
 	}
@@ -69,27 +64,26 @@ public class MessageEcoBeamGeneratorSync implements IMessage, IMessageHandler<Me
 		buf.writeInt(x);
 		buf.writeInt(y);
 		buf.writeInt(z);
-		buf.writeInt(rotation);
-		buf.writeInt(color);
 		ByteBufUtils.writeItemStack(buf, item);
-		buf.writeInt(infuserX);
-		buf.writeInt(infuserY);
-		buf.writeInt(infuserZ);
+		buf.writeInt(cutterX);
+		buf.writeInt(cutterY);
+		buf.writeInt(cutterZ);
 		buf.writeBoolean(shouldSend);
 	}
 
 	@Override
 	public IMessage onMessage(MessageEcoBeamGeneratorSync message, MessageContext ctx) {
 		TileEntity tileEntity = FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.x, message.y, message.z);
-		TileEntityEcoInfuser infuser = (TileEntityEcoInfuser) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.infuserX, message.infuserY, message.infuserZ);
+		TileEntityEcoCutter cutter = (TileEntityEcoCutter) FMLClientHandler.instance().getClient().theWorld.getTileEntity(message.cutterX, message.cutterY, message.cutterZ);
 		if (tileEntity instanceof TileEntityEcoBeamGenerator) {
-			((TileEntityEcoBeamGenerator) tileEntity).rotation = message.rotation;
-			((TileEntityEcoBeamGenerator) tileEntity).color = message.color;
 			((TileEntityEcoBeamGenerator) tileEntity).setInventorySlotContents(0, message.item);
-			((TileEntityEcoBeamGenerator) tileEntity).shouldSendEco =  message.shouldSend;
-			if (infuser != null) {
-				((TileEntityEcoBeamGenerator) tileEntity).infuser = infuser;
-								
+			((TileEntityEcoBeamGenerator) tileEntity).shouldSendEco = message.shouldSend;
+			((TileEntityEcoBeamGenerator) tileEntity).cutterX= message.cutterX;
+			((TileEntityEcoBeamGenerator) tileEntity).cutterY= message.cutterY;
+			((TileEntityEcoBeamGenerator) tileEntity).cutterZ= message.cutterZ;
+			if (cutter != null) {
+				((TileEntityEcoBeamGenerator) tileEntity).cutter = cutter;
+
 			}
 
 		}

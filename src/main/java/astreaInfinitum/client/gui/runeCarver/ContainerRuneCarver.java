@@ -1,6 +1,5 @@
 package astreaInfinitum.client.gui.runeCarver;
 
-import fluxedCore.client.gui.slots.SlotWhitelist;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -8,6 +7,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import astreaInfinitum.items.AIItems;
 import astreaInfinitum.tileEntities.rune.TileEntityRuneCarver;
+import fluxedCore.client.gui.slots.SlotWhitelist;
 
 public class ContainerRuneCarver extends Container {
 
@@ -20,10 +20,10 @@ public class ContainerRuneCarver extends Container {
 				addSlotToContainer(new Slot(player, x + y * 9 + 9, 31 + 18 * x, 157 + y * 18));
 			}
 		}
-		addSlotToContainer(new Slot(tile, 0, 16, 16));
-		addSlotToContainer(new SlotWhitelist(tile, 1, 16, 110, new ItemStack[]{new ItemStack(AIItems.rune)}));
-		addSlotToContainer(new SlotRune(tile, 2, 191, 66));
 		
+		addSlotToContainer(new Slot(tile, 2, 16, 16));
+		addSlotToContainer(new Slot(tile, 1, 191, 66));
+		addSlotToContainer(new SlotWhitelist(tile, 0, 16, 110, new ItemStack[]{new ItemStack(AIItems.rune)}));
 	}
 
 	@Override
